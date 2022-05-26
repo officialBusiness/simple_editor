@@ -1,0 +1,32 @@
+h1,span{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	line-height: 45px;
+	min-height: 45px;
+}
+
+img{
+	width: 40px;
+}
+
+.paragraph{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	line-height: 24px;
+	min-height: 24px;
+}
+
+.table{
+	display: flex;
+	width: 100%;
+}
+.table >.row{
+
+}
+.table >.row >.column{
+
+}
