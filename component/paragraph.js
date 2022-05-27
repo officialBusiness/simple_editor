@@ -98,13 +98,10 @@ createComponent({
 				if( nodeApi.isBlock(startContainer) ){//	是块元素(即组件元素的顶点元素)
 					if( nodeApi.isStartBlock(startContainer) ){//	如果是第一个的话，就不做操作
 					}else{//	到上一个块级元素的后面，并删除这个块级元素
-						console.log(rangApi.getRange())
 						let preBlockNode = startContainer.previousSibling,
 								node;
-						console.log('preBlockNode:', preBlockNode);
 						while(preBlockNode.childNodes && preBlockNode.childNodes.length > 0){
 							preBlockNode = preBlockNode.childNodes[preBlockNode.childNodes.length - 1];
-							// console.log('preBlockNode:', preBlockNode);
 						}
 						node = preBlockNode;
 						if( node.nodeType === Node.ELEMENT_NODE ){
@@ -127,4 +124,7 @@ createComponent({
 	toJson(dom){
 
 	},
+	toDom(json){
+
+	}
 });

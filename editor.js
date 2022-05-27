@@ -25,6 +25,13 @@ Editor.prototype.format = function(format){
 
 }
 
+Editor.prototype.render = function(json){
+	let blocks = json.blocks;
+	blocks.forEach((block)=>{
+		
+	});
+}
+
 Editor.prototype.destroy = function(){
 	destroyEvent(this.editorDom);
 }
