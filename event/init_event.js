@@ -1,4 +1,4 @@
-import backspace from './backspace.js';
+import trigger from './trigger.js';
 
 export const editorEvent = {
 	enter: 'enter',
@@ -19,11 +19,11 @@ export const editorEvent = {
 const 
 	handleKeyCode = {
 		// '13': 'enter',
-		// '8': 'backspace:',
+		'8': 'backspace',
 		// '9': 'tab',
 		// '229': 'ascii',
-		backspace: 8,
-		enter: 13,
+		// backspace: 8,
+		// enter: 13,
 
 	},
 	shortcutsKeyCode = {
@@ -36,15 +36,12 @@ const
 
 export default function initEditorEvent(editorDom){
 	editorDom.onkeydown = (e)=>{
-		switch(e.keyCode){
-			case handleKeyCode.backspace:
-				e.preventDefault();
-				backspace();
-				break;
-			default:
-				break;
+		let eventType = handleKeyCode[e.keyCode]
+		if( eventType ){
+			e.stopPropagation();
+			e.preventDefault();
+			trigger(eventType);
 		}
-
 	}
 	editorDom.onpaste = (e)=>{
 		// console.log('onpaste');

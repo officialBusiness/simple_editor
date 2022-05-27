@@ -14,13 +14,15 @@ export default function Editor(editorDom){
 	this.editorDom = editorDom;
 	initEditorEvent.call(this, this.editorDom);
 
-	this.addComponent('paragraph')
-	// rangApi.setCollapsedRange();
-
+	this.addComponent('paragraph');
 }
 
 Editor.prototype.addComponent = function(component){
 	getComponent(component).init(this.editorDom);
+}
+
+Editor.prototype.format = function(format){
+
 }
 
 Editor.prototype.destroy = function(){

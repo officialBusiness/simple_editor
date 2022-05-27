@@ -19,7 +19,8 @@ export function isNotBlock(dom){
 }
 
 export function isStartBlock(dom){
-	return dom === dom.parentNode.childNodes[0]
+	return isBlock(dom)
+		&& dom === dom.parentNode.childNodes[0]
 }
 
 export function findBlock(dom){
@@ -59,3 +60,17 @@ export function createNode(node, children){
 			return;
 	}
 }
+
+export function removeNode(node){
+	node.parentNode.removeChild(node);
+}
+
+export function getNodeIndexOf(node){
+	let childNodes = node.parentNode.childNodes;
+	for(let i = 0, len = childNodes.length; i < len; i++){
+		if(node === childNodes[i]){
+			return i;
+		}
+	}
+}
+

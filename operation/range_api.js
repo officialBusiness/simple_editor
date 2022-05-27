@@ -1,3 +1,4 @@
+
 export const range = {
 	center: 'center',
 	start: 'start',
@@ -28,6 +29,14 @@ export function setCollapsedRange(node, offset){
 	range.setEnd(node, offset);
 	selection.removeAllRanges(range);
 	selection.addRange(range);
+}
+
+export function setCollapsedRangeInNodeBehind(node){
+
+}
+
+export function setCollapsedRangeInNodeFront(node){
+
 }
 
 export function isRangeInOneNode(){
