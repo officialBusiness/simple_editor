@@ -29,16 +29,18 @@
 				height: 30px;
 			}
 		</style>
-		<link rel="stylesheet" type="text/css" href="../editor.css" />
+		<script type="text/javascript" src="./tex-svg.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/editor.css" />
 	</head>
 	<body>
 		<div id="editor_tool"></div>
 		<div id="editor"></div>
 	</body>
 	<script type="module">
-		import { initEmptyDom } from '../editor.js';
-		let editor = initEmptyDom(document.getElementById('editor'));
+		import Editor from '../src/editor.js';
+		import text from './Simple and Efficient Bilayer Cross Counting.js';
+		let editor = new Editor(document.getElementById('editor'), text);
 
-		
+
 	</script>
 </html>

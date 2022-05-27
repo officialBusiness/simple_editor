@@ -1,4 +1,4 @@
-import createComponent from '../editor_node/component.js';
+import createComponent, { getComponent } from '../editor_node/component.js';
 import * as rangApi from '../operation/range_api.js';
 import * as nodeApi from '../editor_node/node_api.js';
 
@@ -52,7 +52,7 @@ createComponent({
 									}
 									rangApi.setCollapsedRange(preNode, preNode.childNodes.length);
 								}else{//	内部不存在节点
-									let index = getNodeIndexOf(preNode);
+									let index = nodeApi.getNodeIndexOf(preNode);
 									rangApi.setCollapsedRange(parentNode, index + 1);
 								}
 								nodeApi.removeNode(node);
@@ -109,7 +109,6 @@ createComponent({
 						}else if(node.nodeType === Node.TEXT_NODE ){
 							rangApi.setCollapsedRange(node, node.length);
 						}
-						console.log(rangApi.getRange())
 						nodeApi.removeNode(startContainer);
 					}
 				}else{//	是p内展示的独立元素
@@ -125,6 +124,23 @@ createComponent({
 
 	},
 	toDom(json){
-
+		let node = nodeApi.createNode({
+			nodeType: Node.ELEMENT_NODE,
+			nodeName: 'p',
+			attributes: {
+				class: 'paragraph',
+				isBlock: true,
+			}
+		});
+		json.data.forEach((child)=>{
+			if(typeof child === 'string'){
+				node.appendChild(nodeApi.createTextNode(child));
+			}else if( typeof child === 'object' ){
+				if( getComponent(child.type) ){
+					node.appendChild(getComponent(child.type).toDom(child));
+				}
+			}
+		})
+		return node;
 	}
 });
