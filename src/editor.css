@@ -1,3 +1,5 @@
+
+
 h1,span{
 	margin: 0;
 	padding: 0;
@@ -9,7 +11,7 @@ h1,span{
 
 .paragraph{
 	margin: 0;
-	padding: 0;
+	padding: 0 0 10px 0;
 	border: 0;
 	width: 100%;
 	line-height: 24px;
@@ -17,10 +19,12 @@ h1,span{
 	text-indent: 34px;
 	font-size: 16px;
 }
-
 img.mathjax{
-	height: 16px;
-	line-height: 24px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 0;
+	vertical-align: middle;
 }
 
 .table{

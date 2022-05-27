@@ -1,4 +1,4 @@
-export default {
+export const original = {
 	blocks: [
 		{
 			type: 'h1',
@@ -7,7 +7,7 @@ export default {
 		{
 			type: 'h2',
 			data: 'Abstract',
-			alignment: 'center',
+			alignment: 'center'
 		},
 		{
 			type: 'paragraph',
@@ -37,7 +37,7 @@ export default {
 					type: 'mathjax',
 					data: 'O(\\left \\vert E \\right \\vert \\log \\left \\vert V_{small} \\right \\vert)',
 				},
-				'algorithm, where ',
+				' algorithm, where ',
 				{
 					type: 'mathjax',
 					data: 'V_{small}'
@@ -48,6 +48,36 @@ export default {
 					data: 'V'
 				},
 				' of the graph. This algorithm is very easy to implement. Our computational experiments on a large collection of instances show that it performs well in comparison to previously published algorithms, which are much more complicated to understand and implement.'
+			]
+		},
+		{
+			type: 'h2',
+			data: '1 Introduction'
+		},
+		{
+			type: 'paragraph',
+			data: [
+				'Let ',
+				{
+					type: 'mathjax',
+					data: 'G=(N,S,E)'
+				},
+				' be a bipartite graph with disjoint node sets ',
+				{
+					type: 'mathjax',
+					data: 'N'
+				},
+				' and ',
+				{
+					type: 'mathjax',
+					data: 'S'
+				},
+				' and let all edges in ',
+				{
+					type: 'mathjax',
+					data: 'E'
+				},
+				' have one end node in '
 			]
 		}
 	]

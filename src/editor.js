@@ -10,7 +10,6 @@ export function initEmptyDom(dom){
 }
 
 export default function Editor(editorDom, json){
-	editorDom.contentEditable = true;
 	editorDom.style['white-space'] = 'pre-wrap';
 	this.editorDom = editorDom;
 	initEditorEvent.call(this, this.editorDom);
@@ -27,6 +26,11 @@ export default function Editor(editorDom, json){
 			}
 		});
 	}
+	return this;
+}
+
+Editor.prototype.setEditable = function(editable){
+	this.editorDom.contentEditable = editable;
 	return this;
 }
 
