@@ -18,11 +18,11 @@
 			#editor{
 				box-sizing: border-box;
 				margin: 0;
-				padding: 10px;
+				padding: 0 50px;
 				border: 0;
-				width: 500px;
+				width: 50%;
 				height: 100%;
-				outline: none;
+				overflow: auto;
 			}
 		</style>
 		<script type="text/javascript" src="./tex-svg.js"></script>
@@ -34,8 +34,12 @@
 	<script type="module">
 		import Editor from '../src/editor.js';
 		import { original } from './Simple and Efficient Bilayer Cross Counting.js';
-		let editor = new Editor(document.getElementById('editor'), original);
 
+		let editor = new Editor(document.getElementById('editor'), original)
+			.setEditable(true);
+
+		window.original = original;
+		window.editor = editor;
 
 	</script>
 </html>

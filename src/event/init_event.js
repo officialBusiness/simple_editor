@@ -45,42 +45,42 @@ export default function initEditorEvent(editorDom){
 	}
 	editorDom.onpaste = (e)=>{
 		// console.log('onpaste');
-		e.preventDefault();
-		let clipboardData = e.clipboardData,
-			index = 0,
-			length = clipboardData.items.length,
-			string = '';
-		for(let item of clipboardData.items){
-			console.log('item:', item);
-			index ++;
-			// if( 
-				// item.kind === 'string' 
-				// && item.type === 'text/plain' 
-				// ){
-				item.getAsString((str)=>{
-					// console.log(str);
-					// console.log(index);
-					// console.log(length);
-					 string += str;
-					if( length === index ){
-						console.log(string);
-					}
-				});
-			// }
-		}
+		// e.preventDefault();
+		// let clipboardData = e.clipboardData,
+		// 	index = 0,
+		// 	length = clipboardData.items.length,
+		// 	string = '';
+		// for(let item of clipboardData.items){
+		// 	index ++;
+		// 	if( 
+		// 		item.kind === 'string' 
+		// 		&& item.type === 'text/plain' 
+		// 		){
+		// 		console.log('item:', item);
+		// 		item.getAsString((str)=>{
+		// 			console.log(str);
+		// 			console.log(index);
+		// 			console.log(length);
+		// 			 string += str;
+		// 			if( length === index ){
+		// 				console.log(string);
+		// 			}
+		// 		});
+		// 	}
+		// }
 	}
 	editorDom.oncopy = (e)=>{
 		// console.log('oncopy e:', e);
-		e.preventDefault();
+		// e.preventDefault();
 	}
 	editorDom.ondragstart = (e)=>{
-		e.preventDefault();
+		// e.preventDefault();
 	}
 	editorDom.ondragstart = (e)=>{
-		e.preventDefault();
+		// e.preventDefault();
 	}
 	editorDom.ondrop = (e)=>{
-		e.preventDefault();
+		// e.preventDefault();
 	}
 	// editorDom.onbeforeinput = (e)=>{
 	// 	console.log('beforeinput:')

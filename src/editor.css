@@ -1,18 +1,20 @@
 
-
-h1,span{
+h1,h2,h3,h4,h5,h6,div,span,img,p{
 	margin: 0;
 	padding: 0;
 	border: 0;
+	box-sizing: border-box;
+}
+
+h1,h2,h3,h4,h5,h6{
 	width: 100%;
-	line-height: 45px;
-	min-height: 45px;
+	/*line-height: 45px;*/
+	/*min-height: 45px;*/
 }
 
 .paragraph{
-	margin: 0;
+	display: block;
 	padding: 0 0 10px 0;
-	border: 0;
 	width: 100%;
 	line-height: 24px;
 	min-height: 24px;
@@ -20,11 +22,27 @@ h1,span{
 	font-size: 16px;
 }
 img.mathjax{
-	margin: 0;
-	padding: 0;
-	border: 0;
 	font-size: 0;
 	vertical-align: middle;
+}
+
+.image{
+	padding: 0 0 10px 0;
+	width: 100%;
+}
+.image > img{
+	width: 100%;
+}
+.image > .image_title{
+	text-align: center;
+	width: 100%;
+  line-height: 24px;
+  min-height: 24px;
+  font-size: 16px;
+}
+
+.link{
+	cursor: pointer;
 }
 
 .table{

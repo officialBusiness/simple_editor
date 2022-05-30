@@ -121,7 +121,24 @@ createComponent({
 		}
 	},
 	toJson(dom){
-
+		let json = {
+			type: "paragraph",
+			data: []
+		};
+		dom.childNodes.forEach((child)=>{
+			switch(child.nodeType){
+				case Node.TEXT_NODE:
+					json.data.push({
+						type: "text",
+						data: child.nodeValue
+					})
+					break;
+				case Node.ELEMENT_NODE:
+					json.data.push(getComponent(child.className).toJson(child));
+					break;
+			}
+		});
+		return json;
 	},
 	toDom(json){
 		let node = nodeApi.createNode({
@@ -133,12 +150,15 @@ createComponent({
 			}
 		});
 		json.data.forEach((child)=>{
-			if(typeof child === 'string'){
-				node.appendChild(nodeApi.createTextNode(child));
-			}else if( typeof child === 'object' ){
-				if( getComponent(child.type) ){
-					node.appendChild(getComponent(child.type).toDom(child));
-				}
+			switch(child.type){
+				case 'text':
+					node.appendChild(nodeApi.createTextNode(child.data));
+					break;
+				default:
+					if( getComponent(child.type) ){
+						node.appendChild(getComponent(child.type).toDom(child));
+					}
+					break;
 			}
 		})
 		return node;

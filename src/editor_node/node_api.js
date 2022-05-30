@@ -55,7 +55,7 @@ export function createNode(node, children){
 			}
 			return dom;
 		case Node.TEXT_NODE:
-			return createTextNode(node);
+			return createTextNode(node.nodeValue);
 		default:
 			return;
 	}

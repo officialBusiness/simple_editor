@@ -4,6 +4,9 @@ import { toDom, toNode } from './editor_node/transform.js';
 import { getComponent } from './editor_node/component.js';
 import './component/paragraph.js';
 import './component/mathjax.js';
+import './component/header.js';
+import './component/image.js';
+import './component/format.js';
 
 export function initEmptyDom(dom){
 	return new Editor(dom);
@@ -17,16 +20,32 @@ export default function Editor(editorDom, json){
 	if(!json){
 		this.addComponent('paragraph');
 	}else{
-		let blocks = json.blocks;
-		blocks.forEach((block)=>{
-			if( getComponent(block.type) ){
-				editorDom.appendChild(
-					getComponent(block.type).toDom(block)
-				);
-			}
-		});
+		this.render(json);
 	}
 	return this;
+}
+
+Editor.prototype.render = function(json){	
+	this.editorDom.innerHTML = '';
+	let blocks = json.blocks;
+	blocks.forEach((block)=>{
+		if( getComponent(block.type) ){
+			this.editorDom.appendChild(
+				getComponent(block.type).toDom(block)
+			);
+		}
+	});
+	return this;
+}
+
+Editor.prototype.toJson = function(format){
+	let json = {
+		blocks: []
+	}
+	this.editorDom.childNodes.forEach((blockDom)=>{
+		json.blocks.push( getComponent(blockDom.className).toJson(blockDom) );
+	});
+	return json;
 }
 
 Editor.prototype.setEditable = function(editable){
