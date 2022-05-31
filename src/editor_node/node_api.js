@@ -1,26 +1,28 @@
 
 export const nodeType = {
 	// 基础的节点类型
-	text: 'text',
-	leafElement: 'leafElement',
-	format: 'format',
+	// text: 'text',
+	// leafElement: 'leafElement',
+	// format: 'format',
 
+	// container: 'container',
+	// block: 'block',
+	// component: 'component',
+
+	leaf: 'leaf',
+	
+	//容器的特点是允许 childNodes 空，空的情况下再删一次才能删除
 	container: 'container',
-	block: 'block',
-	component: 'component',
+
+	merge: 'merge',
 }
 
-export function isBlock(dom){
-	return dom.getAttribute && dom.getAttribute('isBlock');
+export function isContainer(dom){
+	return !!dom.getAttribute('container');
 }
 
-export function isNotBlock(dom){
-	return !(dom.getAttribute && dom.getAttribute('isBlock'));
-}
-
-export function isStartBlock(dom){
-	return isBlock(dom)
-		&& dom === dom.parentNode.childNodes[0]
+export function isNotContainer(dom){
+	return !dom.getAttribute('container');
 }
 
 export function findBlock(dom){

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>start</title>
+		<title>Simple and Efficient Bilayer Cross Counting</title>
 		<style type="text/css">
 			html,body{
 				margin: 0;
@@ -23,9 +23,10 @@
 				width: 50%;
 				height: 100%;
 				overflow: auto;
+				outline: none;
 			}
 		</style>
-		<script type="text/javascript" src="./tex-svg.js"></script>
+		<script type="text/javascript" src="../src/plugin/tex-svg.js"></script>
 		<link rel="stylesheet" type="text/css" href="../src/editor.css" />
 	</head>
 	<body>
@@ -35,7 +36,27 @@
 		import Editor from '../src/editor.js';
 		import { original } from './Simple and Efficient Bilayer Cross Counting.js';
 
-		let editor = new Editor(document.getElementById('editor'), original)
+		let editor = new Editor(document.getElementById('editor'), {
+			blocks: [
+				{
+					type: 'h1',
+					data: [
+						{
+							type: "text",
+							data: "A Simple "
+						},
+						{
+							type: 'mathjax',
+							data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert V_{small} \\right \\vert)"
+						},
+						{
+							type: "text",
+							data: " Algorithm "
+						}
+					]
+				}
+			]
+		})
 			.setEditable(true);
 
 		window.original = original;

@@ -74,13 +74,10 @@ export default function initEditorEvent(editorDom){
 		// e.preventDefault();
 	}
 	editorDom.ondragstart = (e)=>{
-		// e.preventDefault();
-	}
-	editorDom.ondragstart = (e)=>{
-		// e.preventDefault();
+		e.preventDefault();
 	}
 	editorDom.ondrop = (e)=>{
-		// e.preventDefault();
+		e.preventDefault();
 	}
 	// editorDom.onbeforeinput = (e)=>{
 	// 	console.log('beforeinput:')

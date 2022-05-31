@@ -33,7 +33,6 @@ createComponent({
 				nodeName: 'div',
 				attributes: {
 					class: 'image',
-					isBlock: true,
 				}
 			}),
 			img = nodeApi.createNode({

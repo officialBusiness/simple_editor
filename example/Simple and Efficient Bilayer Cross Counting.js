@@ -815,6 +815,31 @@ export const original = {
 					data: ' . In Section 6 we discuss the computational complexity of bilayer cross counting, and in Section 7 we summarize our findings.'
 				}
 			]
+		},
+		{
+			type: 'h2',
+			data: '2 Bilayer Cross Counts and Inversion Numbers'
+		},
+		{
+			type: 'paragraph',
+			data: [
+				{
+					type: 'text',
+					data: 'In a sequence '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi = \\left \\langle a_0, a_1, . . . , a_{t−1} \\right \\rangle'
+				},
+				{
+					type: 'text',
+					data: ' of pairwise comparable elements '
+				},
+				{
+					type: 'mathjax',
+					data: 'a_i\\,(i = 0,1,...,t − 1),'
+				}
+			]
 		}
 	]
 }

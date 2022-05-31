@@ -22,13 +22,9 @@ export function setRange(startNode, startOffset, endNode, endOffset){
 }
 
 export function setCollapsedRange(node, offset){
-	let 
-			selection = document.getSelection(),
-			range = document.createRange();
+	let range = document.getSelection().getRangeAt(0);
 	range.setStart(node, offset);
 	range.setEnd(node, offset);
-	selection.removeAllRanges(range);
-	selection.addRange(range);
 }
 
 export function setCollapsedRangeInNodeBehind(node){
