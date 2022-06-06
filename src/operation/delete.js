@@ -1,22 +1,28 @@
-import * as rangApi from '../../operation/range_api.js';
-import * as nodeApi from '../../editor_node/node_api.js';
+import * as rangApi from '../operation/range_api.js';
+import * as nodeApi from '../editor_node/node_api.js';
 
 export function deleteOne(node, offset){
 	console.log('node:', node, 'offset:', offset);
 	if( node.nodeType === Node.TEXT_NODE ){
 		let oneChildNodeRoot = nodeApi.findOneChildNodeRoot(node),
-				// preNode = oneChildNodeRoot.previousSibling,
-				preNode = nodeApi.getPreNodeInContainer(oneChildNodeRoot),
+				preNode = oneChildNodeRoot.previousSibling,
 				nextNode = oneChildNodeRoot.nextSibling;
 
-		console.log('oneChildNodeRoot:', oneChildNodeRoot);
-		console.log('preNode:', preNode);
-		console.log('oneChildNodeRoot.previousSibling:', oneChildNodeRoot.previousSibling);
-		console.log('nextNode:', nextNode);
-			
 		if( offset > 1 || (offset === 1 && node.length > 1) ){//	正常删除一个字符
-			console.log('正常删除一个字符');
-			rangApi.setCollapsedRange(node, offset - 1);
+			console.log('删除一个字符');
+			if(offset === 1){
+				let preNodeInContainer = nodeApi.getPreNodeInContainer(node);
+				if( preNodeInContainer ){
+					console.log('跳到前一个节点末端');
+					rangApi.endNodeRange(preNodeInContainer);
+				}else{
+					console.log('光标进一');
+					rangApi.setCollapsedRange(node, 0);
+				}
+			}else{
+				console.log('光标进一');
+				rangApi.setCollapsedRange(node, offset - 1);
+			}
 			node.deleteData(offset - 1, 1);
 		}else if( offset === 1 && node.length === 1 ){//	删空 text
 			console.log('删空 text');
@@ -48,20 +54,36 @@ export function deleteOne(node, offset){
 			}
 		}else if( offset === 0 ){//	在 text 头部
 			console.log('在 text 头部, text 存在字符');
-
+			if( nodeApi.isStartInContainer(oneChildNodeRoot) ){
+				console.log('触发 container 合并');
+			}else{
+				console.error('不知道的特殊情况,按照常理,应该是 container 内的第一个独立节点')
+			}
 		}else{//	不知道的特殊情况
 			console.error('不知道的特殊情况');
 		}
 	}else if( node.nodeType === Node.ELEMENT_NODE ){
-		let element = node.childNodes[offset - 1],
+		let element = node.childNodes[ offset !== 0 ? offset - 1 : 0],
 				oneChildNodeRoot = nodeApi.findOneChildNodeRoot(element),
 				parentNode = oneChildNodeRoot ? oneChildNodeRoot.parentNode : null,
 				preNode = oneChildNodeRoot ? oneChildNodeRoot.previousSibling : null,
 				nextNode = oneChildNodeRoot ? oneChildNodeRoot.nextSibling : null;
 
 		if( offset > 1 || (offset === 1 && node.childNodes.length > 1) ){//	正常删除一个元素
-			console.log('正常删除一个元素');
-			rangApi.setCollapsedRange(node, offset - 1);
+			console.log('删除一个元素');
+			if(offset === 1){
+				let preNodeInContainer = nodeApi.getPreNodeInContainer(element);
+				if( preNodeInContainer ){
+					console.log('跳到前一个节点末端');
+					rangApi.endNodeRange(preNodeInContainer);
+				}else{
+					console.log('光标进一');
+					rangApi.setCollapsedRange(node, 0);
+				}
+			}else{
+				console.log('光标进入前一个元素的末端:', node.childNodes[offset - 2]);
+				rangApi.endNodeRange(node.childNodes[offset - 2]);
+			}
 			nodeApi.removeNode(oneChildNodeRoot);//	正常删除独立的叶子节点
 		}else if( offset === 1 && node.childNodes.length === 1 ){//	删空元素
 			console.log('删空元素', oneChildNodeRoot);
@@ -91,31 +113,22 @@ export function deleteOne(node, offset){
 				}
 			}
 		}else if( offset === 0 ){
-			console.log('在元素头部, 元素存在子节点');
+			console.log('在元素头部');
 			if( nodeApi.isContainer(node) ){
-				console.log('元素是 container', '合并');
+				console.log('元素是 container');
 			}else{
-
-				console.log('元素不是 container ,那就是在 container 子节点')
+				if( nodeApi.isStartInContainer(oneChildNodeRoot) ){
+					console.log('触发 container 合并');
+				}else{
+					console.error('不知道的特殊情况,按照常理,应该是 container 内的第一个独立节点');
+				}
 			}
-			// if(){
-
-			// }
-		}
-		else{
+		}else{
 			console.error('不知道的特殊情况');
 		}
-		// console.log('元素是叶子节点');
-		// if(preNode){
-		// 	rangApi.endNodeRange(preNode);
-		// }else{
-		// 	rangApi.setCollapsedRange(node.parentNode, 0);
-		// }
-		// nodeApi.removeNode(oneChildNodeRoot);//	删除独立的叶子节点
 	}else{
 		console.error('不知道的特殊情况');
 	}
-	console.log('range', rangApi.getRange());
 }
 
 export function deleteRange(startNode, startOffset, endNode, endOffset){

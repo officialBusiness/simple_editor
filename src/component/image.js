@@ -60,6 +60,7 @@ createComponent({
 				nodeName: 'div',
 				attributes: {
 					class: 'image_title',
+					container: 'true'
 				}
 			}, [nodeApi.createNode({
 				nodeType: Node.TEXT_NODE,

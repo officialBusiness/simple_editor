@@ -1,3 +1,4 @@
+import * as nodeApi from '../editor_node/node_api.js';
 
 export const range = {
 	center: 'center',
@@ -8,7 +9,12 @@ export const range = {
 }
 
 export function getRange(){
-	return document.getSelection().getRangeAt(0);
+	let selection = document.getSelection();
+	if( selection.type !== 'None' ){
+		return document.getSelection().getRangeAt(0);
+	}else{
+		return null;
+	}
 }
 
 export function setRange(startNode, startOffset, endNode, endOffset){
@@ -35,7 +41,7 @@ export function endNodeRange(node){
 	if(node.nodeType === Node.TEXT_NODE){
 		setCollapsedRange(node, node.length);
 	}else if(node.nodeType === Node.ELEMENT_NODE){
-		setCollapsedRange(node.parentNode, node.parentNode.childNodes.length);
+		setCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node) + 1);
 	}else{
 		console.error('没有处理的节点类型');
 	}

@@ -1,5 +1,5 @@
 
-export const nodeType = {
+export const nodeLabel = {
 	// 基础的节点类型
 
 
@@ -23,6 +23,18 @@ export function isContainer(dom){
 
 export function isNotContainer(dom){
 	return !dom.getAttribute('container');
+}
+
+export function isStartInContainer(node){
+	let parentNode = node.parentNode;
+	while( isNotContainer(parentNode) ){
+		if( parentNode.childNodes[0] !== node ){
+			return false;
+		}
+		node = parentNode;
+		parentNode = node.parentNode;
+	}
+	return true;
 }
 
 export function createTextNode(text){
