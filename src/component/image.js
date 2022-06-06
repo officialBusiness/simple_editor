@@ -33,6 +33,7 @@ createComponent({
 				nodeName: 'div',
 				attributes: {
 					class: 'image',
+					container: 'true'
 				}
 			}),
 			img = nodeApi.createNode({
@@ -63,7 +64,7 @@ createComponent({
 			}, [nodeApi.createNode({
 				nodeType: Node.TEXT_NODE,
 				nodeValue: json.title
-			})]));
+			})] ));
 		}
 		return node;
 	}

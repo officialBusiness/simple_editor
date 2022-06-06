@@ -838,7 +838,80 @@ export const original = {
 				{
 					type: 'mathjax',
 					data: 'a_i\\,(i = 0,1,...,t − 1),'
+				},
+				{
+					type: 'text',
+					data: ' a pair '
+				},
+				{
+					type: 'mathjax',
+					data: '(a_i,a_j)'
+				},
+				{
+					type: 'text',
+					data: ' is called an inversion if '
+				},
+				{
+					type: 'mathjax',
+					data: 'i < j'
+				},
+				{
+					type: 'text',
+					data: ' and '
+				},
+				{
+					type: 'mathjax',
+					data: ' a_i > a_j '
+				},
+				{
+					type: 'text',
+					data: ' . The inversion number '
+				},
+				{
+					type: 'mathjax',
+					data: 'INV(\\pi) = \\left \\vert{(a_i,a_j) | i < j\\ and\\ a_i > a_j}\\right \\vert'
+				},
+				{
+					type: 'text',
+					data: ' is a well known measure of the degree of sortedness of the sequence '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi'
+				},
+				{
+					type: 'text',
+					data: ' .'
 				}
+			]
+		},
+		{
+			type: 'paragraph',
+			data: [
+				{
+					type: 'text',
+					data: 'In a bilayer graph with northern layer permutation '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi_N = \\left \\langle n_0, n_1, . . . , n_{p−1} \\right \\rangle'
+				},
+				{
+					type: 'text',
+					data: ' and southern layer permutation '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi_S = \\left \\langle s_0, s_1, . . . , s_{q−1} \\right \\rangle'
+				},
+				{
+					type: 'text',
+					data: ' let '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi_E = \\left \\langle e_0, e_1, . . . , e_{r−1} \\right \\rangle'
+				},
 			]
 		}
 	]

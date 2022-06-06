@@ -45,7 +45,7 @@ export default function initEditorEvent(editorDom){
 	}
 	editorDom.onpaste = (e)=>{
 		// console.log('onpaste');
-		// e.preventDefault();
+		e.preventDefault();
 		// let clipboardData = e.clipboardData,
 		// 	index = 0,
 		// 	length = clipboardData.items.length,
@@ -71,7 +71,7 @@ export default function initEditorEvent(editorDom){
 	}
 	editorDom.oncopy = (e)=>{
 		// console.log('oncopy e:', e);
-		// e.preventDefault();
+		e.preventDefault();
 	}
 	editorDom.ondragstart = (e)=>{
 		e.preventDefault();

@@ -37,7 +37,8 @@ createComponent({
 						nodeName: 'img',
 						attributes: {
 							tex: tex,
-							src: "data:image/svg+xml;base64," + btoa( unescape(encodeURIComponent( new XMLSerializer().serializeToString( MathJax.tex2svg(tex).childNodes[0] ))) )
+							src: "data:image/svg+xml;base64," + btoa( unescape(encodeURIComponent( new XMLSerializer().serializeToString( MathJax.tex2svg(tex).childNodes[0] ))) ),
+							leaf: true
 						}
 					}));
 				});
@@ -49,7 +50,8 @@ createComponent({
 					attributes: {
 						class: 'mathjax',
 						tex: json.data,
-						src: "data:image/svg+xml;base64," + btoa( unescape(encodeURIComponent( new XMLSerializer().serializeToString( MathJax.tex2svg(json.data).childNodes[0] ))) )
+						src: "data:image/svg+xml;base64," + btoa( unescape(encodeURIComponent( new XMLSerializer().serializeToString( MathJax.tex2svg(json.data).childNodes[0] ))) ),
+						leaf: true
 					}
 				});
 			}

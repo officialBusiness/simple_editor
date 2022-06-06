@@ -1,20 +1,20 @@
 
 export const nodeType = {
 	// 基础的节点类型
-	// text: 'text',
-	// leafElement: 'leafElement',
-	// format: 'format',
 
-	// container: 'container',
-	// block: 'block',
-	// component: 'component',
 
-	leaf: 'leaf',
+	format: 'format',//	格式用于存放 text
+	leaf: 'leaf',	//	元素是叶子节点
 	
-	//容器的特点是允许 childNodes 空，空的情况下再删一次才能删除
+	//	容器用于存放元素,一般是 editor 下的第二级节点
+	//	允许 childNodes 空，空的情况下再删一次才能删除
 	container: 'container',
+	mergeText: 'merge-text',
+	mergeAll: 'merge-all',
+}
 
-	merge: 'merge',
+export function isLeaf(dom){
+	return !!dom.getAttribute('leaf');
 }
 
 export function isContainer(dom){
@@ -23,13 +23,6 @@ export function isContainer(dom){
 
 export function isNotContainer(dom){
 	return !dom.getAttribute('container');
-}
-
-export function findBlock(dom){
-	while(isNotBlock(dom)){
-		dom = dom.parentNode;
-	}
-	return dom;
 }
 
 export function createTextNode(text){
@@ -73,6 +66,55 @@ export function getNodeIndexOf(node){
 		if(node === childNodes[i]){
 			return i;
 		}
+	}
+}
+
+export function getPreNodeInContainer(node){
+	let hasPreNode = node;
+
+	while( !hasPreNode.previousSibling ){
+		hasPreNode = hasPreNode.parentNode;
+		if( isContainer(hasPreNode) ){
+			return null;
+		} 
+	}
+	return hasPreNode.previousSibling;
+}
+
+export function getNextNodeInContainer(node){
+	let hasNextNode = node;
+
+	while( !hasNextNode.nextSibling ){
+		hasNextNode = hasNextNode.parentNode;
+		if( isContainer(hasNextNode) ){
+			return null;
+		} 
+	}
+	return hasNextNode.nextSibling;
+}
+
+export function findContainer(node){
+	let root = node,
+			parentNode = node.parentNode;
+	while( isNotContainer(parentNode) ){
+		root = parentNode;
+		parentNode = root.parentNode;
+	}
+	return root;
+}
+
+export function findOneChildNodeRoot(node){
+	if( node ){
+		let root = node,
+				parentNode = node.parentNode;
+		while( parentNode.childNodes.length === 1
+				&& isNotContainer(parentNode) ){
+			root = parentNode;
+			parentNode = root.parentNode;
+		}
+		return root;
+	}else{
+		return null;
 	}
 }
 

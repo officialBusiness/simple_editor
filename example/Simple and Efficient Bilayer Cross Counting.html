@@ -18,7 +18,7 @@
 			#editor{
 				box-sizing: border-box;
 				margin: 0;
-				padding: 0 50px;
+				padding: 0 40px;
 				border: 0;
 				width: 50%;
 				height: 100%;
@@ -36,27 +36,7 @@
 		import Editor from '../src/editor.js';
 		import { original } from './Simple and Efficient Bilayer Cross Counting.js';
 
-		let editor = new Editor(document.getElementById('editor'), {
-			blocks: [
-				{
-					type: 'h1',
-					data: [
-						{
-							type: "text",
-							data: "A Simple "
-						},
-						{
-							type: 'mathjax',
-							data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert V_{small} \\right \\vert)"
-						},
-						{
-							type: "text",
-							data: " Algorithm "
-						}
-					]
-				}
-			]
-		})
+		let editor = new Editor(document.getElementById('editor'), original )
 			.setEditable(true);
 
 		window.original = original;
