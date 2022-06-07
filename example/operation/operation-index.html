@@ -15,6 +15,10 @@
 				display: flex;
 				flex-direction: column;
 			}
+			textarea {
+				display: block;
+				outline: none;
+			}
 			#editor{
 				box-sizing: border-box;
 				margin: 0;
@@ -35,14 +39,69 @@
 				padding: 0 10px;
 				cursor: pointer;
 			}
+			#mathjaxContainer{
+				display: none;
+				justify-content: center;
+				align-items: center;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+			#mathjaxContainer > .mathjax{
+				width: 400px;
+				height: 300px;
+				background-color: #ffffff;
+			}
+			#mathjaxContainer > .mathjax{
+				display: flex;
+				flex-direction: column;
+			}
+			#mathjaxContainer > .mathjax > .img{
+				padding: 10px 20px;
+				width: 100%;
+			}
+			#mathjaxContainer > .mathjax > #mathjaxTex{
+				box-sizing: border-box;
+				padding: 0.1rem;
+				width: 100%;
+				height: 60px;
+				resize: none;
+				border-width: 0.02rem;
+				border-style: dashed;
+				border-color: #434343;
+				border-radius: 0.04rem;
+			}
+			#mathjaxContainer > .mathjax > .button{
+				display: flex;
+				justify-content: space-around;
+			}
+			#mathjaxContainer > .mathjax > .button > div{
+				padding: 10px;
+				cursor: pointer;
+			}
+
 		</style>
 		<script type="text/javascript" src="../../src/plugin/tex-svg.js"></script>
 		<link rel="stylesheet" type="text/css" href="../../src/editor.css" />
 	</head>
 	<body>
 		<div class="editor_tool">
-			<div id="showMathjax" class="button">mathjax</div>
+			<div id="mathjaxButton" class="button">mathjax</div>
 		</div>
+		<div id="mathjaxContainer">
+			<div class="mathjax">
+				<div class="img">
+					<img id="mathjaxImg">
+				</div>
+				<textarea id="mathjaxTex"></textarea>
+				<div class="button">
+					<div id="comfirm">确定</div>
+					<div id="cancel">取消</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="editor"></div>
 	</body>
 	<script type="module">
@@ -54,11 +113,45 @@
 			editable: true,
 		})
 
+		function initMathjax(){
+			
+			let
+				mathjaxButton = document.getElementById('mathjaxButton'),
+				mathjaxContainer = document.getElementById('mathjaxContainer'),
+				mathjaxImg = document.getElementById('mathjaxImg'),
+				mathjaxTex = document.getElementById('mathjaxTex'),
+				comfirm = document.getElementById('comfirm'),
+				cancel = document.getElementById('cancel')
+
+
+			mathjaxButton.onmousedown = showMathjax;
+
+			mathjaxTex.oninput = function(){
+				mathjaxImg.src = getBase64(mathjaxTex.value)
+			}
+			cancel.onmousedown = hiddenMathjax
+			comfirm.onmousedown = function(){
+				hiddenMathjax();
+				editor.insertMathjax(mathjaxTex.value);
+			}
+
+			function showMathjax(){
+				mathjaxContainer.style.display = 'flex';
+			}
+			function hiddenMathjax(){
+				mathjaxContainer.style.display = 'none';
+			}
+			function getBase64(tex){
+				try{
+					var svgData = new XMLSerializer().serializeToString( MathJax.tex2svg(tex).childNodes[0] );
+					return "data:image/svg+xml;base64," + btoa( unescape(encodeURIComponent(svgData)) );
+				}catch(e){
+					return new Error(e)
+				}
+			}
+		}
 		window.editor = editor;
 
-		// document.getElementById('showMathjax').addEventListener('mousedown', showMathjax);
-		// function showMathjax(){
-		// 	console.log('mathjax')
-		// }
+		initMathjax();
 	</script>
 </html>

@@ -4,6 +4,7 @@ import * as nodeApi from '../editor_node/node_api.js';
 
 createComponent({
 	name: 'mathjax',
+	
 	toJson(dom){
 		if(dom.childNodes.length){
 			let json = {

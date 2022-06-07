@@ -1032,6 +1032,183 @@ export const original = {
 					data: ' .'
 				}
 			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "It is well known that the number of inversions of an r-element sequence "
+				},
+				{
+					type: "mathjax",
+					data: "\\pi"
+				},
+				{
+					type: "text",
+					data: " can be determined in "
+				},
+				{
+					type: "mathjax",
+					data: "O(r \\log r)"
+				},
+				{
+					type: "text",
+					data: " time and "
+				},
+				{
+					type: "mathjax",
+					data: "O(r)"
+				},
+				{
+					type: "text",
+					data: " space, e.g., Cormen, Leiserson, and Rivest [3] suggest an obvious modification of the merge sort algorithm in exercise 1-3d. Since the lexicographical ordering that leads to "
+				},
+				{
+					type: "mathjax",
+					data: "\\pi"
+				},
+				{
+					type: "text",
+					data: " can be computed in "
+				},
+				{
+					type: "mathjax",
+					data: "O(\\left \\vert E \\right \\vert)"
+				},
+				{
+					type: "text",
+					data: " time and space, this implies immediately the existence of an "
+				},
+				{
+					type: "mathjax",
+					data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert V \\right \\vert)"
+				},
+				{
+					type: "text",
+					data: " time and "
+				},
+				{
+					type: "mathjax",
+					data: "O(\\left \\vert E \\right \\vert)"
+				},
+				{
+					type: "text",
+					data: " space algorithm for bilayer cross counting. More precisely, the (modified) merge sorting algorithm requires "
+				},
+				{
+					type: "mathjax",
+					data: "O(r \\log RUN (\\pi))"
+				},
+				{
+					type: "text",
+					data: " time and "
+				},
+				{
+					type: "mathjax",
+					data: "O(r)"
+				},
+				{
+					type: "text",
+					data: " space, where "
+				},
+				{
+					type: "mathjax",
+					data: "RUN (\\pi)"
+				},
+				{
+					type: "text",
+					data: " is the number of runs, i.e., the number of sorted subsequences in "
+				},
+				{
+					type: "mathjax",
+					data: "\\pi"
+				},
+				{
+					type: "text",
+					data: " . This appears attractive when "
+				},
+				{
+					type: "mathjax",
+					data: "RUN(\\pi)"
+				},
+				{
+					type: "text",
+					data: " is expected to be small. We will test this empirically in Section 4. The number of inversions of a sequence "
+				},
+				{
+					type: "mathjax",
+					data: "\\pi"
+				},
+				{
+					type: "text",
+					data: " can also be determined with the insertion sort algorithm with "
+				},
+				{
+					type: "mathjax",
+					data: "O(r + INV (\\pi))"
+				},
+				{
+					type: "text",
+					data: " time and "
+				},
+				{
+					type: "mathjax",
+					data: "O(r)"
+				},
+				{
+					type: "text",
+					data: " space consumption, and this immediately gives an "
+				},
+				{
+					type: "mathjax",
+					data: "O(\\left \\vert E \\right \\vert + \\left \\vert C \\right \\vert)"
+				},
+				{
+					type: "text",
+					data: " time and "
+				},
+				{
+					type: "mathjax",
+					data: "O(\\left \\vert E \\right \\vert)"
+				},
+				{
+					type: "text",
+					data: " space algorithm for bilayer cross counting. We will work out this idea in detail in the following section, and develop another algorithm with "
+				},
+				{
+					type: "mathjax",
+					data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert V_{small} \\right \\vert) "
+				},
+				{
+					type: "text",
+					data: " running time. An algorithm for counting the inversions of an r-element sequence "
+				},
+				{
+					type: "mathjax",
+					data: "\\pi"
+				},
+				{
+					type: "text",
+					data: " with elements in "
+				},
+				{
+					type: "mathjax",
+					data: "\\{0, 1, . . . , q − 1\\}, q \\le r,"
+				},
+				{
+					type: "text",
+					data: " with running time better than "
+				},
+				{
+					type: "mathjax",
+					data: "O(r \\log r)"
+				},
+				{
+					type: "text",
+					data: " would immediately improve the bilayer cross counting approaches based on counting inversions. We do not know if such an algorithm exists. We shall discuss this issue in Section 6."
+				}
+			]
 		}
 	]
 }
