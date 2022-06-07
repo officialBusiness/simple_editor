@@ -12,15 +12,16 @@ export function initEmptyDom(dom){
 	return new Editor(dom);
 }
 
-export default function Editor(editorDom, json){
-	editorDom.style['white-space'] = 'pre-wrap';
-	this.editorDom = editorDom;
+export default function Editor(options){
+	this.editorDom = options.container;
+	this.editorDom.style['white-space'] = 'pre-wrap';
+	this.editorDom.contentEditable = options.editable;
 	initEditorEvent.call(this, this.editorDom);
 
-	if(!json){
-		this.addComponent('paragraph');
+	if(options.json){
+		this.render(options.json);
 	}else{
-		this.render(json);
+		this.addComponent('paragraph');
 	}
 	return this;
 }

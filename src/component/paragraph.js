@@ -10,10 +10,12 @@ createComponent({
 			nodeName: 'p',
 			attributes: {
 				class: 'paragraph',
+				container: 'true',
+				block: 'true'
 			}
 		});
 		container.appendChild(node);
-		rangApi.setCollapsedRange(node, 0);
+		rangApi.setNewCollapsedRange(node, 0);
 		return node;
 	},
 	toJson(dom){
@@ -42,7 +44,8 @@ createComponent({
 			nodeName: 'p',
 			attributes: {
 				class: 'paragraph',
-				container: 'true'
+				container: 'true',
+				block: 'true'
 			}
 		});
 		json.data.forEach((child)=>{

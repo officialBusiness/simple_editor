@@ -912,6 +912,125 @@ export const original = {
 					type: 'mathjax',
 					data: '\\pi_E = \\left \\langle e_0, e_1, . . . , e_{r−1} \\right \\rangle'
 				},
+				{
+					type: 'text',
+					data: ' be sorted lexicographically such that '
+				},
+				{
+					type: 'mathjax',
+					data: [
+						'e_k = (n_{i_k} , s_{j_k} ) < ',
+						'(n_{i_l} , s_{j_l} ) = e_l'
+					]
+				},
+				{
+					type: 'text',
+					data: ' in '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi_E'
+				},
+				{
+					type: 'text',
+					data: ' if '
+				},
+				{
+					type: 'mathjax',
+					data: 'i_k <i_l'
+				},
+				{
+					type: 'text',
+					data: ' or '
+				},
+				{
+					type: 'mathjax',
+					data: 'i_k =i_l'
+				},
+				{
+					type: 'text',
+					data: ' and '
+				},
+				{
+					type: 'mathjax',
+					data: 'j_k <j_l'
+				},
+				{
+					type: 'text',
+					data: ' . In Fig.1, the edges are sorted like this. Let '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi = \\left \\langle j_0, j_1, . . . , j_{r−1} \\right \\rangle'
+				},
+				{
+					type: 'text',
+					data: ' be the sequence of the positions of the southern end nodes in '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi_E'
+				},
+				{
+					type: 'text',
+					data: ' . In our example, we have '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi = \\left \\langle 0,1,2,0,3,4,0,2,3,2,4 \\right \\rangle'
+				},
+				{
+					type: 'text',
+					data: ' . Each inversion in '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi'
+				},
+				{
+					type: 'text',
+					data: ' is in a 1-1 correspondence to a pairwise edge crossing in a bilayer graph drawing '
+				},
+				{
+					type: 'mathjax',
+					data: 'BLD(G)'
+				},
+				{
+					type: 'text',
+					data: ' according to '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi_N'
+				},
+				{
+					type: 'text',
+					data: ' and '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi_S'
+				},
+				{
+					type: 'text',
+					data: ' . Therefore, '
+				},
+				{
+					type: 'mathjax',
+					data: 'BCC(\\pi_N,\\pi_S)'
+				},
+				{
+					type: 'text',
+					data: ' is equal to the number of inversions in '
+				},
+				{
+					type: 'mathjax',
+					data: '\\pi'
+				},
+				{
+					type: 'text',
+					data: ' .'
+				}
 			]
 		}
 	]

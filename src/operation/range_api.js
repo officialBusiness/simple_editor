@@ -18,6 +18,18 @@ export function getRange(){
 }
 
 export function setRange(startNode, startOffset, endNode, endOffset){
+	let range = document.getSelection().getRangeAt(0);
+	range.setStart(startNode, startOffset);
+	range.setEnd(endNode, endOffset);
+}
+
+export function setCollapsedRange(node, offset){
+	let range = document.getSelection().getRangeAt(0);
+	range.setStart(node, offset);
+	range.setEnd(node, offset);
+}
+
+export function setNewRange(startNode, startOffset, endNode, endOffset){
 	let 
 			selection = document.getSelection(),
 			range = document.createRange();
@@ -27,11 +39,16 @@ export function setRange(startNode, startOffset, endNode, endOffset){
 	selection.addRange(range);
 }
 
-export function setCollapsedRange(node, offset){
-	let range = document.getSelection().getRangeAt(0);
+export function setNewCollapsedRange(node, offset){
+		let 
+			selection = document.getSelection(),
+			range = document.createRange();
 	range.setStart(node, offset);
 	range.setEnd(node, offset);
+	selection.removeAllRanges(range);
+	selection.addRange(range);
 }
+
 // 选择一个节点的最末端
 export function endNodeRange(node){
 	while( node.childNodes.length > 0 ){

@@ -77,7 +77,7 @@ export function deleteOne(node, offset){
 					console.log('跳到前一个节点末端');
 					rangApi.endNodeRange(preNodeInContainer);
 				}else{
-					console.log('光标进一');
+					console.log('光标到 container 头部');
 					rangApi.setCollapsedRange(node, 0);
 				}
 			}else{

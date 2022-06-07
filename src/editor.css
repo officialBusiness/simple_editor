@@ -24,6 +24,14 @@ img.mathjax{
 	vertical-align: middle;
 }
 
+span.mathjax{
+
+}
+
+span.mathjax > img{
+	
+}
+
 .image{
 	padding: 0 0 10px 0;
 	width: 100%;
@@ -33,6 +41,7 @@ img.mathjax{
 }
 .image > .image_title{
 	text-align: center;
+	padding: 10px 0 0 0;
 	width: 100%;
   line-height: 24px;
   min-height: 24px;

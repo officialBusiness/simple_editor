@@ -20,7 +20,7 @@
 				margin: 0;
 				padding: 0 40px;
 				border: 0;
-				width: 50%;
+				width: 100%;
 				height: 100%;
 				overflow: auto;
 				outline: none;
@@ -36,8 +36,11 @@
 		import Editor from '../src/editor.js';
 		import { original } from './Simple and Efficient Bilayer Cross Counting.js';
 
-		let editor = new Editor(document.getElementById('editor'), original )
-			.setEditable(true);
+		let editor = new Editor({
+			container: document.getElementById('editor'),
+			json: original,
+			editable: true,
+		});
 
 		window.original = original;
 		window.editor = editor;

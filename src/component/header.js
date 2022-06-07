@@ -38,6 +38,7 @@ createComponent({
 			nodeName: json.type,
 			attributes: {
 				class: 'header',
+				block: 'true',
 				container: 'true'
 			}
 		});
