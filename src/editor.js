@@ -7,6 +7,7 @@ import './component/mathjax.js';
 import './component/header.js';
 import './component/image.js';
 import './component/format.js';
+import './component/list.js';
 
 export function initEmptyDom(dom){
 	return new Editor(dom);
@@ -42,9 +43,10 @@ Editor.prototype.render = function(json){
 	let blocks = json.blocks;
 	blocks.forEach((block)=>{
 		if( getComponent(block.type) ){
-			this.editorDom.appendChild(
-				getComponent(block.type).toDom(block)
-			);
+			let dom = getComponent(block.type).toDom(block);
+			if( dom ){
+				this.editorDom.appendChild(dom);
+			}
 		}
 	});
 	return this;
@@ -68,7 +70,7 @@ Editor.prototype.setEditable = function(editable){
 	this.editorDom.contentEditable = editable;
 	return this;
 }
-
+// 暂时如此，只实现部分情况的插入，需要修改
 Editor.prototype.insertMathjax = function(tex){
 	let
 		range = this.getRange(),

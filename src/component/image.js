@@ -55,17 +55,22 @@ createComponent({
 		}
 
 		if( json.title ){
-			node.appendChild(nodeApi.createNode({
-				nodeType: Node.ELEMENT_NODE,
-				nodeName: 'div',
-				attributes: {
-					class: 'image_title',
-					container: 'true'
-				}
-			}, [nodeApi.createNode({
-				nodeType: Node.TEXT_NODE,
-				nodeValue: json.title
-			})] ));
+			let title = nodeApi.createNode({
+						nodeType: Node.ELEMENT_NODE,
+						nodeName: 'div',
+						attributes: {
+							class: 'image_title',
+							// container: 'true'
+							contenteditable: false
+						}
+					}),
+					text = nodeApi.createNode({
+						nodeType: Node.TEXT_NODE,
+						nodeValue: json.title
+					});
+
+			node.appendChild(title);
+			title.appendChild(text);
 		}
 		return node;
 	}
