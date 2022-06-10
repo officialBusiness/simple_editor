@@ -41,6 +41,7 @@ span.mathjax > img{
 }
 .image > img{
 	width: 100%;
+	cursor: pointer;
 }
 .image > .image_title{
 	text-align: center;
@@ -63,6 +64,7 @@ span.mathjax > img{
 .list > .li > .label{
 	padding: 0 10px 0 0;
 	user-select: none;
+	white-space: nowrap;
 }
 
 .list > .li > .container{
@@ -70,6 +72,36 @@ span.mathjax > img{
   line-height: 24px;
   min-height: 24px;
   font-size: 16px;
+}
+
+.code{
+	width: 100%;
+}
+
+.code > .code_container{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.code > .code_container > code{
+	position: relative;
+	display: block;
+	line-height: 20px;
+	text-align: left;
+	padding: 10px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: black;
+	border-radius: 4px;
+}
+.code > .code_title{
+	text-align: center;
+	padding: 10px 0 0 0;
+	width: 100%;
+  line-height: 24px;
+  min-height: 24px;
+  font-size: 16px;
+	user-select: none;
 }
 
 .link{

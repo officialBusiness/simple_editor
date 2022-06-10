@@ -76,15 +76,30 @@ export function deleteOne(node, offset){
 				if( preNodeInContainer ){
 					console.log('跳到前一个节点末端');
 					rangApi.endNodeRange(preNodeInContainer);
+					nodeApi.removeNode(oneChildNodeRoot);//	正常删除独立的叶子节点
+					if( preNodeInContainer.nextSibling &&
+						preNodeInContainer.nodeType === Node.TEXT_NODE && 
+						preNodeInContainer.nextSibling.nodeType === Node.TEXT_NODE ){
+						console.log('前后节点都是 text');
+						parentNode.normalize();
+					}
 				}else{
 					console.log('光标到 container 头部');
 					rangApi.setCollapsedRange(node, 0);
+					nodeApi.removeNode(oneChildNodeRoot);//	正常删除独立的叶子节点
 				}
 			}else{
 				console.log('光标进入前一个元素的末端:', node.childNodes[offset - 2]);
 				rangApi.endNodeRange(node.childNodes[offset - 2]);
+				nodeApi.removeNode(oneChildNodeRoot);//	正常删除独立的叶子节点
+				if( preNode ){
+					if(preNode.nodeType === Node.TEXT_NODE && 
+							nextNode && nextNode.nodeType === Node.TEXT_NODE){
+						console.log('前后节点都是 text');
+						parentNode.normalize();
+					}
+				}
 			}
-			nodeApi.removeNode(oneChildNodeRoot);//	正常删除独立的叶子节点
 		}else if( offset === 1 && node.childNodes.length === 1 ){//	删空元素
 			console.log('删空元素', oneChildNodeRoot);
 			if( preNode ){

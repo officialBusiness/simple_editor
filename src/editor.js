@@ -8,6 +8,7 @@ import './component/header.js';
 import './component/image.js';
 import './component/format.js';
 import './component/list.js';
+import './component/code.js';
 
 export function initEmptyDom(dom){
 	return new Editor(dom);
@@ -19,11 +20,13 @@ export default function Editor(options){
 	this.editorDom.contentEditable = options.editable;
 	this.editorDom.onblur = ()=>{
 		let range = rangApi.getRange();
-		this.range.collapsed = range.collapsed;
-		this.range.startContainer = range.startContainer;
-		this.range.startOffset = range.startOffset;
-		this.range.endContainer = range.endContainer;
-		this.range.endOffset = range.endOffset;
+		if( range ){
+			this.range.collapsed = range.collapsed;
+			this.range.startContainer = range.startContainer;
+			this.range.startOffset = range.startOffset;
+			this.range.endContainer = range.endContainer;
+			this.range.endOffset = range.endOffset;
+		}
 	}
 
 	this.range = {};
