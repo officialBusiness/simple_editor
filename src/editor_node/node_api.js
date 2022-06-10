@@ -83,7 +83,10 @@ export function getNodeIndexOf(node){
 
 export function getPreNodeInContainer(node){
 	let hasPreNode = node;
-
+	
+	if( isContainer(hasPreNode) ){
+		return null;
+	}
 	while( !hasPreNode.previousSibling ){
 		hasPreNode = hasPreNode.parentNode;
 		if( isContainer(hasPreNode) ){
@@ -96,6 +99,9 @@ export function getPreNodeInContainer(node){
 export function getNextNodeInContainer(node){
 	let hasNextNode = node;
 
+	if( isContainer(hasNextNode) ){
+		return null;
+	}
 	while( !hasNextNode.nextSibling ){
 		hasNextNode = hasNextNode.parentNode;
 		if( isContainer(hasNextNode) ){

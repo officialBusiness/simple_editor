@@ -55,7 +55,7 @@ export function deleteOne(node, offset){
 		}else if( offset === 0 ){//	在 text 头部
 			console.log('在 text 头部, text 存在字符');
 			if( nodeApi.isStartInContainer(oneChildNodeRoot) ){
-				console.log('触发 container 合并');
+				console.log('根据 container 所在的组件, 触发对应的 backspaceOnStart 事件');
 			}else{
 				console.error('不知道的特殊情况,按照常理,应该是 container 内的第一个独立节点')
 			}
@@ -133,7 +133,7 @@ export function deleteOne(node, offset){
 				console.log('元素是 container');
 			}else{
 				if( nodeApi.isStartInContainer(oneChildNodeRoot) ){
-					console.log('触发 container 合并');
+				console.log('根据 container 所在的组件, 触发对应的 backspaceOnStart 事件');
 				}else{
 					console.error('不知道的特殊情况,按照常理,应该是 container 内的第一个独立节点');
 				}

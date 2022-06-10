@@ -1,0 +1,79 @@
+body{
+	display: flex;
+	flex-direction: column;
+}
+#operation-index{
+	margin: auto;
+	max-width: 900px;
+	width: 100%;
+	min-width: 350px;
+	flex: 1;
+}
+#editor{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0 50px;
+	border: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	outline: none;
+}
+.editor_tool{
+	display: flex;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+}
+.editor_tool > .button{
+	padding: 0 10px;
+	cursor: pointer;
+}
+#mathjaxContainer{
+	display: none;
+	/*display: flex;*/
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+#mathjaxContainer > .mathjax{
+	display: flex;
+	flex-direction: column;
+	border-radius: 6px;
+	padding: 0 20px;
+	width: 400px;
+	background-color: #ffffff;
+}
+#mathjaxContainer > .mathjax > .img{
+	padding: 10px;
+	width: 100%;
+}
+
+#mathjaxContainer > .mathjax > #mathjaxTexContainer{
+	padding: 0;
+}
+#mathjaxContainer > .mathjax > #mathjaxTexContainer > #mathjaxTex{
+	padding: 10px;
+	box-sizing: border-box;
+	width: 100%;
+	height: 80px;
+	line-height: 30px;
+	resize: none;
+	border-width: 2px;
+	border-style: dashed;
+	border-color: #434343;
+	border-radius: 4px;
+	outline: none;
+}
+#mathjaxContainer > .mathjax > .button{
+	padding: 20px 0 0 0;
+	display: flex;
+	justify-content: space-around;
+}
+#mathjaxContainer > .mathjax > .button > div{
+	padding: 10px;
+	cursor: pointer;
+}
