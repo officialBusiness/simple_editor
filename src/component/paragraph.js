@@ -10,8 +10,8 @@ createComponent({
 			nodeName: 'p',
 			attributes: {
 				class: 'paragraph',
-				container: 'true',
-				block: 'true'
+				block: 'true',
+				container: 'true'
 			}
 		});
 		container.appendChild(node);

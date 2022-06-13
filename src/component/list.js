@@ -57,7 +57,7 @@ createComponent({
 								nodeName: 'div',
 								attributes: {
 									class: 'label',
-									contenteditable: false
+									contenteditable: 'false'
 								}
 							}),
 					container = nodeApi.createNode({
@@ -65,7 +65,7 @@ createComponent({
 								nodeName: 'div',
 								attributes: {
 									class: 'container',
-									container: true
+									container: 'true'
 								}
 							});
 			label.innerText = getLabel(index); 

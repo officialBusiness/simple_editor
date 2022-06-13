@@ -11,6 +11,7 @@ export const nodeLabel = {
 	container: 'container',
 	mergeText: 'merge-text',
 	mergeAll: 'merge-all',
+	block: 'block',
 }
 
 export function isLeaf(dom){
@@ -23,6 +24,14 @@ export function isContainer(dom){
 
 export function isNotContainer(dom){
 	return !dom.getAttribute('container');
+}
+
+export function isBlock(){
+	return !!dom.getAttribute('block');
+}
+
+export function isNotBlock(){
+	return !dom.getAttribute('block');
 }
 
 export function isStartInContainer(node){
@@ -51,15 +60,15 @@ export function createElement(nodeName, attributes){
   return element;
 }
 
-export function createNode(node, children){
+export function createNode(node){
 	switch(node.nodeType){
 		case Node.ELEMENT_NODE:
 			let dom = createElement(node.nodeName, node.attributes);
-			if(children){
-				children.forEach((child)=>{
-					dom.appendChild(child);
-				});
-			}
+			// if(children){
+			// 	children.forEach((child)=>{
+			// 		dom.appendChild(child);
+			// 	});
+			// }
 			return dom;
 		case Node.TEXT_NODE:
 			return createTextNode(node.nodeValue);
@@ -83,7 +92,7 @@ export function getNodeIndexOf(node){
 
 export function getPreNodeInContainer(node){
 	let hasPreNode = node;
-	
+
 	if( isContainer(hasPreNode) ){
 		return null;
 	}
@@ -111,17 +120,8 @@ export function getNextNodeInContainer(node){
 	return hasNextNode.nextSibling;
 }
 
-export function findContainer(node){
-	let root = node,
-			parentNode = node.parentNode;
-	while( isNotContainer(parentNode) ){
-		root = parentNode;
-		parentNode = root.parentNode;
-	}
-	return root;
-}
 
-export function findOneChildNodeRoot(node){
+export function getSingleNodeInContainer(node){
 	if( node ){
 		let root = node,
 				parentNode = node.parentNode;
@@ -134,5 +134,26 @@ export function findOneChildNodeRoot(node){
 	}else{
 		return null;
 	}
+}
+
+export function getContainer(node){
+	let root = node,
+			parentNode = node.parentNode;
+	while( isNotContainer(parentNode) ){
+		root = parentNode;
+		parentNode = root.parentNode;
+	}
+	return root;
+}
+
+
+export function getBlock(node){
+	let root = node,
+			parentNode = node.parentNode;
+	while( isNotContainer(parentNode) ){
+		root = parentNode;
+		parentNode = root.parentNode;
+	}
+	return root;
 }
 

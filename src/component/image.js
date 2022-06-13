@@ -33,6 +33,7 @@ createComponent({
 				nodeName: 'div',
 				attributes: {
 					class: 'image',
+					block: 'true',
 					container: 'true'
 				}
 			}),

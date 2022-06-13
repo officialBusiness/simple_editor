@@ -10,7 +10,7 @@ createComponent({
 
 	},
 	toDom(json){
-		console.log('json:', json);
+		// console.log('json:', json);
 		let node = nodeApi.createNode({
 					nodeType: Node.ELEMENT_NODE,
 					nodeName: 'div',

@@ -84,8 +84,8 @@ Editor.prototype.insertMathjax = function(tex){
 		return ;
 	}
 	if( node.nodeType === Node.TEXT_NODE ){
-		let oneChildNodeRoot = nodeApi.findOneChildNodeRoot(node);
-		node = oneChildNodeRoot.parentNode;
+		let singleNode = nodeApi.getSingleNodeInContainer(node);
+		node = singleNode.parentNode;
 		offset = nodeApi.getNodeIndexOf(node);
 	}
 	let 
