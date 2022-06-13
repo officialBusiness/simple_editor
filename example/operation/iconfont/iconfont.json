@@ -1,0 +1,16 @@
+{
+  "id": "3460624",
+  "name": "simple_editor",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "https://github.com/officialBusiness/simple_editor",
+  "glyphs": [
+    {
+      "icon_id": "5673786",
+      "name": "公式_计算",
+      "font_class": "fsux_tubiao_gongshi_jisuan",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import * as nodeApi from '../editor_node/node_api.js';
+import * as nodeApi from '../../editor_node/node_api.js';
 
 export const range = {
 	center: 'center',

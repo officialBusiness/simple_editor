@@ -1,8 +1,8 @@
 
-import * as rangApi from '../operation/range_api.js';
 import * as nodeApi from '../editor_node/node_api.js';
-import { deleteOne, deleteRange } from '../operation/delete.js';
-import { pasteOne, pasteRange } from '../operation/paste.js';
+import * as rangApi from './operation/range_api.js';
+import { deleteOne, deleteRange } from './operation/delete.js';
+import { pasteOne, pasteRange } from './operation/paste.js';
 import { editorEvent } from './init_event.js';
 
 export default function trigger(eventType, message){

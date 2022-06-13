@@ -3,6 +3,7 @@ body{
 	flex-direction: column;
 }
 #operation-index{
+	padding: 10px 0 0 0;
 	margin: auto;
 	max-width: 900px;
 	width: 100%;
@@ -20,10 +21,15 @@ body{
 	outline: none;
 }
 .editor_tool{
+	box-sizing: border-box;
+	margin: auto;
 	display: flex;
+	max-width: 900px;
 	width: 100%;
-	height: 50px;
-	line-height: 50px;
+	min-width: 350px;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #F5F5F5;;
 }
 .editor_tool > .button{
 	padding: 0 10px;

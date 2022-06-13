@@ -77,6 +77,15 @@ export function createNode(node){
 	}
 }
 
+export function insertAfter(newNode, lastNode){
+	let parentNode = lastNode.parentNode;
+	if( lastNode.nextSibling ){
+		parentNode.insertBefore(newNode, lastNode.nextSibling);
+	}else{
+		parentNode.appendChild(newNode);
+	}
+}
+
 export function removeNode(node){
 	node.parentNode.removeChild(node);
 }

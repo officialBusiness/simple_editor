@@ -1,5 +1,5 @@
-import * as rangApi from '../operation/range_api.js';
-import * as nodeApi from '../editor_node/node_api.js';
+import * as rangApi from './range_api.js';
+import * as nodeApi from '../../editor_node/node_api.js';
 
 export function deleteOne(node, offset){
 	console.log('node:', node, 'offset:', offset);
