@@ -1,6 +1,7 @@
 import createComponent, { getComponent } from '../editor_node/component.js';
 import * as rangApi from '../event/operation/range_api.js';
 import * as nodeApi from '../editor_node/node_api.js';
+import { customEvents } from '../event/init_event.js';
 
 createComponent({
 	name: 'paragraph',
@@ -47,6 +48,10 @@ createComponent({
 				container: 'true',
 				block: 'true'
 			}
+		});
+
+		node.addEventListener('backspaceOnStart', function(e){
+			console.log('backspaceOnStart:', e);
 		});
 		json.data.forEach((child)=>{
 			switch(child.type){

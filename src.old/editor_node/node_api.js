@@ -19,11 +19,11 @@ export function isLeaf(dom){
 }
 
 export function isContainer(dom){
-	return !!dom.getAttribute('container');
+	return dom.getAttribute && !!dom.getAttribute('container');
 }
 
 export function isNotContainer(dom){
-	return !dom.getAttribute('container');
+	return !dom.getAttribute || !dom.getAttribute('container');
 }
 
 export function isBlock(){
@@ -148,7 +148,7 @@ export function getSingleNodeInContainer(node){
 export function getContainer(node){
 	let root = node,
 			parentNode = node.parentNode;
-	while( isNotContainer(parentNode) ){
+	while( isNotContainer(root) ){
 		root = parentNode;
 		parentNode = root.parentNode;
 	}

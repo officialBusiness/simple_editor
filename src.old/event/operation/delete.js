@@ -1,5 +1,7 @@
 import * as rangApi from './range_api.js';
 import * as nodeApi from '../../editor_node/node_api.js';
+import { customEvents } from '../init_event.js';
+
 
 export function deleteOne(node, offset){
 	console.log('node:', node, 'offset:', offset);
@@ -56,6 +58,8 @@ export function deleteOne(node, offset){
 			console.log('在 text 头部, text 存在字符');
 			if( nodeApi.isStartInContainer(singleNode) ){
 				console.log('根据 container 所在的组件, 触发对应的 backspaceOnStart 事件');
+				let container = nodeApi.getContainer(node);
+				container.dispatchEvent(customEvents.backspaceOnStart);
 			}else{
 				console.error('不知道的特殊情况,按照常理,应该是 container 内的第一个独立节点')
 			}
@@ -131,9 +135,12 @@ export function deleteOne(node, offset){
 			console.log('在元素头部');
 			if( nodeApi.isContainer(node) ){
 				console.log('元素是 container');
+				node.dispatchEvent(customEvents.backspaceOnStart);
 			}else{
 				if( nodeApi.isStartInContainer(singleNode) ){
-				console.log('根据 container 所在的组件, 触发对应的 backspaceOnStart 事件');
+					console.log('根据 container 所在的组件, 触发对应的 backspaceOnStart 事件');
+					let container = nodeApi.getContainer(node);
+					container.dispatchEvent(customEvents.backspaceOnStart);
 				}else{
 					console.error('不知道的特殊情况,按照常理,应该是 container 内的第一个独立节点');
 				}

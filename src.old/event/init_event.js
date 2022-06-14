@@ -1,5 +1,9 @@
 import trigger from './trigger.js';
 
+export const customEvents = {
+	backspaceOnStart: new Event('backspaceOnStart'),
+}
+
 export const editorEvent = {
 	enter: 'enter',
 	backspace: 'backspace',
@@ -35,6 +39,7 @@ const
 
 
 export default function initEditorEvent(editorDom){
+
 	editorDom.onkeydown = (e)=>{
 		let eventType = handleKeyCode[e.keyCode]
 		if( eventType ){

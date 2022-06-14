@@ -61,8 +61,18 @@ export function createElement(nodeName, attributes, on){
   return element;
 }
 
-export function createDomTree(tree){
-	
+export function linkDomTree(tree){
+	let parent = tree,
+			nodes = [parent],
+			children;
+  while (parent = nodes.pop()) {
+    if (children = parent.children) {
+      for (let i = 0, len = children.length; i < len; i++) {
+      	parent.node.appendChild(children[i].node);
+        nodes.push(children[i]);
+      }
+    }
+  }
 	return tree.node;
 }
 
@@ -145,7 +155,7 @@ export function getSingleNodeInContainer(node){
 export function getContainer(node){
 	let root = node,
 			parentNode = node.parentNode;
-	while( isNotContainer(parentNode) ){
+	while( isNotContainer(root) ){
 		root = parentNode;
 		parentNode = root.parentNode;
 	}

@@ -1,14 +1,13 @@
 import * as rangApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
+import * as componentApi from './base_api/component.js';
 
-import { createComponent, getComponent } from './component/component.js';
 
-
-export default function Editor(dom){
+export default function Editor(dom, json){
 	this.editorDom = dom;
 	this.editorDom.style['white-space'] = 'pre-wrap';
+	this.editorDom.contentEditable = this.editable = true;
 
-	// this.editable;
 	this.editorDom.onblur = ()=>{
 		let range = rangApi.getRange();
 		if( this.editable && range ){
@@ -20,16 +19,37 @@ export default function Editor(dom){
 		}
 	}
 	this.range = {};
+
+	if(json){
+		this.render(json);
+	}else{
+		this.addBlock('paragraph');
+	}
+
 }
 
 Editor.prototype.rangApi = rangApi;
 Editor.prototype.nodeApi = nodeApi;
+Editor.prototype.componentApi = componentApi;
 
 // Editor.prototype.rangApi = rangApi;
 // Editor.prototype.nodeApi = nodeApi;
 
+
+Editor.prototype.render = function(obj){
+	// this.nodeApi.
+	return this;
+}
+
+Editor.prototype.addBlock = function(name){
+	let blockDom = this.componentApi.componentDom(name);
+	this.editorDom.appendChild(blockDom);
+	return this;
+}
+
 Editor.prototype.insertElement = function(node, start, offset){
 
+	return this;
 }
 
 Editor.prototype.insertText = function(text, start, offset){
@@ -47,4 +67,5 @@ Editor.prototype.insertText = function(text, start, offset){
 		}
 		rangApi.setCollapsedRange(text, text.length);
 	}
+	return this;
 }
