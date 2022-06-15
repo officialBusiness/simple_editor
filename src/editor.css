@@ -8,6 +8,7 @@ h1,h2,h3,h4,h5,h6,div,span,img,p{
 
 h1,h2,h3,h4,h5,h6{
 	width: 100%;
+	padding: 0 0 10px 0;
 }
 
 .paragraph{
@@ -79,6 +80,7 @@ span.mathjax > img{
 
 .code{
 	width: 100%;
+	padding: 0 0 10px 0;
 }
 
 .code > .code_container{

@@ -68,7 +68,7 @@ export function getComponentDom(context, type, obj){
 		}
 		return components[type.type].toDom.call(context, type);
 	}else{
-		console.log('不知道的特殊情况:', 'type:', type, 'obj:', obj);
+		console.info('不知道的特殊情况:', 'type:', type, 'obj:', obj);
 	}
 }
 
@@ -83,7 +83,7 @@ export function getComponentObj(context, type, dom){
 			// console.log('type:', type);
 			return components[type.className].toObj.call(context, type);
 		}else{
-			console.log('不知道的特殊情况:', 'type:', type, 'dom:', dom);
+			console.info('不知道的特殊情况:', 'type:', type, 'dom:', dom);
 		}
 	}
 }

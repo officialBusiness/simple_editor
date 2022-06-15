@@ -1,7 +1,14 @@
-import * as rangApi from './base_api/range.js';
+import * as rangeApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
 import initEditorEvent from './event/init_event.js';
+
+import insertElement from './operation/insertElement.js';
+import insertText from './operation/insertText.js';
+import deleteOne from './operation/deleteOne.js';
+import deleteRange from './operation/deleteRange.js';
+// import insertText from './operation/insertText.js';
+
 
 export default function Editor(dom, obj){
 	// console.time('editorInit');
@@ -10,7 +17,7 @@ export default function Editor(dom, obj){
 	this.editorDom.contentEditable = this.editable = true;
 
 	this.editorDom.onblur = ()=>{
-		let range = rangApi.getRange();
+		let range = rangeApi.getRange();
 		if( this.editable && range ){
 			this.range.collapsed = range.collapsed;
 			this.range.startContainer = range.startContainer;
@@ -36,24 +43,16 @@ Editor.prototype.setEditable = function(editable){
 	return this;
 }
 
-Editor.prototype.rangApi = rangApi;
+Editor.prototype.rangeApi = rangeApi;
 Editor.prototype.nodeApi = nodeApi;
 
 Editor.prototype.getRange = function(){
-	let range = rangApi.getRange();
+	let range = rangeApi.getRange();
 	if( range && this.editorDom.contains(range.commonAncestorContainer) ){
 		return range;
 	}else{
 		return this.range;
 	}
-}
-
-Editor.prototype.render = function(obj){
-	this.nodeApi.emptyAllChild(this.editorDom);
-	obj.blocks.forEach((block)=>{
-		this.addBlock(block);
-	});
-	return this;
 }
 
 Editor.prototype.toObj = function(){
@@ -71,14 +70,22 @@ Editor.prototype.toObj = function(){
 	return obj;
 }
 
-Editor.prototype.addBlock = function(type, obj){
-	let block = componentApi.getBlockDom(this, type, obj);
-	if( block ){
-		this.editorDom.appendChild(block);
-	}else{
-		console.error('block 读取解析失败:', block);
-	}
+Editor.prototype.render = function(obj){
+	this.nodeApi.emptyAllChild(this.editorDom);
+	obj.blocks.forEach((block)=>{
+		let blockDom = this.getBlockDom(block);
+		if( blockDom ){
+			this.editorDom.appendChild(blockDom);
+		}else{
+			console.error('block 读取解析失败:', block);
+		}
+		return this;
+	});
 	return this;
+}
+
+Editor.prototype.getBlockDom = function(type, obj){
+	return componentApi.getBlockDom(this, type, obj);
 }
 
 Editor.prototype.getComponentDom = function(type, obj){
@@ -89,50 +96,11 @@ Editor.prototype.getComponentObj = function(type, dom){
 	return componentApi.getComponentObj(this, type, dom);
 }
 
-
-
-Editor.prototype.insertElement = function(node, start, offset){
-	if( start.nodeType === Node.TEXT_NODE ){
-		if( offset % start.length === 0 ){
-			let singleNode = this.nodeApi.getSingleNodeInContainer(start),
-					index = this.nodeApi.getNodeIndexOf(singleNode);
-			if( offset === 0 ){
-				singleNode.parentNode.insertBefore(node, singleNode);
-				this.rangApi.setNewCollapsedRange(singleNode.parentNode, index + 1);
-			}else if( offset === start.length ){
-				this.nodeApi.insertAfter(node, singleNode);
-				this.rangApi.setNewCollapsedRange(singleNode.parentNode, index + 2);
-			}
-		}else{
-			console.info('待完善');
-		}
-	}else if( start.nodeType === Node.ELEMENT_NODE ){
-		if( offset === 0 ){
-			start.appendChild(node);
-			this.rangApi.setNewCollapsedRange(start, 1);
-		}else{
-			this.nodeApi.insertAfter(node, start.childNodes[offset - 1]);
-			this.rangApi.setNewCollapsedRange(start, offset + 1);
-		}
-	}
-
-	return this;
-}
-
-Editor.prototype.insertText = function(text, start, offset){
-	let rangApi = this.rangApi,
-			nodeApi = this.nodeApi;
-	if( start.nodeType === Node.TEXT_NODE ){
-		start.insertData(offset, text);
-		rangApi.setCollapsedRange(start, offset + text.length);
-	}else if( start.nodeType === Node.ELEMENT_NODE ){
-		let text = nodeApi.createTextNode(text);
-		if( offset === 0 ){
-			start.insertBefore(text, start.childNodes[0]);
-		}else{
-			nodeApi.insertAfter(text, start.childNodes[offset - 1]);
-		}
-		rangApi.setCollapsedRange(text, text.length);
-	}
-	return this;
-}
+// 在 container 内插入元素
+Editor.prototype.insertElement = insertElement;
+// 在 container 内插入文字
+Editor.prototype.insertText = insertText;
+// 在 container 内光标单个删除
+Editor.prototype.deleteOne = deleteOne;
+// 在 container 内光标范围删除
+Editor.prototype.deleteRange = deleteRange;

@@ -24,7 +24,7 @@ export default {
 				})
 			}
 		}catch(e){
-			console.log(obj, 'e:', e);
+			console.error('mathjax 生成出错', obj, 'e:', e);
 			return new Error(e)
 		}
 	},

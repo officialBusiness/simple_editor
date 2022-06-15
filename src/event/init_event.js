@@ -1,3 +1,4 @@
+import * as triggerEvent from './trigger/index.js';
 
 export let customEventType = {
 	backspaceOnStart: 'backspaceOnStart',
@@ -7,13 +8,49 @@ export let customEvent = {
 	backspaceOnStart: new Event(customEventType.backspaceOnStart),
 }
 
+export const editorEvent = {
+	enter: 'enter',
+	backspace: 'backspace',
+	// tab: 'tab',
+	paste: 'paste',						// onpaste
+	// copy: 'copy',							// oncopy
+	// save: 'save',							// shortcuts s 83
+	// redo: 'redo',							// shortcuts y 89
+	// undo: 'undo',							// shortcuts z 90
+	// selectAll: 'selectAll',		// shortcuts a 65
+	// esc: 'esc',								// 27
+	// fullScreen: 'fullScreen',
+	// ascii: 'ascii',
+	// format: 'format',
+}
+
+const 
+	handleKeyCode = {
+		'13': editorEvent.enter,
+		'8': editorEvent.backspace,
+		// '9': 'tab',
+	},
+	controlKeyCode = {
+		'65': editorEvent.selectAll,
+	}
+
+function trigger(context, eventType){
+	if( typeof triggerEvent[eventType] === 'function' ){
+		triggerEvent[eventType].call(context);
+	}else{
+		console.error('事件还未完善');
+	}
+}
 
 export default function initEditorEvent(context){
 	// console.log('初始化富文本事件');
 	context.editorDom.onkeydown = (e)=>{
-		// console.log('e:', e);
-		// e.preventDefault();
-		
+		let eventType;
+		(e.metaKey || e.ctrlKey) ? (eventType = controlKeyCode[e.keyCode]) : (eventType = handleKeyCode[e.keyCode]);
+		if( eventType ){
+			e.preventDefault();
+			trigger(context, eventType);
+		}
 	}
 	context.editorDom.onpaste = (e)=>{
 		e.preventDefault();
@@ -30,7 +67,7 @@ export default function initEditorEvent(context){
 				});
 			}
 			if( length === index ){
-				
+				console.info('待完善')
 			}
 		}
 	}
