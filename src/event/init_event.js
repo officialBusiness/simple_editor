@@ -8,17 +8,14 @@ export let customEvent = {
 }
 
 
-export default function initEditorEvent(editorDom){
-	editorDom.onkeydown = (e)=>{
-		let eventType = handleKeyCode[e.keyCode]
-		if( eventType ){
-			e.stopPropagation();
-			e.preventDefault();
-			trigger(eventType);
-		}
+export default function initEditorEvent(context){
+	// console.log('初始化富文本事件');
+	context.editorDom.onkeydown = (e)=>{
+		// console.log('e:', e);
+		// e.preventDefault();
+		
 	}
-	editorDom.onpaste = (e)=>{
-		// console.log('onpaste');
+	context.editorDom.onpaste = (e)=>{
 		e.preventDefault();
 		let clipboardData = e.clipboardData,
 			index = 0,
@@ -26,32 +23,25 @@ export default function initEditorEvent(editorDom){
 			string = '';
 		for(let item of clipboardData.items){
 			index ++;
-			if( 
-				item.kind === 'string' 
-				&& item.type === 'text/plain' 
-				){
-				// console.log('item:', item);
+			if( item.kind === 'string' 
+				&& item.type === 'text/plain' ){
 				item.getAsString((str)=>{
-					// console.log(str);
-					console.log(index);
-					// console.log(length);
 					 string += str;
-					if( length === index ){
-						// console.log(string);
-						trigger(editorEvent.paste, string.replace(/(\r|\n)/gi, " "));
-					}
 				});
+			}
+			if( length === index ){
+				
 			}
 		}
 	}
-	editorDom.oncopy = (e)=>{
-		// console.log('oncopy e:', e);
+	context.editorDom.oncopy = (e)=>{
 		e.preventDefault();
 	}
-	editorDom.ondragstart = (e)=>{
+
+	context.editorDom.ondragstart = (e)=>{
 		e.preventDefault();
 	}
-	editorDom.ondrop = (e)=>{
+	context.editorDom.ondrop = (e)=>{
 		e.preventDefault();
 	}
 }

@@ -29,7 +29,11 @@ export default function initMathjax(){
 	function comfirmMathJax(){
 		hiddenMathjax();
 		if( mathjaxTex.value && mathjaxTex.value.trim() ){
-			editor.insertMathjax(mathjaxTex.value);
+			let range = editor.getRange();
+			editor.insertElement( editor.getComponentDom({
+				type: 'mathjax',
+				data: mathjaxTex.value
+			}), range.startContainer, range.startOffset );
 		}
 	}
 

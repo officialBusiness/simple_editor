@@ -31,7 +31,7 @@ export default {
 			data: []
 		};
 		dom.childNodes.forEach((child)=>{
-			obj.data.push(this.getComponentObj(dom));
+			obj.data.push(this.getComponentObj(child));
 		});
 		return obj;
 	}

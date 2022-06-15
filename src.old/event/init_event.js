@@ -5,6 +5,7 @@ export const customEvents = {
 }
 
 export const editorEvent = {
+
 	enter: 'enter',
 	backspace: 'backspace',
 	tab: 'tab',
@@ -18,10 +19,12 @@ export const editorEvent = {
 	fullScreen: 'fullScreen',
 	// ascii: 'ascii',
 	format: 'format',
+
 }
 
 const 
 	handleKeyCode = {
+
 		// '13': 'enter',
 		'8': 'backspace',
 		// '9': 'tab',
@@ -31,10 +34,12 @@ const
 
 	},
 	shortcutsKeyCode = {
+
 		// '83': 'save',
 		// '89': 'redo',
 		// '90': 'undo',
 		// '65': 'selectAll',
+
 	}
 
 

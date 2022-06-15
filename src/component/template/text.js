@@ -7,12 +7,12 @@ export default {
 		return this.nodeApi.createTextNode(obj.data);
 	},
 	toObj(dom){
-		if( !child.nodeValue ){
+		if( !dom.nodeValue ){
 			return null;
 		}
 		return {
 			type: "text",
-			data: child.nodeValue
+			data: dom.nodeValue
 		}
 	}
 }

@@ -29,7 +29,7 @@ export default {
 		if(dom.childNodes.length > 1){
 			obj.data = [];
 			dom.childNodes.forEach((child)=>{
-				obj.data.push(this.getComponentObj(dom));
+				obj.data.push(this.getComponentObj(child));
 			});
 		}else{
 			obj.data = dom.innerText;

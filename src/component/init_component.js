@@ -67,18 +67,23 @@ export function getComponentDom(context, type, obj){
 			return null;
 		}
 		return components[type.type].toDom.call(context, type);
+	}else{
+		console.log('不知道的特殊情况:', 'type:', type, 'obj:', obj);
 	}
 }
 
 export function getComponentObj(context, type, dom){
 	if( typeof type === 'string' ){
-		return components[type].toJson.call(context, dom);
+		return components[type].toObj.call(context, dom);
 	}else 
 	if( typeof type === 'object' ){
-		if( dom.nodeType === Node.TEXT_NODE ){
-			return components['text'].toJson.call(context, type);
+		if( type.nodeType === Node.TEXT_NODE ){
+			return components['text'].toObj.call(context, type);
+		}else if( type.nodeType === Node.ELEMENT_NODE ){
+			// console.log('type:', type);
+			return components[type.className].toObj.call(context, type);
 		}else{
-			return components[type.className].toJson.call(context, type);
+			console.log('不知道的特殊情况:', 'type:', type, 'dom:', dom);
 		}
 	}
 }
