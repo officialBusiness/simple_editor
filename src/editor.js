@@ -3,7 +3,7 @@ import * as nodeApi from './base_api/node.js';
 import * as componentApi from './base_api/component.js';
 
 
-export default function Editor(dom, json){
+export default function Editor(dom, obj){
 	this.editorDom = dom;
 	this.editorDom.style['white-space'] = 'pre-wrap';
 	this.editorDom.contentEditable = this.editable = true;
@@ -20,32 +20,54 @@ export default function Editor(dom, json){
 	}
 	this.range = {};
 
-	if(json){
-		this.render(json);
+	if(obj){
+		this.render(obj);
 	}else{
 		this.addBlock('paragraph');
 	}
+}
 
+
+Editor.prototype.setEditable = function(editable){
+	this.editorDom.contentEditable = this.editable = editable;
+	return this;
 }
 
 Editor.prototype.rangApi = rangApi;
 Editor.prototype.nodeApi = nodeApi;
-Editor.prototype.componentApi = componentApi;
 
 // Editor.prototype.rangApi = rangApi;
 // Editor.prototype.nodeApi = nodeApi;
 
-
 Editor.prototype.render = function(obj){
-	// this.nodeApi.
+	this.nodeApi.emptyAllChild(this.editorDom);
+	obj.blocks.forEach((block)=>{
+		this.addBlock(block);
+	});
 	return this;
 }
 
-Editor.prototype.addBlock = function(name){
-	let blockDom = this.componentApi.componentDom(name);
-	this.editorDom.appendChild(blockDom);
+Editor.prototype.toObj = function(){
+	// return 
+}
+
+Editor.prototype.addBlock = function(type, obj){
+	let block = componentApi.getBlockDom(this, type, obj);
+	if( block ){
+		this.editorDom.appendChild(block);
+	}
 	return this;
 }
+
+Editor.prototype.getComponentDom = function(type, obj){
+	return componentApi.getComponentDom(this, type, obj);
+}
+
+Editor.prototype.getComponentObj = function(type, dom){
+	return componentApi.getComponentObj(this, type, dom);
+}
+
+
 
 Editor.prototype.insertElement = function(node, start, offset){
 

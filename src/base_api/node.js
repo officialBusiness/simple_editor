@@ -1,14 +1,14 @@
 
 export const nodeLabel = {
 	// 基础的节点类型
-	format: 'format',//	格式用于存放 text
-	leaf: 'leaf',	//	元素是叶子节点
+	// format: 'format',//	格式用于存放 text
+	// leaf: 'leaf',	//	元素是叶子节点
 	
 	//	容器用于存放元素,一般是 editor 下的第二级节点
 	//	允许 childNodes 空，空的情况下再删一次才能删除
 	container: 'container',
-	mergeText: 'merge-text',
-	mergeAll: 'merge-all',
+	// mergeText: 'merge-text',
+	// mergeAll: 'merge-all',
 	block: 'block',
 }
 

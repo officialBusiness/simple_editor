@@ -5,6 +5,7 @@ export default {
 	toDom(obj = {
 			type: "paragraph"
 		}){
+		// console.log('this:', this);
 		let paragraph = this.nodeApi.createElement('p', {
 					class: 'paragraph',
 					container: 'true',
@@ -16,14 +17,22 @@ export default {
 				});
 		if( obj.data && Array.isArray(obj.data) ){
 			obj.data.forEach((child)=>{
-				// if( getComponent(child.type) ){
-					// paragraph.appendChild(getComponent(child.type).toDom(child));
-				// }
+				let childDom = this.getComponentDom(child.type, child);
+				if( childDom ){
+					paragraph.appendChild( childDom );
+				}
 			});
 		}
 		return paragraph;
 	},
 	toObj(dom){
-		
+		let obj = {
+			type: "paragraph",
+			data: []
+		};
+		dom.childNodes.forEach((child)=>{
+			obj.data.push(this.getComponentObj(dom));
+		});
+		return obj;
 	}
 }
