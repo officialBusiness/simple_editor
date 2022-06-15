@@ -41,7 +41,7 @@ Editor.prototype.nodeApi = nodeApi;
 
 Editor.prototype.getRange = function(){
 	let range = rangApi.getRange();
-	if( range ){
+	if( range && this.editorDom.contains(range.commonAncestorContainer) ){
 		return range;
 	}else{
 		return this.range;
@@ -64,6 +64,8 @@ Editor.prototype.toObj = function(){
 		let blockObj = this.getComponentObj(blockDom);
 		if( blockObj ){
 			obj.blocks.push( blockObj );
+		}else{
+			console.error('block 转化失败:', blockDom);
 		}
 	});
 	return obj;
@@ -74,7 +76,7 @@ Editor.prototype.addBlock = function(type, obj){
 	if( block ){
 		this.editorDom.appendChild(block);
 	}else{
-		console.error('block 读取解析失败');
+		console.error('block 读取解析失败:', block);
 	}
 	return this;
 }
@@ -92,17 +94,26 @@ Editor.prototype.getComponentObj = function(type, dom){
 Editor.prototype.insertElement = function(node, start, offset){
 	if( start.nodeType === Node.TEXT_NODE ){
 		if( offset % start.length === 0 ){
-			let singleNode = this.nodeApi.getSingleNodeInContainer(start);
+			let singleNode = this.nodeApi.getSingleNodeInContainer(start),
+					index = this.nodeApi.getNodeIndexOf(singleNode);
 			if( offset === 0 ){
-				singleNode.parentNode.insertBefore(node, singleNode)
+				singleNode.parentNode.insertBefore(node, singleNode);
+				this.rangApi.setNewCollapsedRange(singleNode.parentNode, index + 1);
 			}else if( offset === start.length ){
 				this.nodeApi.insertAfter(node, singleNode);
+				this.rangApi.setNewCollapsedRange(singleNode.parentNode, index + 2);
 			}
 		}else{
 			console.info('待完善');
 		}
 	}else if( start.nodeType === Node.ELEMENT_NODE ){
-		console.info('待完善');
+		if( offset === 0 ){
+			start.appendChild(node);
+			this.rangApi.setNewCollapsedRange(start, 1);
+		}else{
+			this.nodeApi.insertAfter(node, start.childNodes[offset - 1]);
+			this.rangApi.setNewCollapsedRange(start, offset + 1);
+		}
 	}
 
 	return this;

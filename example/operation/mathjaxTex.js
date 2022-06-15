@@ -15,7 +15,7 @@ export default function initMathjax(){
 		mathjaxImg.src = getBase64(mathjaxTex.value)
 	}
 	mathjaxTex.onkeydown = function(e){
-		console.log('e:', e);
+		// console.log('e:', e);
 		if( e.key === 'Enter' ){
 			e.preventDefault();
 			comfirmMathJax();
@@ -23,13 +23,14 @@ export default function initMathjax(){
 			hiddenMathjax();
 		}
 	}
-	cancel.onmousedown = hiddenMathjax
-	comfirm.onmousedown = comfirmMathJax
+	cancel.onclick = hiddenMathjax
+	comfirm.onclick = comfirmMathJax
 
 	function comfirmMathJax(){
 		hiddenMathjax();
 		if( mathjaxTex.value && mathjaxTex.value.trim() ){
 			let range = editor.getRange();
+			console.log('range:', range);
 			editor.insertElement( editor.getComponentDom({
 				type: 'mathjax',
 				data: mathjaxTex.value

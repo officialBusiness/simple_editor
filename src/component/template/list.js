@@ -26,13 +26,12 @@ export default {
 			getLabel = labelNumber;
 		}else if( Array.isArray(title) ){
 			getLabel = labelCustom;
-			title = 'custom';
 		}
 
 		let list = this.nodeApi.createElement('div', {
 			class: 'list',
 			block: true,
-			title
+			title: Array.isArray(title) ? 'custom' : title
 		});
 
 		data.forEach((item, index)=>{
