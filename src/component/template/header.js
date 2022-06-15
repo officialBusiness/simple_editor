@@ -6,8 +6,8 @@ export default {
 	toDom(obj){
 		let header = this.nodeApi.createElement(obj.type, {
 			class: 'header',
-			block: 'true',
-			container: 'true'
+			block: true,
+			container: true
 		});
 
 		if(Array.isArray(obj.data)){

@@ -1,4 +1,16 @@
-import * as factories from '../component/index.js';
+import * as factories from './template/index.js';
+
+/*{
+	type,
+	alias,
+	isBlock,
+	toDom(obj){
+
+	},
+	toObj(dom){
+
+	}
+}*/
 
 export let components = {};
 export let blocks = {};

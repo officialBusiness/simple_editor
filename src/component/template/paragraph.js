@@ -8,8 +8,8 @@ export default {
 		// console.log('this:', this);
 		let paragraph = this.nodeApi.createElement('p', {
 					class: 'paragraph',
-					container: 'true',
-					block: 'true'
+					container: true,
+					block: true
 				}, {
 					// backspaceOnStart: function(e){
 					// 	console.log('触发了 backspaceOnStart 事件:', e);

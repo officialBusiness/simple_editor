@@ -19,7 +19,7 @@ createComponent({
 						block: 'true'
 					}
 				}),
-				code_container = nodeApi.createNode({
+				codeContainer = nodeApi.createNode({
 					nodeType: Node.ELEMENT_NODE,
 					nodeName: 'div',
 					attributes: {
@@ -40,8 +40,8 @@ createComponent({
 			code.style.width = json.width;
 		}
 		code.innerText = json.data;
-		code_container.appendChild(code);
-		node.appendChild(code_container);
+		codeContainer.appendChild(code);
+		node.appendChild(codeContainer);
 
 		if( json.title ){
 			let title = nodeApi.createNode({
@@ -49,7 +49,7 @@ createComponent({
 						nodeName: 'div',
 						attributes: {
 							class: 'code_title',
-							// container: 'true'
+							// container: true
 							contenteditable: false
 						}
 					}),

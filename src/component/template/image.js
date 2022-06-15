@@ -5,8 +5,8 @@ export default {
 	toDom(obj){
 		let imageContainer = this.nodeApi.createElement('div', {
 					class: 'image',
-					block: 'true',
-					container: 'true'
+					block: true,
+					container: true
 				}),
 				image = this.nodeApi.createElement('img', {
 					src: obj.src,
@@ -22,7 +22,7 @@ export default {
 		if( obj.title ){
 			let title = this.nodeApi.createElement('div', {
 				class: 'image_title',
-				// container: 'true'
+				// container: true,
 				contenteditable: false
 			})
 			title.innerText = obj.title;

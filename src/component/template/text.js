@@ -1,8 +1,6 @@
 export default {
 	type: 'text',
-	toDom(obj = {
-			type: "text"
-		}){
+	toDom(obj){
 		if( !obj.data ){
 			console.error('text必须要有data数据');
 		}
