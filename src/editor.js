@@ -1,6 +1,6 @@
 import * as rangApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
-import * as componentApi from './component/component.js';
+import * as componentApi from './component/init_component.js';
 
 
 export default function Editor(dom, obj){

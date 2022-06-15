@@ -28,21 +28,17 @@
 				outline: none;
 			}
 		</style>
-		<script type="text/javascript" src="../src.old/plugin/tex-svg.js"></script>
-		<link rel="stylesheet" type="text/css" href="../src.old/editor.css" />
+		<script type="text/javascript" src="../src/thirdparty/tex-svg.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/editor.css" />
 	</head>
 	<body>
 		<div id="editor"></div>
 	</body>
 	<script type="module">
-		import Editor from '../src.old/editor.js';
+		import Editor from '../src/editor.js';
 		import { original } from './Simple and Efficient Bilayer Cross Counting.js';
 
-		let editor = new Editor({
-			container: document.getElementById('editor'),
-			json: original,
-			editable: true,
-		});
+		let editor = new Editor(document.getElementById('editor'), original);
 
 		window.original = original;
 		window.editor = editor;
