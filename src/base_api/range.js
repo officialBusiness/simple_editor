@@ -72,12 +72,25 @@ export function startNodeRange(node){
 	if(node.nodeType === Node.TEXT_NODE){
 		setCollapsedRange(node, 0);
 	}else if(node.nodeType === Node.ELEMENT_NODE){
-		setCollapsedRange(node.parentNode, 0);
+		setCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node));
 	}else{
 		console.error('没有处理的节点类型');
 	}
 }
 
+// 选择一个节点的最开始,清除原来的 range
+export function startNodeNewRange(node){
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[0];
+	}
+	if(node.nodeType === Node.TEXT_NODE){
+		setNewCollapsedRange(node, 0);
+	}else if(node.nodeType === Node.ELEMENT_NODE){
+		setNewCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node));
+	}else{
+		console.error('没有处理的节点类型');
+	}
+}
 
 export function isRangeInOneNode(){
 	let selection = document.getSelection()

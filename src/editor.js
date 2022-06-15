@@ -1,7 +1,7 @@
 import * as rangeApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
-import initEditorEvent from './event/init_event.js';
+import initEditorEvent, { customEvent, customEventType } from './event/init_event.js';
 
 import insertElement from './operation/insertElement.js';
 import insertText from './operation/insertText.js';
@@ -31,9 +31,15 @@ export default function Editor(dom, obj){
 	if(obj){
 		this.render(obj);
 	}else{
-		this.addBlock('paragraph');
+		let blockDom = this.getBlockDom('paragraph');
+		if( blockDom ){
+			this.editorDom.appendChild(blockDom);
+		}else{
+			console.error('block 读取解析失败:', block);
+		}
 	}
 	initEditorEvent(this);
+	this.rangeApi.startNodeNewRange(this.editorDom);
 	// console.timeEnd('editorInit');
 }
 
@@ -45,6 +51,9 @@ Editor.prototype.setEditable = function(editable){
 
 Editor.prototype.rangeApi = rangeApi;
 Editor.prototype.nodeApi = nodeApi;
+
+Editor.prototype.customEvent = customEvent;
+Editor.prototype.customEventType = customEventType;
 
 Editor.prototype.getRange = function(){
 	let range = rangeApi.getRange();
