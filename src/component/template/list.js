@@ -43,8 +43,13 @@ export default {
 					class: 'label',
 					contenteditable: Array.isArray(title) ? true : false,
 					container: Array.isArray(title) ? true : null
+				}, {
+					mousedown: (e)=>{
+						if(!Array.isArray(title)){
+							this.rangeApi.startNodeRange(container);
+						}
+					}
 				}),
-
 				container = this.nodeApi.createElement('div', {
 					class: 'container',
 					container: true

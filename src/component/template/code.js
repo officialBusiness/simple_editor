@@ -1,3 +1,5 @@
+import deleteOne from './default_container/delete_one.js'
+
 export default {
 	type: 'code',
 	isBlock: true,
@@ -24,8 +26,8 @@ export default {
 		if( obj.title ){
 			let title = this.nodeApi.createElement('div', {
 				class: 'code_title',
-				// container: true
-				contenteditable: false
+				container: true
+				// contenteditable: false
 			});
 			title.innerText = obj.title;
 			block.appendChild(title);

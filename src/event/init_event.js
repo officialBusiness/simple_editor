@@ -3,6 +3,7 @@ import * as triggerEvent from './trigger/index.js';
 export let customEventType = {
 	backspaceOne: 'backspaceOne',
 	backspaceOnStart: 'backspaceOnStart',
+	merge: 'merge',
 	backspaceRange: 'backspaceRange',
 
 	enterOne: 'enterOne'
@@ -50,6 +51,8 @@ function trigger(context, eventType){
 	}
 }
 
+
+
 export default function initEditorEvent(context){
 	// console.log('初始化富文本事件');
 	context.editorDom.onkeydown = (e)=>{
@@ -57,7 +60,7 @@ export default function initEditorEvent(context){
 		(e.metaKey || e.ctrlKey) ? (eventType = controlKeyCode[e.keyCode]) : (eventType = handleKeyCode[e.keyCode]);
 		if( eventType ){
 			e.preventDefault();
-			trigger(context, eventType);
+			trigger(context, eventType;
 		}
 	}
 	context.editorDom.onpaste = (e)=>{

@@ -8,7 +8,8 @@ export const nodeLabel = {
 	container: 'container',
 	block: 'block',
 	// mergeText: 'merge-text',
-	// mergeAll: 'merge-all',
+	mergeBlock: 'mergeBlock',
+	singleBlock: 'singleBlock',
 }
 
 export function isNotEditor(dom){
@@ -29,6 +30,14 @@ export function isContainer(dom){
 
 export function isNotContainer(dom){
 	return !dom.getAttribute || !dom.getAttribute('container');
+}
+
+export function isMerge(dom){
+	return dom.getAttribute && dom.getAttribute('mergeBlock');
+}
+
+export function isSingle(dom){
+	return dom.getAttribute && dom.getAttribute('singleBlock');
 }
 
 export function isNotEditable(dom){
@@ -111,6 +120,16 @@ export function insertAfter(newNode, lastNode){
 	}
 }
 
+export function appendChildren(parentNode, childrenNodes){
+	if( !Array.isArray(childrenNodes) && !NodeList.prototype.isPrototypeOf(childrenNodes)){
+		console.error('参数出错');
+		return;
+	}
+	for( let i = childrenNodes.length - 1; i >=0; i-- ){
+		parentNode.appendChild(childrenNodes[i]);
+	}
+}
+
 export function removeNode(node){
 	node.parentNode.removeChild(node);
 }
@@ -132,12 +151,27 @@ export function getNodeIndexOf(node){
 	}
 }
 
+export function getEndNode(node){
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[node.childNodes.length - 1];
+	}
+	return node;
+}
+
+
+export function getStartNode(node){
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[0];
+	}
+	return node;
+}
+
 export function getPreEndNodeInBlock(node){
 	// console.log('测试 getPreEndNodeInBlock:', node);
 	let hasPreNode = node;
 
 	if( isBlock(hasPreNode) ){
-		console.erroe('getPreEndNodeInBlock 函数出错:', node);
+		console.error('getPreEndNodeInBlock 函数出错:', node);
 	}
 	while( !hasPreNode.previousSibling ){
 		hasPreNode = hasPreNode.parentNode;
@@ -158,7 +192,7 @@ export function getNextStartNodeInBlock(node){
 	let hasNextNode = node;
 
 	if( isBlock(hasNextNode) ){
-		console.erroe('getNextStartNodeInBlock 函数出错:', node);
+		console.error('getNextStartNodeInBlock 函数出错:', node);
 	}
 	while( !hasNextNode.nextSibling ){
 		hasNextNode = hasNextNode.parentNode;
@@ -178,7 +212,7 @@ export function getPreNodeInContainer(node){
 	let hasPreNode = node;
 
 	if( isContainer(hasPreNode) ){
-		console.erroe('getPreNodeInContainer 函数出错:', node);
+		console.error('getPreNodeInContainer 函数出错:', node);
 	}
 	while( !hasPreNode.previousSibling ){
 		hasPreNode = hasPreNode.parentNode;
@@ -193,7 +227,7 @@ export function getNextNodeInContainer(node){
 	let hasNextNode = node;
 
 	if( isContainer(hasNextNode) ){
-		console.erroe('getNextNodeInContainer 函数出错:', node);
+		console.error('getNextNodeInContainer 函数出错:', node);
 	}
 	while( !hasNextNode.nextSibling ){
 		hasNextNode = hasNextNode.parentNode;

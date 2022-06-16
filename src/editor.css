@@ -78,8 +78,6 @@ span.mathjax > img{
   line-height: 24px;
   min-height: 34px;
   font-size: 16px;
-	/*user-select: none;*/
-	cursor: pointer;
 }
 
 .list{
@@ -133,7 +131,6 @@ span.mathjax > img{
   line-height: 24px;
   min-height: 24px;
   font-size: 16px;
-	user-select: none;
 }
 
 .link{

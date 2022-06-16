@@ -11,7 +11,8 @@ export default {
 		let paragraph = this.nodeApi.createElement('p', {
 					class: 'paragraph',
 					container: true,
-					block: true
+					block: true,
+					merge: true,
 				}, {
 					[this.customEventType.backspaceOne]: deleteOne.bind(this),
 					[this.customEventType.backspaceOnStart]: deleteOneOnStart.bind(this),

@@ -1,4 +1,4 @@
-import deleteOne from '../default_container/delete_one.js'
+import deleteOne from './default_container/delete_one.js'
 
 export default {
 	type: 'image',
@@ -7,14 +7,13 @@ export default {
 		let imageContainer = this.nodeApi.createElement('div', {
 					class: 'image',
 					block: true,
+					singleBlock: true,
 					container: true
 				}, {
 					[this.customEventType.backspaceOne]: (e)=>{
 						let { startContainer, startOffset } = this.rangeApi.getRange();
 						if(startOffset === 0){
-							// console.log('imageContainer:', imageContainer);
 							let preBlock = this.nodeApi.getPreBlock(imageContainer);
-							// console.log('preBlock:', preBlock);
 							if( preBlock ){
 								this.rangeApi.endNodeRange(preBlock);
 							}
