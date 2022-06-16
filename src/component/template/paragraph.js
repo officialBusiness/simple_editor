@@ -11,8 +11,10 @@ export default {
 					container: true,
 					block: true
 				}, {
-					[this.customEventType.backspaceOnStart]: function(e){
+					[this.customEventType.backspaceOnStart]: (e)=>{
 						console.log('触发了 backspaceOnStart 事件:', e);
+						console.log('paragraph:', paragraph);
+						console.log('this:', this);
 					}
 				});
 		if( obj.data && Array.isArray(obj.data) ){

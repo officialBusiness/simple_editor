@@ -10,7 +10,11 @@ export default {
 				}),
 				image = this.nodeApi.createElement('img', {
 					src: obj.src,
-				})
+				}, {
+					mousedown: (e)=>{
+						this.rangeApi.endNodeRange(image);
+					},
+				});
 		imageContainer.appendChild(image);
 		if(obj.width){
 			image.style.width = obj.width;
@@ -24,6 +28,10 @@ export default {
 				class: 'image_title',
 				// container: true,
 				contenteditable: false
+			}, {
+					mousedown: (e)=>{
+						this.rangeApi.endNodeRange(image);
+					},
 			})
 			title.innerText = obj.title;
 			imageContainer.appendChild(title);

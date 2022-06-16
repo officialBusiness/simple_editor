@@ -12,6 +12,10 @@ export default {
 						this.nodeApi.createElement('img', {
 							tex: tex,
 							src: "data:image/svg+xml;base64," + btoa( unescape(encodeURIComponent( new XMLSerializer().serializeToString( MathJax.tex2svg(tex).childNodes[0] ))) )
+						}, {
+							mousedown: (e)=>{
+								this.rangeApi.endNodeRange(e.target);
+							},
 						})
 					);
 				});
@@ -21,6 +25,10 @@ export default {
 					class: 'mathjax',
 					tex: obj.data,
 					src: "data:image/svg+xml;base64," + btoa( unescape(encodeURIComponent( new XMLSerializer().serializeToString( MathJax.tex2svg(obj.data).childNodes[0] ))) )
+				}, {
+					mousedown: (e)=>{
+						this.rangeApi.endNodeRange(e.target);
+					},
 				})
 			}
 		}catch(e){

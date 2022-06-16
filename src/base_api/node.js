@@ -30,8 +30,21 @@ export function isNotBlock(){
 
 export function isStartInContainer(node){
 	let parentNode = node.parentNode;
-	while( isNotContainer(parentNode) ){
+	while( isNotContainer(node) ){
 		if( parentNode.childNodes[0] !== node ){
+			return false;
+		}
+		node = parentNode;
+		parentNode = node.parentNode;
+	}
+	return true;
+}
+
+export function isEndInContainer(node){
+	let parentNode = node.parentNode;
+	while( isNotContainer(node) ){
+		let len = parentNode.childNodes.length;
+		if( parentNode.childNodes[len - 1] !== node ){
 			return false;
 		}
 		node = parentNode;

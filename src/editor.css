@@ -24,6 +24,7 @@ img.mathjax{
   max-height: 20px;
 	font-size: 0;
 	vertical-align: middle;
+	cursor: pointer;
 }
 
 span.mathjax{
@@ -34,6 +35,7 @@ span.mathjax > img{
   max-height: 20px;
 	font-size: 0;
 	vertical-align: middle;
+	cursor: pointer;
 }
 
 .image{
