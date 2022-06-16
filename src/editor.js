@@ -2,7 +2,8 @@ import * as rangeApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
 
-import initEditorEvent, { customEvent, customEventType } from './event/init_event.js';
+import initEditorEvent from './event/init_event.js';
+import { customEventType, bindCustomEvent } from './event/custom_event.js';
 
 export default function Editor(dom, obj){
 	// console.time('editorInit');
@@ -34,6 +35,7 @@ export default function Editor(dom, obj){
 		}
 	}
 	initEditorEvent(this);
+	this.customEventMap = new Map();
 	this.rangeApi.startNodeNewRange(this.editorDom);
 	// console.timeEnd('editorInit');
 }
@@ -47,8 +49,8 @@ Editor.prototype.setEditable = function(editable){
 Editor.prototype.rangeApi = rangeApi;
 Editor.prototype.nodeApi = nodeApi;
 
-Editor.prototype.customEvent = customEvent;
 Editor.prototype.customEventType = customEventType;
+Editor.prototype.bindCustomEvent = bindCustomEvent;
 
 Editor.prototype.getRange = function(){
 	let range = rangeApi.getRange();

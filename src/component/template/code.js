@@ -7,7 +7,8 @@ export default {
 		let
 			block = this.nodeApi.createElement('div', {
 				class: 'code',
-				block: true
+				block: true,
+				singleBlock: true
 			}),
 			codeContainer = this.nodeApi.createElement('div', {
 				class: 'code_container'

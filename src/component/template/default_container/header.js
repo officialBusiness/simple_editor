@@ -9,8 +9,8 @@ export default {
 		let header = this.nodeApi.createElement(obj.type, {
 			class: 'header',
 			block: true,
+			mergeBlock: true,
 			container: true,
-			merge: true,
 		}, {
 			[this.customEventType.backspaceOne]: deleteOne.bind(this),
 			[this.customEventType.backspaceOnStart]: deleteOneOnStart.bind(this),

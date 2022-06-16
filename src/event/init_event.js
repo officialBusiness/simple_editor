@@ -1,23 +1,6 @@
 import * as triggerEvent from './trigger/index.js';
 
-export let customEventType = {
-	backspaceOne: 'backspaceOne',
-	backspaceOnStart: 'backspaceOnStart',
-	merge: 'merge',
-	backspaceRange: 'backspaceRange',
-
-	enterOne: 'enterOne'
-}
-
-export let customEvent = {
-	backspaceOne: new Event(customEventType.backspaceOne),
-	backspaceOnStart: new Event(customEventType.backspaceOnStart),
-	backspaceRange: new Event(customEventType.backspaceRange),
-	
-	enterOne: new Event(customEventType.enterOne),
-}
-
-export const editorEvent = {
+const editorEvent = {
 	enter: 'enter',
 	backspace: 'backspace',
 	// tab: 'tab',
@@ -60,7 +43,7 @@ export default function initEditorEvent(context){
 		(e.metaKey || e.ctrlKey) ? (eventType = controlKeyCode[e.keyCode]) : (eventType = handleKeyCode[e.keyCode]);
 		if( eventType ){
 			e.preventDefault();
-			trigger(context, eventType;
+			trigger(context, eventType);
 		}
 	}
 	context.editorDom.onpaste = (e)=>{
