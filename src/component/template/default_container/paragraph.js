@@ -1,3 +1,5 @@
+import deleteOne from './delete_one.js'
+import deleteOneOnStart from './delete_one_on_start.js'
 
 export default {
 	type: 'paragraph',
@@ -11,11 +13,8 @@ export default {
 					container: true,
 					block: true
 				}, {
-					[this.customEventType.backspaceOnStart]: (e)=>{
-						console.log('触发了 backspaceOnStart 事件:', e);
-						console.log('paragraph:', paragraph);
-						console.log('this:', this);
-					}
+					[this.customEventType.backspaceOne]: deleteOne.bind(this),
+					[this.customEventType.backspaceOnStart]: deleteOneOnStart.bind(this),
 				});
 		if( obj.data && Array.isArray(obj.data) ){
 			obj.data.forEach((child)=>{

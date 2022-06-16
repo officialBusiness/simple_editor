@@ -30,7 +30,6 @@ export default function initMathjax(){
 		hiddenMathjax();
 		if( mathjaxTex.value && mathjaxTex.value.trim() ){
 			let range = editor.getRange();
-			console.log('range:', range);
 			editor.insertElement( editor.getComponentDom({
 				type: 'mathjax',
 				data: mathjaxTex.value

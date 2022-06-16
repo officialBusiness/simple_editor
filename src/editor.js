@@ -1,20 +1,15 @@
 import * as rangeApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
+
 import initEditorEvent, { customEvent, customEventType } from './event/init_event.js';
-
-import insertElement from './operation/insertElement.js';
-import insertText from './operation/insertText.js';
-import deleteOne from './operation/deleteOne.js';
-import deleteRange from './operation/deleteRange.js';
-// import insertText from './operation/insertText.js';
-
 
 export default function Editor(dom, obj){
 	// console.time('editorInit');
 	this.editorDom = dom;
 	this.editorDom.style['white-space'] = 'pre-wrap';
 	this.editorDom.contentEditable = this.editable = true;
+	this.editorDom.setAttribute('editor', true);
 
 	this.editorDom.onblur = ()=>{
 		let range = rangeApi.getRange();
@@ -105,11 +100,53 @@ Editor.prototype.getComponentObj = function(type, dom){
 	return componentApi.getComponentObj(this, type, dom);
 }
 
+Editor.prototype.addComponentEvent = function(component, eventType, event){
+
+}
+
 // 在 container 内插入元素
-Editor.prototype.insertElement = insertElement;
+Editor.prototype.insertElement = function insertElement(node, start, offset){
+	if( start.nodeType === Node.TEXT_NODE ){
+		if( offset % start.length === 0 ){
+			let singleNode = this.nodeApi.getSingleNodeInContainer(start),
+					index = this.nodeApi.getNodeIndexOf(singleNode);
+			if( offset === 0 ){
+				singleNode.parentNode.insertBefore(node, singleNode);
+				this.rangeApi.setNewCollapsedRange(singleNode.parentNode, index + 1);
+			}else if( offset === start.length ){
+				this.nodeApi.insertAfter(node, singleNode);
+				this.rangeApi.setNewCollapsedRange(singleNode.parentNode, index + 2);
+			}
+		}else{
+			console.info('待完善');
+		}
+	}else if( start.nodeType === Node.ELEMENT_NODE ){
+		if( offset === 0 ){
+			start.appendChild(node);
+			this.rangeApi.setNewCollapsedRange(start, 1);
+		}else{
+			this.nodeApi.insertAfter(node, start.childNodes[offset - 1]);
+			this.rangeApi.setNewCollapsedRange(start, offset + 1);
+		}
+	}
+
+	return this;
+}
 // 在 container 内插入文字
-Editor.prototype.insertText = insertText;
-// 在 container 内光标单个删除
-Editor.prototype.deleteOne = deleteOne;
-// 在 container 内光标范围删除
-Editor.prototype.deleteRange = deleteRange;
+Editor.prototype.insertText = function insertText(text, start, offset){
+	let rangeApi = this.rangeApi,
+			nodeApi = this.nodeApi;
+	if( start.nodeType === Node.TEXT_NODE ){
+		start.insertData(offset, text);
+		rangeApi.setCollapsedRange(start, offset + text.length);
+	}else if( start.nodeType === Node.ELEMENT_NODE ){
+		let text = nodeApi.createTextNode(text);
+		if( offset === 0 ){
+			start.insertBefore(text, start.childNodes[0]);
+		}else{
+			nodeApi.insertAfter(text, start.childNodes[offset - 1]);
+		}
+		rangeApi.setCollapsedRange(text, text.length);
+	}
+	return this;
+}

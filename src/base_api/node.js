@@ -1,4 +1,3 @@
-
 export const nodeLabel = {
 	// 基础的节点类型
 	// format: 'format',//	格式用于存放 text
@@ -7,9 +6,21 @@ export const nodeLabel = {
 	//	容器用于存放元素,一般是 editor 下的第二级节点
 	//	允许 childNodes 空，空的情况下再删一次才能删除
 	container: 'container',
+	block: 'block',
 	// mergeText: 'merge-text',
 	// mergeAll: 'merge-all',
-	block: 'block',
+}
+
+export function isNotEditor(dom){
+	return !dom.getAttribute || !dom.getAttribute('editor');
+}
+
+export function isNotBlock(dom){
+	return !dom.getAttribute || !dom.getAttribute('block');
+}
+
+export function isBlock(dom){
+	return dom.getAttribute && !!dom.getAttribute('block');
 }
 
 export function isContainer(dom){
@@ -20,12 +31,12 @@ export function isNotContainer(dom){
 	return !dom.getAttribute || !dom.getAttribute('container');
 }
 
-export function isBlock(){
-	return dom.getAttribute && !!dom.getAttribute('block');
-}
-
-export function isNotBlock(){
-	return !dom.getAttribute || !dom.getAttribute('block');
+export function isNotEditable(dom){
+	if( dom.nodeType === Node.TEXT_NODE ){
+		return !dom.parentNode.isContentEditable;
+	}else if( dom.nodeType === Node.ELEMENT_NODE ){
+		return !dom.isContentEditable;
+	}
 }
 
 export function isStartInContainer(node){
@@ -51,6 +62,10 @@ export function isEndInContainer(node){
 		parentNode = node.parentNode;
 	}
 	return true;
+}
+
+export function isEmpty(node){
+	return node.childNodes.length === 0
 }
 
 export function createTextNode(text){
@@ -117,11 +132,53 @@ export function getNodeIndexOf(node){
 	}
 }
 
+export function getPreEndNodeInBlock(node){
+	// console.log('测试 getPreEndNodeInBlock:', node);
+	let hasPreNode = node;
+
+	if( isBlock(hasPreNode) ){
+		console.erroe('getPreEndNodeInBlock 函数出错:', node);
+	}
+	while( !hasPreNode.previousSibling ){
+		hasPreNode = hasPreNode.parentNode;
+		if( isBlock(hasPreNode) ){
+			return null;
+		} 
+	}
+	hasPreNode = hasPreNode.previousSibling;
+	while( hasPreNode.childNodes.length ){
+		hasPreNode = hasPreNode.childNodes[hasPreNode.childNodes.length - 1];
+	}
+
+	return hasPreNode;
+}
+
+export function getNextStartNodeInBlock(node){
+	// console.log('测试 getNextStartNodeInBlock:', node);
+	let hasNextNode = node;
+
+	if( isBlock(hasNextNode) ){
+		console.erroe('getNextStartNodeInBlock 函数出错:', node);
+	}
+	while( !hasNextNode.nextSibling ){
+		hasNextNode = hasNextNode.parentNode;
+		if( isBlock(hasNextNode) ){
+			return null;
+		}
+	}
+	hasNextNode = hasNextNode.nextSibling;
+	while( hasNextNode.childNodes.length ){
+		hasNextNode = hasNextNode.childNodes[0];
+	}
+
+	return hasNextNode;
+}
+
 export function getPreNodeInContainer(node){
 	let hasPreNode = node;
 
 	if( isContainer(hasPreNode) ){
-		console.erroe('getSingleNodeInContainer 函数出错:', node);
+		console.erroe('getPreNodeInContainer 函数出错:', node);
 	}
 	while( !hasPreNode.previousSibling ){
 		hasPreNode = hasPreNode.parentNode;
@@ -136,7 +193,7 @@ export function getNextNodeInContainer(node){
 	let hasNextNode = node;
 
 	if( isContainer(hasNextNode) ){
-		console.erroe('getSingleNodeInContainer 函数出错:', node);
+		console.erroe('getNextNodeInContainer 函数出错:', node);
 	}
 	while( !hasNextNode.nextSibling ){
 		hasNextNode = hasNextNode.parentNode;
@@ -178,10 +235,20 @@ export function getContainer(node){
 export function getBlock(node){
 	let root = node,
 			parentNode = node.parentNode;
-	while( isNotContainer(root) ){
+	while( isNotBlock(root) ){
 		root = parentNode;
 		parentNode = root.parentNode;
 	}
 	return root;
+}
+
+export function getPreBlock(node){
+	let root = node,
+			parentNode = node.parentNode;
+	while( isNotBlock(root) ){
+		root = parentNode;
+		parentNode = root.parentNode;
+	}
+	return root.previousSibling;
 }
 

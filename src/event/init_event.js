@@ -1,11 +1,19 @@
 import * as triggerEvent from './trigger/index.js';
 
 export let customEventType = {
+	backspaceOne: 'backspaceOne',
 	backspaceOnStart: 'backspaceOnStart',
+	backspaceRange: 'backspaceRange',
+
+	enterOne: 'enterOne'
 }
 
 export let customEvent = {
+	backspaceOne: new Event(customEventType.backspaceOne),
 	backspaceOnStart: new Event(customEventType.backspaceOnStart),
+	backspaceRange: new Event(customEventType.backspaceRange),
+	
+	enterOne: new Event(customEventType.enterOne),
 }
 
 export const editorEvent = {

@@ -54,7 +54,13 @@ export function endNodeRange(node){
 	while( node.childNodes.length > 0 ){
 		node = node.childNodes[node.childNodes.length - 1];
 	}
-	// console.log('endNodeRange:', node);
+	while( node && nodeApi.isNotEditable(node) ){
+		console.log('存在不可编辑的节点,需要跳过:', node);
+		node = nodeApi.getPreEndNodeInBlock(node);
+	}
+	if( !node ){
+		console.error('node不存在, 请检查组件设计是否正确');
+	}
 	if(node.nodeType === Node.TEXT_NODE){
 		setCollapsedRange(node, node.length);
 	}else if(node.nodeType === Node.ELEMENT_NODE){
@@ -69,6 +75,13 @@ export function startNodeRange(node){
 	while( node.childNodes.length > 0 ){
 		node = node.childNodes[0];
 	}
+	while( node && nodeApi.isNotEditable(node) ){
+		console.log('存在不可编辑的节点,需要跳过:', node);
+		node = nodeApi.getNextStartNodeInBlock(node);
+	}
+	if( !node ){
+		console.error('node不存在, 请检查组件设计是否正确');
+	}
 	if(node.nodeType === Node.TEXT_NODE){
 		setCollapsedRange(node, 0);
 	}else if(node.nodeType === Node.ELEMENT_NODE){
@@ -82,6 +95,13 @@ export function startNodeRange(node){
 export function startNodeNewRange(node){
 	while( node.childNodes.length > 0 ){
 		node = node.childNodes[0];
+	}
+	while( node && nodeApi.isNotEditable(node) ){
+		console.log('存在不可编辑的节点,需要跳过:', node);
+		node = nodeApi.getNextStartNodeInBlock(node);
+	}
+	if( !node ){
+		console.error('node不存在, 请检查组件设计是否正确');
 	}
 	if(node.nodeType === Node.TEXT_NODE){
 		setNewCollapsedRange(node, 0);

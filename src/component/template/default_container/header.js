@@ -1,3 +1,5 @@
+import deleteOne from './delete_one.js'
+import deleteOneOnStart from './delete_one_on_start.js'
 
 export default {
 	type: 'header',
@@ -8,6 +10,9 @@ export default {
 			class: 'header',
 			block: true,
 			container: true
+		}, {
+			[this.customEventType.backspaceOne]: deleteOne.bind(this),
+			[this.customEventType.backspaceOnStart]: deleteOneOnStart.bind(this),
 		});
 
 		if(Array.isArray(obj.data)){

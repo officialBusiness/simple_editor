@@ -3,10 +3,15 @@ export default function backspace(){
 	if( !range ){
 		return ;
 	}
-	let	{ collapsed, startOffset, startContainer, endContainer, endOffset } = range;
+	let	{ collapsed, startContainer, endContainer } = range;
+	// console.log('range:', range);
 	if(collapsed){
-		this.deleteOne(startContainer, startOffset);
+		this.nodeApi.getContainer(startContainer)
+			.dispatchEvent(this.customEvent.backspaceOne);
 	}else{
-		this.deleteRange(startContainer, startOffset, endContainer, endOffset);
+		// this.deleteRange(startContainer, startOffset, endContainer, endOffset);
+
+		// this.nodeApi.getContainer(startContainer)
+			// .dispatchEvent(this.customEvent.backspaceRange);
 	}
 }
