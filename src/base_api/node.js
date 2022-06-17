@@ -125,8 +125,8 @@ export function appendChildren(parentNode, childrenNodes){
 		console.error('参数出错');
 		return;
 	}
-	for( let i = childrenNodes.length - 1; i >=0; i-- ){
-		parentNode.appendChild(childrenNodes[i]);
+	for( let i = 0, len = childrenNodes.length; i < len; i++ ){
+		parentNode.appendChild(childrenNodes[0]);
 	}
 }
 
@@ -284,5 +284,15 @@ export function getPreBlock(node){
 		parentNode = root.parentNode;
 	}
 	return root.previousSibling;
+}
+
+export function getNextBlock(node){
+	let root = node,
+			parentNode = node.parentNode;
+	while( isNotBlock(root) ){
+		root = parentNode;
+		parentNode = root.parentNode;
+	}
+	return root.nextSibling;
 }
 

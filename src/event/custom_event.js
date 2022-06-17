@@ -9,7 +9,8 @@ export let customEventType = {
 	backspaceRange: 'backspaceRange',
 
 
-	enterOne: 'enterOne'
+	enterOne: 'enterOne',
+	enterRange: 'enterRange'
 }
 
 export function bindCustomEvent(dom, event){

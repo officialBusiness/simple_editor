@@ -1,6 +1,8 @@
-import deleteOne from './delete_one.js';
-import deleteOneOnStart from './delete_one_on_start.js';
-import mergeNode from './merge_node.js';
+import deleteOne from './operation/delete_one.js';
+import deleteOneOnStart from './operation/delete_one_on_start.js';
+import deleteRange from './operation/delete_range.js';
+import mergeNode from './operation/merge_node.js';
+import enterOne from './operation/enter_one.js';
 
 export default {
 	type: 'paragraph',
@@ -27,7 +29,9 @@ export default {
 		this.bindCustomEvent(paragraph, {
 			[this.customEventType.backspaceOne]: deleteOne,
 			[this.customEventType.backspaceOnStart]: deleteOneOnStart,
-			[this.customEventType.mergeNode]: mergeNode
+			[this.customEventType.mergeNode]: mergeNode,
+			[this.customEventType.backspaceRange]: deleteRange,
+			[this.customEventType.enterOne]: enterOne
 		});
 		return paragraph;
 	},

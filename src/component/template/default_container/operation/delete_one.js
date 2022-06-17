@@ -24,37 +24,7 @@ export default function deleteOne(node, offset){
 			node.deleteData(offset - 1, 1);
 		}else if( offset === 1 && node.length === 1 ){//	删空 text
 			console.log('删空 text');
-			if( preNode ){//	前面有节点
-				console.log('前面有节点');
-				let parentNode = singleNode.parentNode,
-						previousSibling = singleNode.previousSibling,
-						nextSibling = singleNode.nextSibling;
-				rangeApi.endNodeRange(preNode);
-				nodeApi.removeNode(singleNode);//	删除text独立节点
-				if( previousSibling &&
-						previousSibling.nodeType === Node.TEXT_NODE &&
-						nextSibling &&
-						nextSibling.nodeType === Node.TEXT_NODE ){//	前后节点都是text
-					console.log('前后节点都是 text');
-					parentNode.normalize();//	合并前后 text
-				}
-			}else{//	前面没有节点
-				console.log('前面没有节点');
-				if( nextNode ){//	后面有节点
-					console.log('后面有节点');
-					rangeApi.startNodeRange(nextNode);
-					nodeApi.removeNode(singleNode);//删除text关联节点
-				}else{//	后面没有节点
-					console.log('后面没有节点');
-					let parentNode = singleNode.parentNode;
-					if( nodeApi.isContainer(parentNode) ){
-						rangeApi.setCollapsedRange(parentNode, 0);
-						nodeApi.removeNode(singleNode);
-					}else{
-						console.error('不知道的特殊情况,按照常理,前后都没有的话，那应该已经是 container,不会打印此信息')
-					}
-				}
-			}
+			deleteOneNode.call(this, node);
 		}else if( offset === 0 ){//	在 text 头部
 			console.log('在 text 头部, text 存在字符');
 			if( nodeApi.isStartInContainer(singleNode) ){
@@ -114,35 +84,7 @@ export default function deleteOne(node, offset){
 			}
 		}else if( offset === 1 && node.childNodes.length === 1 ){//	删空元素
 			console.log('删空元素', singleNode);
-			if( preNode ){
-				console.log('前面有节点');
-				let previousSibling = singleNode.previousSibling,
-						nextSibling = singleNode.nextSibling;
-				rangeApi.endNodeRange(preNode);
-				nodeApi.removeNode(singleNode);
-				if( previousSibling &&
-						previousSibling.nodeType === Node.TEXT_NODE &&
-						nextSibling &&
-						nextSibling.nodeType === Node.TEXT_NODE ){//	前后节点都是text
-					console.log('前后节点都是 text');
-					parentNode.normalize();//	合并前后 text
-				}
-			}else{
-				console.log('前面没有节点');
-				if( nextNode ){
-					console.log('后面有节点');
-					rangeApi.startNodeRange(nextNode);
-					nodeApi.removeNode(singleNode);
-				}else{
-					console.log('后面没有节点');
-					if( nodeApi.isContainer(parentNode) ){
-						rangeApi.setCollapsedRange(parentNode, 0);
-						nodeApi.removeNode(singleNode);
-					}else{
-						console.error('不知道的特殊情况,按照常理,前后都没有的话，那应该已经是 container,不会打印此信息')
-					}
-				}
-			}
+			deleteOneNode.call(this, singleNode);
 		}else if( offset === 0 ){
 			console.log('在元素头部');
 			if( nodeApi.isContainer(node) ){
@@ -162,5 +104,43 @@ export default function deleteOne(node, offset){
 	}else{
 		console.error('不知道的特殊情况');
 	}
+}
 
+export function deleteOneNode(node){
+	let 
+			{ rangeApi, nodeApi } = this,
+			singleNode = nodeApi.getSingleNodeInContainer(node),
+			parentNode = singleNode.parentNode,
+			preNode = nodeApi.getPreNodeInContainer(singleNode),
+			nextNode = nodeApi.getNextNodeInContainer(singleNode);
+
+	if( preNode ){//	前面有节点
+		console.log('前面有节点');
+		let previousSibling = singleNode.previousSibling,
+				nextSibling = singleNode.nextSibling;
+		rangeApi.endNodeRange(preNode);
+		nodeApi.removeNode(singleNode);//	删除text独立节点
+		if( previousSibling &&
+				previousSibling.nodeType === Node.TEXT_NODE &&
+				nextSibling &&
+				nextSibling.nodeType === Node.TEXT_NODE ){//	前后节点都是text
+			console.log('前后节点都是 text');
+			parentNode.normalize();//	合并前后 text
+		}
+	}else{//	前面没有节点
+		console.log('前面没有节点');
+		if( nextNode ){//	后面有节点
+			console.log('后面有节点');
+			rangeApi.startNodeRange(nextNode);
+			nodeApi.removeNode(singleNode);//删除text关联节点
+		}else{//	后面没有节点
+			console.log('后面没有节点');
+			if( nodeApi.isContainer(parentNode) ){
+				rangeApi.setCollapsedRange(parentNode, 0);
+				nodeApi.removeNode(singleNode);
+			}else{
+				console.error('不知道的特殊情况,按照常理,前后都没有的话，那应该已经是 container,不会打印此信息');
+			}
+		}
+	}
 }

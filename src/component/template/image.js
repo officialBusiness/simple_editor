@@ -1,4 +1,4 @@
-import deleteOne from './default_container/delete_one.js'
+import deleteOne from './default_container/operation/delete_one.js'
 
 export default {
 	type: 'image',

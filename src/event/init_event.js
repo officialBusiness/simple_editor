@@ -65,7 +65,7 @@ export default function initEditorEvent(context){
 				});
 			}
 			if( length === index ){
-				console.info('待完善')
+				console.info('paste 事件待完善');
 			}
 		}
 	}
