@@ -30,8 +30,9 @@ export default {
 
 		let list = this.nodeApi.createElement('div', {
 			class: 'list',
+			title: Array.isArray(title) ? 'custom' : title,
 			block: true,
-			title: Array.isArray(title) ? 'custom' : title
+			mergeBlock: true
 		});
 
 		data.forEach((item, index)=>{
@@ -66,6 +67,17 @@ export default {
 					container.appendChild( childDom );
 				}
 			});
+
+			this.bindCustomEvent(container, {
+				
+			})
+		});
+
+		this.bindCustomEvent(list, {
+			getMergeNode(){
+				return list.childNodes[list.childNodes.length - 1]
+								.childNodes[1];
+			}
 		});
 
 		return list;

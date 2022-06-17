@@ -2,29 +2,33 @@
 export let customEventType = {
 	backspaceOne: 'backspaceOne',
 	backspaceOnStart: 'backspaceOnStart',
-	merge: 'merge',
+
+	mergeNode: 'mergeNode',
+	getMergeNode: 'getMergeNode',
+
 	backspaceRange: 'backspaceRange',
+
 
 	enterOne: 'enterOne'
 }
 
-// export let customEvent = {
-// 	backspaceOne: new Event(customEventType.backspaceOne),
-// 	backspaceOnStart: new Event(customEventType.backspaceOnStart),
-// 	backspaceRange: new Event(customEventType.backspaceRange),
-	
-// 	enterOne: new Event(customEventType.enterOne),
-// }
-
 export function bindCustomEvent(dom, event){
-	// this.
 	let domEvents = this.customEventMap.get(dom);
 	if( !domEvents ){
 		domEvents = {};
-
+		this.customEventMap.set(dom, domEvents);
+	}
+	for(let key in event){
+		domEvents[key] = event[key];
 	}
 }
 
-export function dispatchCustomEvent(dom, event){
-	
+export function dispatchCustomEvent(dom, eventType, params){
+	let domEvents = this.customEventMap.get(dom);
+	if( domEvents ){
+		let event = domEvents[eventType];
+		if( event ){
+			return event.apply(this, params);
+		}
+	}
 }

@@ -1,8 +1,5 @@
-export default function deleteOneOnStart(t){
+export default function deleteOneOnStart(node, offset){
 	let { rangeApi, nodeApi } = this,
-			range = rangeApi.getRange(),
-			node = range.startContainer,
-			offset = range.startOffset,
 			container = nodeApi.getContainer(node);
 
 	// console.log('this:', this);
@@ -28,20 +25,19 @@ export default function deleteOneOnStart(t){
 				console.log('前一个 Block 为空');
 				nodeApi.removeNode(preBlock);
 			}else if(nodeApi.isMerge(preBlock)) {
-				
-				let 
-					startNode = nodeApi.getEndNode(preBlock),
-					endNode = nodeApi.getStartNode(container);
-				rangeApi.endNodeRange(preBlock);
-				nodeApi.appendChildren(preBlock, container.childNodes);
-				nodeApi.removeNode(container);
-				if(startNode && startNode.nodeType === Node.TEXT_NODE &&
-						endNode && endNode.nodeType === Node.TEXT_NODE){
-					console.log('需要合并');
-					preBlock.normalize();//	合并前后 text
-				}
+				console.log('将当前 container 合并到 preBlock 中');
+				let merge = this.dispatchCustomEvent(
+					preBlock,
+					this.customEventType.getMergeNode
+				);
 
+				this.dispatchCustomEvent(
+					container,
+					this.customEventType.mergeNode,
+					[merge ? merge : preBlock, container]
+				);
 			}else if(nodeApi.isSingle(preBlock)){
+				console.log('前一个 Block 为 singleBlock');
 				nodeApi.removeNode(preBlock);
 			}else{
 				console.error('不知道的特殊情况');

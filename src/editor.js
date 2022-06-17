@@ -3,7 +3,7 @@ import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
 
 import initEditorEvent from './event/init_event.js';
-import { customEventType, bindCustomEvent } from './event/custom_event.js';
+import { customEventType, bindCustomEvent, dispatchCustomEvent } from './event/custom_event.js';
 
 export default function Editor(dom, obj){
 	// console.time('editorInit');
@@ -23,6 +23,9 @@ export default function Editor(dom, obj){
 		}
 	}
 	this.range = {};
+	
+	initEditorEvent(this);
+	this.customEventMap = new Map();
 
 	if(obj){
 		this.render(obj);
@@ -34,8 +37,6 @@ export default function Editor(dom, obj){
 			console.error('block 读取解析失败:', block);
 		}
 	}
-	initEditorEvent(this);
-	this.customEventMap = new Map();
 	this.rangeApi.startNodeNewRange(this.editorDom);
 	// console.timeEnd('editorInit');
 }
@@ -51,6 +52,7 @@ Editor.prototype.nodeApi = nodeApi;
 
 Editor.prototype.customEventType = customEventType;
 Editor.prototype.bindCustomEvent = bindCustomEvent;
+Editor.prototype.dispatchCustomEvent = dispatchCustomEvent;
 
 Editor.prototype.getRange = function(){
 	let range = rangeApi.getRange();

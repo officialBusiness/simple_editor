@@ -1,5 +1,6 @@
-import deleteOne from './delete_one.js'
-import deleteOneOnStart from './delete_one_on_start.js'
+import deleteOne from './delete_one.js';
+import deleteOneOnStart from './delete_one_on_start.js';
+import mergeNode from './merge_node.js';
 
 export default {
 	type: 'header',
@@ -11,9 +12,6 @@ export default {
 			block: true,
 			mergeBlock: true,
 			container: true,
-		}, {
-			[this.customEventType.backspaceOne]: deleteOne.bind(this),
-			[this.customEventType.backspaceOnStart]: deleteOneOnStart.bind(this),
 		});
 
 		if(Array.isArray(obj.data)){
@@ -26,6 +24,12 @@ export default {
 		}else if( typeof obj.data === 'string' ){
 			header.innerText = obj.data;
 		}
+
+		this.bindCustomEvent(header, {
+			[this.customEventType.backspaceOne]: deleteOne,
+			[this.customEventType.backspaceOnStart]: deleteOneOnStart,
+			[this.customEventType.mergeNode]: mergeNode
+		});
 		return header;
 	},
 	toObj(dom){

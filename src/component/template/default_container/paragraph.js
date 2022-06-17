@@ -1,5 +1,6 @@
-import deleteOne from './delete_one.js'
-import deleteOneOnStart from './delete_one_on_start.js'
+import deleteOne from './delete_one.js';
+import deleteOneOnStart from './delete_one_on_start.js';
+import mergeNode from './merge_node.js';
 
 export default {
 	type: 'paragraph',
@@ -13,9 +14,6 @@ export default {
 					block: true,
 					mergeBlock: true,
 					container: true,
-				}, {
-					[this.customEventType.backspaceOne]: deleteOne.bind(this),
-					[this.customEventType.backspaceOnStart]: deleteOneOnStart.bind(this),
 				});
 		if( obj.data && Array.isArray(obj.data) ){
 			obj.data.forEach((child)=>{
@@ -25,6 +23,12 @@ export default {
 				}
 			});
 		}
+
+		this.bindCustomEvent(paragraph, {
+			[this.customEventType.backspaceOne]: deleteOne,
+			[this.customEventType.backspaceOnStart]: deleteOneOnStart,
+			[this.customEventType.mergeNode]: mergeNode
+		});
 		return paragraph;
 	},
 	toObj(dom){

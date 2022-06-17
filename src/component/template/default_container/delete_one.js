@@ -1,8 +1,5 @@
-export default function deleteOne(){
-	let { rangeApi, nodeApi, customEvent } = this,
-			range = this.rangeApi.getRange(),
-			node = range.startContainer,
-			offset = range.startOffset;
+export default function deleteOne(node, offset){
+	let { rangeApi, nodeApi, customEventType } = this;
 
 	console.log( 'deleteOne:', 'node:', node, 'offset:', offset);
 	if( node.nodeType === Node.TEXT_NODE ){
@@ -62,7 +59,7 @@ export default function deleteOne(){
 			console.log('在 text 头部, text 存在字符');
 			if( nodeApi.isStartInContainer(singleNode) ){
 				console.log('根据 container 所在的组件, 触发对应的 backspaceOnStart 事件');
-				nodeApi.getContainer(node).dispatchEvent(customEvent.backspaceOnStart);
+				this.dispatchCustomEvent( nodeApi.getContainer(node), this.customEventType.backspaceOnStart, [node, offset] );
 			}else{
 				console.error('不知道的特殊情况,按照常理,应该是 container 内的第一个独立节点')
 			}
@@ -150,11 +147,11 @@ export default function deleteOne(){
 			console.log('在元素头部');
 			if( nodeApi.isContainer(node) ){
 				console.log('元素是 container');
-				node.dispatchEvent(customEvent.backspaceOnStart);
+				this.dispatchCustomEvent( node, this.customEventType.backspaceOnStart, [node, offset] );
 			}else{
 				if( nodeApi.isStartInContainer(singleNode) ){
 					console.log('根据 container 所在的组件, 触发对应的 backspaceOnStart 事件');
-					nodeApi.getContainer(node).dispatchEvent(customEvent.backspaceOnStart);
+					this.dispatchCustomEvent( nodeApi.getContainer(node), this.customEventType.backspaceOnStart, [node, offset] );
 				}else{
 					console.error('不知道的特殊情况,按照常理,应该是 container 内的第一个独立节点');
 				}

@@ -9,19 +9,6 @@ export default {
 					block: true,
 					singleBlock: true,
 					container: true
-				}, {
-					[this.customEventType.backspaceOne]: (e)=>{
-						let { startContainer, startOffset } = this.rangeApi.getRange();
-						if(startOffset === 0){
-							let preBlock = this.nodeApi.getPreBlock(imageContainer);
-							if( preBlock ){
-								this.rangeApi.endNodeRange(preBlock);
-							}
-						}else{
-							this.rangeApi.endNodeRange(this.nodeApi.getPreBlock(imageContainer));
-							this.nodeApi.removeNode(imageContainer);
-						}
-					},
 				}),
 				image = this.nodeApi.createElement('img', {
 					src: obj.src,
@@ -31,6 +18,24 @@ export default {
 					},
 				});
 		imageContainer.appendChild(image);
+
+		this.bindCustomEvent(imageContainer, {
+			[this.customEventType.backspaceOne]: (e)=>{
+				let { startContainer, startOffset } = this.rangeApi.getRange();
+				if(startOffset === 0){
+					let preBlock = this.nodeApi.getPreBlock(imageContainer);
+					if( preBlock ){
+						this.rangeApi.endNodeRange(preBlock);
+					}
+				}else if(startOffset === 1){
+					this.rangeApi.endNodeRange(this.nodeApi.getPreBlock(imageContainer));
+					this.nodeApi.removeNode(imageContainer);
+				}else{
+					console.error('不知道的特殊情况');
+				}
+			},
+		});
+
 		if(obj.width){
 			image.style.width = obj.width;
 		}
@@ -43,7 +48,12 @@ export default {
 				class: 'image_title',
 				container: true,
 				// contenteditable: false
-			}, {
+			})
+			imageTitle.innerText = obj.title;
+			imageContainer.appendChild(imageTitle);
+
+
+			this.bindCustomEvent(imageTitle, {
 				[this.customEventType.backspaceOne]: deleteOne.bind(this),
 				[this.customEventType.backspaceOnStart]: ()=>{
 					this.rangeApi.endNodeRange(image);
@@ -51,9 +61,7 @@ export default {
 						this.nodeApi.removeNode(imageTitle);
 					}
 				}
-			})
-			imageTitle.innerText = obj.title;
-			imageContainer.appendChild(imageTitle);
+			});
 		}
 		return imageContainer;
 	},

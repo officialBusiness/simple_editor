@@ -40,7 +40,11 @@ export default function initEditorEvent(context){
 	// console.log('初始化富文本事件');
 	context.editorDom.onkeydown = (e)=>{
 		let eventType;
-		(e.metaKey || e.ctrlKey) ? (eventType = controlKeyCode[e.keyCode]) : (eventType = handleKeyCode[e.keyCode]);
+
+		(e.metaKey || e.ctrlKey) ? 
+			(eventType = controlKeyCode[e.keyCode]) : 
+			(eventType = handleKeyCode[e.keyCode]);
+
 		if( eventType ){
 			e.preventDefault();
 			trigger(context, eventType);
