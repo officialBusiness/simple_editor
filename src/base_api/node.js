@@ -121,7 +121,7 @@ export function insertAfter(newNode, lastNode){
 }
 
 export function appendChildren(parentNode, childrenNodes){
-	if( !Array.isArray(childrenNodes) && !NodeList.prototype.isPrototypeOf(childrenNodes)){
+	if( !NodeList.prototype.isPrototypeOf(childrenNodes)){
 		console.error('参数出错');
 		return;
 	}
@@ -163,6 +163,7 @@ export function getStartNode(node){
 	while( node.childNodes.length > 0 ){
 		node = node.childNodes[0];
 	}
+	// console.log('node:', node);
 	return node;
 }
 

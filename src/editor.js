@@ -37,7 +37,9 @@ export default function Editor(dom, obj){
 			console.error('block 读取解析失败:', block);
 		}
 	}
-	this.rangeApi.startNodeNewRange(this.editorDom);
+	this.rangeApi.setNewCollapsedRange(
+		this.nodeApi.getStartNode(this.editorDom), 0
+	);
 	// console.timeEnd('editorInit');
 }
 
@@ -54,11 +56,20 @@ Editor.prototype.customEventType = customEventType;
 Editor.prototype.bindCustomEvent = bindCustomEvent;
 Editor.prototype.dispatchCustomEvent = dispatchCustomEvent;
 
-Editor.prototype.getRange = function(){
+Editor.prototype.getNowRange = function(){
 	let range = rangeApi.getRange();
 	if( range && this.editorDom.contains(range.commonAncestorContainer) ){
 		return range;
 	}else{
+		return null;
+	}
+}
+
+Editor.prototype.getRange = function(){
+	let range = rangeApi.getRange();
+	if( range && this.editorDom.contains(range.commonAncestorContainer) ){
+		return range;
+	}else if(this.range){
 		return this.range;
 	}
 }
@@ -137,14 +148,14 @@ Editor.prototype.insertElement = function insertElement(node, start, offset){
 	return this;
 }
 // 在 container 内插入文字
-Editor.prototype.insertText = function insertText(text, start, offset){
+Editor.prototype.insertText = function insertText(string, start, offset){
 	let rangeApi = this.rangeApi,
 			nodeApi = this.nodeApi;
 	if( start.nodeType === Node.TEXT_NODE ){
-		start.insertData(offset, text);
-		rangeApi.setCollapsedRange(start, offset + text.length);
+		start.insertData(offset, string);
+		rangeApi.setCollapsedRange(start, offset + string.length);
 	}else if( start.nodeType === Node.ELEMENT_NODE ){
-		let text = nodeApi.createTextNode(text);
+		let text = nodeApi.createTextNode(string);
 		if( offset === 0 ){
 			start.insertBefore(text, start.childNodes[0]);
 		}else{
@@ -153,4 +164,20 @@ Editor.prototype.insertText = function insertText(text, start, offset){
 		rangeApi.setCollapsedRange(text, text.length);
 	}
 	return this;
+}
+
+Editor.prototype.transformBlock = function transformBlock(type){
+	let range = this.getRange();
+	if( !range ){
+		throw new Error('range 不存在');
+	}
+	let 
+		{ startContainer, startOffset, endContainer, endOffset } = range,
+		oldBlock = nodeApi.getBlock(range.startContainer),
+		newBlock = this.getBlockDom(type, {type});
+
+	this.nodeApi.appendChildren(newBlock, oldBlock.childNodes);
+	this.nodeApi.insertAfter(newBlock, oldBlock);
+	this.nodeApi.removeNode(oldBlock);
+	this.rangeApi.setNewRange(startContainer, startOffset, endContainer, endOffset);
 }

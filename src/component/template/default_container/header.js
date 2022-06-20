@@ -8,7 +8,9 @@ export default {
 	type: 'header',
 	alias: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
 	isBlock: true,
-	toDom(obj){
+	toDom(obj = {
+		type: "header"
+	}){
 		let header = this.nodeApi.createElement(obj.type, {
 			class: 'header',
 			block: true,

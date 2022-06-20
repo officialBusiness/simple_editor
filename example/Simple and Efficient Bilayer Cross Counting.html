@@ -40,7 +40,9 @@
 		import Editor from '../src/editor.js';
 		import { original } from './Simple and Efficient Bilayer Cross Counting.js';
 
-		let editor = new Editor(document.getElementById('editor'), original);
+		let editor =
+			new Editor(document.getElementById('editor'), original)
+				// .setEditable(false);
 
 		window.original = original;
 		window.editor = editor;

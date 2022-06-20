@@ -61,16 +61,19 @@ export default function initEditorEvent(context){
 			if( item.kind === 'string' 
 				&& item.type === 'text/plain' ){
 				item.getAsString((str)=>{
-					 string += str;
+					string += str;
+					// console.log('item:', item);
+					if( length === index ){
+						// console.info('paste 事件待完善');
+						// console.log('string:', string);
+						triggerEvent['paste'].call(context, string);
+					}
 				});
-			}
-			if( length === index ){
-				console.info('paste 事件待完善');
 			}
 		}
 	}
 	context.editorDom.oncopy = (e)=>{
-		e.preventDefault();
+		// e.preventDefault();
 	}
 
 	context.editorDom.ondragstart = (e)=>{

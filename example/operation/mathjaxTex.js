@@ -1,5 +1,5 @@
 
-export default function initMathjax(){
+export default function initMathjax(editor){
 	let
 		mathjaxButton = document.getElementById('mathjaxButton'),
 		mathjaxContainer = document.getElementById('mathjaxContainer'),
