@@ -87,3 +87,26 @@ body{
 	padding: 10px;
 	cursor: pointer;
 }
+
+
+
+#paragraphAndHeader {
+	position: relative;
+	width: 60px;
+}
+
+#paragraphAndHeader > #paragraphAndHeaderSelected {
+	overflow: visible;
+}
+
+#paragraphAndHeader > #paragraphAndHeaderSelection {
+	position: absolute;
+	top: 100%;
+	text-align: center;
+	left: 10px;
+	display: none;
+}
+
+#paragraphAndHeader:hover > #paragraphAndHeaderSelection {
+	display: block;
+}

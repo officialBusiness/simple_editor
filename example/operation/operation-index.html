@@ -43,6 +43,16 @@
 		</div>
 		<div class="editor_tool">
 			<div id="mathjaxButton" class="button"><icon class="iconfont icon-fsux_tubiao_gongshi_jisuan"></icon></div>
+
+			<div id="paragraphAndHeader" class="button">
+				<div id="paragraphAndHeaderSelected"></div>
+				<div id="paragraphAndHeaderSelection">
+					<div class="selection">正文</div>
+					<div class="selection">h1</div>
+					<div class="selection">h2</div>
+					<div class="selection">h3</div>
+				</div>
+			</div>
 		</div>
 		<div id="operation-index">
 			<div id="editor"></div>
@@ -51,6 +61,7 @@
 	<script type="module">
 		import Editor from '../../src/editor.js';
 		import initMathjax from './mathjaxTex.js';
+		import initParagraphAndHeader from './paragraphAndHeader.js';
 		// import { original } from '../Simple and Efficient Bilayer Cross Counting.js';
 
 		let editor = new Editor(document.getElementById('editor'));
@@ -58,5 +69,6 @@
 		window.editor = editor;
 
 		initMathjax(editor);
+		initParagraphAndHeader(editor);
 	</script>
 </html>
