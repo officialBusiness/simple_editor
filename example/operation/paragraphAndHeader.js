@@ -4,13 +4,11 @@ export default function initParagraphAndHeader(editor){
 		selected = document.getElementById('paragraphAndHeaderSelected'),
 		selection = document.getElementById('paragraphAndHeaderSelection'),
 		selections = selection.getElementsByClassName('selection');
-	console.log('selections:', selections);
+	// console.log('selections:', selections);
 	for( let i = selections.length - 1; i >= 0; i-- ){
-		console.log(`selections[${i}]:`, selections[i])
+		// console.log(`selections[${i}]:`, selections[i])
 		selections[i].onmousedown = ()=>{
-			let type = getBlockType(selections[i]);
-			console.log(type);
-			// console.log('selections[i]:', selections[i]);
+			getBlockType(selections[i]);
 		}
 	}
 
@@ -26,7 +24,5 @@ export default function initParagraphAndHeader(editor){
 				editor.transformBlock('paragraph');
 				break;
 		}
-		console.log('type:', type);
 	}
-
 }

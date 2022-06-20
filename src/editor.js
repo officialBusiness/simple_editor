@@ -179,5 +179,5 @@ Editor.prototype.transformBlock = function transformBlock(type){
 	this.nodeApi.appendChildren(newBlock, oldBlock.childNodes);
 	this.nodeApi.insertAfter(newBlock, oldBlock);
 	this.nodeApi.removeNode(oldBlock);
-	this.rangeApi.setNewRange(startContainer, startOffset, endContainer, endOffset);
+	// this.rangeApi.setNewRange(startContainer, startOffset, endContainer, endOffset);
 }
