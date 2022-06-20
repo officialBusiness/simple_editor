@@ -14,7 +14,9 @@ export default {
 					src: obj.src,
 				}, {
 					mousedown: (e)=>{
-						this.rangeApi.endNodeRange(image);
+						if( this.editable ){
+							this.rangeApi.endNodeRange(image);
+						}
 					},
 				});
 		imageContainer.appendChild(image);

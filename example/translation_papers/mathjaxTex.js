@@ -1,5 +1,5 @@
 
-export default function initMathjax(editor){
+export default function initMathjax(editorEnglish, editorChinese){
 	let
 		mathjaxButton = document.getElementById('mathjaxButton'),
 		mathjaxContainer = document.getElementById('mathjaxContainer'),
@@ -26,11 +26,18 @@ export default function initMathjax(editor){
 	cancel.onclick = hiddenMathjax
 	comfirm.onclick = comfirmMathJax
 
+	editorEnglish.addComponentEvent('mathjax', 'imgMousedown', (edtior, mathjaxObj)=>{
+		// console.log('edtior:', edtior);
+		console.log('mathjaxObj:', mathjaxObj);
+		showMathjax();
+		mathjaxTex.value = mathjaxObj.data;
+	});
+
 	function comfirmMathJax(){
 		hiddenMathjax();
 		if( mathjaxTex.value && mathjaxTex.value.trim() ){
-			let range = editor.getRange();
-			editor.insertElement( editor.getComponentDom({
+			let range = editorChinese.getRange();
+			editorChinese.insertElement( editorChinese.getComponentDom({
 				type: 'mathjax',
 				data: mathjaxTex.value
 			}), range.startContainer, range.startOffset );

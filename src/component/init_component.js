@@ -2,6 +2,7 @@ import * as factories from './template/index.js';
 
 /*{
 	type,
+	eventInterface,
 	alias,
 	isBlock,
 	toDom(obj){

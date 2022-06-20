@@ -1,5 +1,5 @@
 
-export default function initParagraphAndHeader(editor){
+export default function initParagraphAndHeader(editorEnglish, editorChinese){
 	let
 		selected = document.getElementById('paragraphAndHeaderSelected'),
 		selection = document.getElementById('paragraphAndHeaderSelection'),
@@ -18,10 +18,10 @@ export default function initParagraphAndHeader(editor){
 			case 'h1':
 			case 'h2':
 			case 'h3':
-				editor.transformBlock(type);
+				editorChinese.transformBlock(type);
 				break;
 			case '正文':
-				editor.transformBlock('paragraph');
+				editorChinese.transformBlock('paragraph');
 				break;
 		}
 	}

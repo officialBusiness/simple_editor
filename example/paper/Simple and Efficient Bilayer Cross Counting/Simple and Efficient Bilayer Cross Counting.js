@@ -2498,7 +2498,143 @@ export const translation = {
             "data":[
                 {
                     "type":"text",
-                    "data":"令"
+                    "data":"令 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"G=(N,S,E)"
+                },
+                {
+                    "type":"text",
+                    "data":" 为节点集 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"N"
+                },
+                {
+                    "type":"text",
+                    "data":" 和 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"S"
+                },
+                {
+                    "type":"text",
+                    "data":" 不相交的二分图，并令 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"E"
+                },
+                {
+                    "type":"text",
+                    "data":" 中的所有边的端节各为 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"E"
+                },
+                {
+                    "type":"text",
+                    "data":" 和 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"S"
+                },
+                {
+                    "type":"text",
+                    "data":" 中的节点。进一步，令 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"L_{N}, L_{s} \\subset IR^2"
+                },
+                {
+                    "type":"text",
+                    "data":" 为两条不相交的平行线，一条“北”线和一条“南”线。双层图 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"BLD(G)"
+                },
+                {
+                    "type":"text",
+                    "data":" 中的节点 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"n_i \\in N = \\{ n_0,n_1,...,n_{p−1} \\}"
+                },
+                {
+                    "type":"text",
+                    "data":" 为 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"L_N"
+                },
+                {
+                    "type":"text",
+                    "data":" 上不同的节点 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"P(n_i)"
+                },
+                {
+                    "type":"text",
+                    "data":" ，节点 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"s_j \\in S = \\{s_0,s_1,...,s_{q−1}\\}"
+                },
+                {
+                    "type":"text",
+                    "data":" 为 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"L_S"
+                },
+                {
+                    "type":"text",
+                    "data":" 上不同的节点 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"P(s_j)"
+                },
+                {
+                    "type":"text",
+                    "data":" 。边 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"e_k = (n_i,s_j) \\in E = \\{e_0,e_1,...,e_{r−1}\\}"
+                },
+                {
+                    "type":"text",
+                    "data":" 是端点为 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"P(n_i)"
+                },
+                {
+                    "type":"text",
+                    "data":" 和 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"P(s_j)"
+                },
+                {
+                    "type":"text",
+                    "data":" 的直线段，如图1示例。"
                 }
             ]
         }

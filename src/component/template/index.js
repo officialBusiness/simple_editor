@@ -8,5 +8,3 @@ export { default as text } from './text.js';
 export { default as mathjax } from './mathjax.js';
 export { default as list } from './list.js';
 // export { default as format } from './format.js';
-
-

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>start</title>
+		<title>translation papers</title>
 		<style type="text/css">
 			html,body{
 				margin: 0;
@@ -65,10 +65,24 @@
 		import { original, translation } from '../paper/Simple and Efficient Bilayer Cross Counting/Simple and Efficient Bilayer Cross Counting.js';
 
 		let
-			editorEnglish = new Editor(document.getElementById('editor-english'), original),
+			editorEnglish = new Editor(document.getElementById('editor-english'), original)
+					.setEditable(false),
 			editorChinese = new Editor(document.getElementById('editor-chinese'), translation);
 		window.editorChinese = editorChinese;
-		initMathjax(editorChinese);
-		initParagraphAndHeader(editorChinese);
+
+		function rememberRange(){
+			console.log('rememberRange');
+			setTimeout(()=>{
+				editorChinese.setRange();
+			}, 0)
+		}
+
+		editorChinese.editorDom.addEventListener('mousedown', rememberRange);
+		editorChinese.editorDom.addEventListener('keydown', rememberRange);
+
+		initMathjax(editorEnglish, editorChinese);
+		initParagraphAndHeader(editorEnglish, editorChinese);
+
+
 	</script>
 </html>

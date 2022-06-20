@@ -13,14 +13,7 @@ export default function Editor(dom, obj){
 	this.editorDom.setAttribute('editor', true);
 
 	this.editorDom.onblur = ()=>{
-		let range = rangeApi.getRange();
-		if( this.editable && range ){
-			this.range.collapsed = range.collapsed;
-			this.range.startContainer = range.startContainer;
-			this.range.startOffset = range.startOffset;
-			this.range.endContainer = range.endContainer;
-			this.range.endOffset = range.endOffset;
-		}
+		this.setRange();
 	}
 	this.range = {};
 	
@@ -55,6 +48,17 @@ Editor.prototype.nodeApi = nodeApi;
 Editor.prototype.customEventType = customEventType;
 Editor.prototype.bindCustomEvent = bindCustomEvent;
 Editor.prototype.dispatchCustomEvent = dispatchCustomEvent;
+
+Editor.prototype.setRange = function setRange(){
+	let range = this.rangeApi.getRange();
+	if( this.editable && this.editorDom.contains(range.commonAncestorContainer) && range ){
+		this.range.collapsed = range.collapsed;
+		this.range.startContainer = range.startContainer;
+		this.range.startOffset = range.startOffset;
+		this.range.endContainer = range.endContainer;
+		this.range.endOffset = range.endOffset;
+	}
+}
 
 Editor.prototype.getNowRange = function(){
 	let range = rangeApi.getRange();
@@ -115,8 +119,10 @@ Editor.prototype.getComponentObj = function(type, dom){
 	return componentApi.getComponentObj(this, type, dom);
 }
 
-Editor.prototype.addComponentEvent = function(component, eventType, event){
-
+Editor.prototype.addComponentEvent = function(componentType, eventType, event){
+	let component = componentApi.getComponent(componentType)
+	component.eventInterface[eventType] = event;
+	return this;
 }
 
 // 在 container 内插入元素
