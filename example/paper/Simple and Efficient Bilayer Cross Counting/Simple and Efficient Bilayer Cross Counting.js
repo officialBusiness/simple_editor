@@ -126,15 +126,7 @@ export const original = {
 				},
 				{
 					type: "mathjax",
-					data: "L_{N}"
-				},
-				{
-					type: "text",
-					data: " , "
-				},
-				{
-					type: "mathjax",
-					data: "L_{s} \\subset IR^2"
+					data: "L_{N}, L_{s} \\subset IR^2"
 				},
 				{
 					type: "text",
@@ -2416,4 +2408,99 @@ export const original = {
         },
 
 	]
+}
+
+export const translation = {
+    "blocks":[
+        {
+            "type":"h1",
+            "data":"简单高效的双层交叉计数"
+        },
+        {
+            "type":"h2",
+            "data":"摘要"
+        },
+        {
+            "type":"paragraph",
+            "data":[
+                {
+                    "type":"text",
+                    "data":"本文研究了在绘制具有节点集 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"V"
+                },
+                {
+                    "type":"text",
+                    "data":" 和边集 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"E"
+                },
+                {
+                    "type":"text",
+                    "data":" 的二分图 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"G=(V,E)"
+                },
+                {
+                    "type":"text",
+                    "data":" "
+                },
+                {
+                    "type":"text",
+                    "data":"时，计算内边交叉的问题。二分图的两个边的节点在两条平行线上被绘制为不同的点，而边被绘制为直线段。这一问题的有效解决对分层图形绘制具有重要意义。我们的主要观察结果是，它可以简化为计算某个序列的倒数。这直接导致了一个基于合并排序的 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"O(\\left \\vert E \\right \\vert \\log \\left \\vert V \\right \\vert)"
+                },
+                {
+                    "type":"text",
+                    "data":" 的算法。我们提出了一个更简单的 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"O(\\left \\vert E \\right \\vert \\log \\left \\vert V_{small} \\right \\vert)"
+                },
+                {
+                    "type":"text",
+                    "data":" 的算法，其中 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"V_{small}"
+                },
+                {
+                    "type":"text",
+                    "data":" 是图的节点集 "
+                },
+                {
+                    "type":"mathjax",
+                    "data":"V"
+                },
+                {
+                    "type":"text",
+                    "data":" 的二分划中较小的基数节点集。该算法很容易实现。我们在大量实例上的计算实验表明，与之前发布的算法相比，该算法表现良好，而且相比以前发布的算法，该算法的理解和实现要更加简单。"
+                }
+            ]
+        },
+        {
+            "type":"h2",
+            "data":"1 介绍"
+        },
+        {
+            "type":"paragraph",
+            "data":[
+                {
+                    "type":"text",
+                    "data":"令"
+                }
+            ]
+        }
+    ]
 }

@@ -13,39 +13,39 @@
 			}
 			body{
 				display: flex;
-				flex-direction: column;
 			}
-			#editor{
+			#editor-english,
+			#editor-chinese{
 				box-sizing: border-box;
-				margin: auto;
 				padding: 0 40px 40px 40px;
 				border: 0;
 				max-width: 900px;
-				width: 100%;
+				width: 50%;
 				min-width: 350px;
-				height: auto;
-				min-height: 1024px;
-				/*min-height: 100%;*/
-				/*overflow: auto;*/
+				height: 100%;
 				outline: none;
+				overflow: auto;
 			}
 		</style>
 		<script type="text/javascript" src="../../../src/thirdparty/tex-svg.js"></script>
 		<link rel="stylesheet" type="text/css" href="../../../src/editor.css" />
 	</head>
 	<body>
-		<div id="editor"></div>
+		<div id="editor-english"></div>
+		<div id="editor-chinese"></div>
 	</body>
 	<script type="module">
 		import Editor from '../../../src/editor.js';
-		import { original } from './Simple and Efficient Bilayer Cross Counting.js';
+		import { original, translation } from './Simple and Efficient Bilayer Cross Counting.js';
 
-		let editor =
-			new Editor(document.getElementById('editor'), original)
-				// .setEditable(false);
+		let editorEnglish =
+			new Editor(document.getElementById('editor-english'), original)
+				.setEditable(false),
+			editorChinese =
+			new Editor(document.getElementById('editor-chinese'), translation)
+				.setEditable(false);
 
-		window.original = original;
-		window.editor = editor;
-
+		window.editorEnglish = editorEnglish;
+		window.editorChinese = editorChinese;
 	</script>
 </html>
