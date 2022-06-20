@@ -92,18 +92,21 @@ body{
 
 #paragraphAndHeader {
 	position: relative;
-	width: 60px;
+	/*width: 60px;*/
 }
 
 #paragraphAndHeader > #paragraphAndHeaderSelected {
 	overflow: visible;
+  width: 80px;
+  text-align: center;
 }
 
 #paragraphAndHeader > #paragraphAndHeaderSelection {
 	position: absolute;
 	top: 100%;
-	text-align: center;
 	left: 10px;
+	width: 100%;
+	text-align: left;
 	display: none;
 }
 
