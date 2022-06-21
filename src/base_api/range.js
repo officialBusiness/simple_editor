@@ -91,6 +91,27 @@ export function startNodeRange(node){
 	}
 }
 
+// 选择一个节点的最末端,清除原来的 range
+export function endNodeNewRange(node){
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[node.childNodes.length - 1];
+	}
+	while( node && nodeApi.isNotEditable(node) ){
+		console.log('存在不可编辑的节点,需要跳过:', node);
+		node = nodeApi.getPreEndNodeInBlock(node);
+	}
+	if( !node ){
+		console.error('node不存在, 请检查组件设计是否正确');
+	}
+	if(node.nodeType === Node.TEXT_NODE){
+		setNewCollapsedRange(node, node.length);
+	}else if(node.nodeType === Node.ELEMENT_NODE){
+		setNewCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node) + 1);
+	}else{
+		console.error('没有处理的节点类型');
+	}
+}
+
 // 选择一个节点的最开始,清除原来的 range
 export function startNodeNewRange(node){
 	while( node.childNodes.length > 0 ){

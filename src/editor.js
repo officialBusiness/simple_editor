@@ -133,10 +133,18 @@ Editor.prototype.insertElement = function insertElement(node, start, offset){
 					index = this.nodeApi.getNodeIndexOf(singleNode);
 			if( offset === 0 ){
 				singleNode.parentNode.insertBefore(node, singleNode);
-				this.rangeApi.setNewCollapsedRange(singleNode.parentNode, index + 1);
+				if( node.childNodes.length > 0 ){
+					this.rangeApi.endNodeNewRange(node);
+				}else{
+					this.rangeApi.setNewCollapsedRange(singleNode.parentNode, index + 1);
+				}
 			}else if( offset === start.length ){
 				this.nodeApi.insertAfter(node, singleNode);
-				this.rangeApi.setNewCollapsedRange(singleNode.parentNode, index + 2);
+				if( node.childNodes.length > 0 ){
+					this.rangeApi.endNodeNewRange(node);
+				}else{
+					this.rangeApi.setNewCollapsedRange(singleNode.parentNode, index + 2);
+				}
 			}
 		}else{
 			console.info('待完善');
@@ -144,10 +152,18 @@ Editor.prototype.insertElement = function insertElement(node, start, offset){
 	}else if( start.nodeType === Node.ELEMENT_NODE ){
 		if( offset === 0 ){
 			start.appendChild(node);
-			this.rangeApi.setNewCollapsedRange(start, 1);
+			if( node.childNodes.length > 0 ){
+				this.rangeApi.endNodeNewRange(node);
+			}else{
+				this.rangeApi.setNewCollapsedRange(start, 1);
+			}
 		}else{
 			this.nodeApi.insertAfter(node, start.childNodes[offset - 1]);
-			this.rangeApi.setNewCollapsedRange(start, offset + 1);
+			if( node.childNodes.length > 0 ){
+				this.rangeApi.endNodeNewRange(node);
+			}else{
+				this.rangeApi.setNewCollapsedRange(start, offset + 1);
+			}
 		}
 	}
 

@@ -7,14 +7,25 @@ export default function initMathjax(editorEnglish, editorChinese){
 		// mathjaxImg = document.getElementById('mathjaxImg'),
 		mathjaxTexContainer = document.getElementById('mathjaxTexContainer'),
 		// mathjaxTex = document.getElementById('mathjaxTex'),
-		comfirm = document.getElementById('comfirm'),
-		cancel = document.getElementById('cancel')
+		comfirmMathjaxButton = document.getElementById('comfirmMathjaxButton'),
+		cancelMathjaxButton = document.getElementById('cancelMathjaxButton'),
+		addMathjaxButton = document.getElementById('addMathjaxButton'),
+		reduceMathjaxButton = document.getElementById('reduceMathjaxButton');
 
 
 	mathjaxButton.onmousedown = showMathjax;
 
-	cancel.onclick = hiddenMathjax
-	comfirm.onclick = comfirmMathJax
+	cancelMathjaxButton.onclick = hiddenMathjax
+	comfirmMathjaxButton.onclick = comfirmMathjax
+	addMathjaxButton.onclick = ()=>{
+		addMathjaxTex();
+	}
+	reduceMathjaxButton.onclick = ()=>{
+		mathjaxTexContainer.removeChild(
+			mathjaxTexContainer.childNodes[mathjaxTexContainer.childNodes.length - 1]
+		)
+		initMathjaxTexImage();
+	}
 
 	editorEnglish.addComponentEvent('mathjax', 'imgMousedown', (edtior, mathjaxObj)=>{
 		if( edtior === editorEnglish ){
@@ -35,7 +46,7 @@ export default function initMathjax(editorEnglish, editorChinese){
 
 	function initMathjaxTexImage(){
 		editorEnglish.nodeApi.emptyAllChild(imgConatienr);
-		console.log('imgConatienr:', imgConatienr);
+		// console.log('imgConatienr:', imgConatienr);
 		imgConatienr.appendChild(editorChinese.getComponentDom({
 			type: 'mathjax',
 			data: getMathjaxTexValue()
@@ -60,12 +71,15 @@ export default function initMathjax(editorEnglish, editorChinese){
 			// console.log('e:', e);
 			if( e.key === 'Enter' ){
 				e.preventDefault();
-				comfirmMathJax();
+				comfirmMathjax();
 			}else if( e.key === 'Escape' ){
 				hiddenMathjax();
 			}
 		}
 		mathjaxTexContainer.appendChild(mathjaxTex);
+		setTimeout(()=>{
+			mathjaxTex.focus();
+		}, 0);
 	}
 
 	function getMathjaxTexValue(){
@@ -84,7 +98,7 @@ export default function initMathjax(editorEnglish, editorChinese){
 		return tex;
 	}
 
-	function comfirmMathJax(){
+	function comfirmMathjax(){
 		hiddenMathjax();
 		let tex = getMathjaxTexValue();
 		if( tex ){
@@ -97,15 +111,14 @@ export default function initMathjax(editorEnglish, editorChinese){
 	}
 
 	function showMathjax(){
-		initMathjaxTex(1)
 		mathjaxContainer.style.display = 'flex';
-		setTimeout(()=>{
-			mathjaxTexContainer.childNodes[0].focus();
-		}, 0);
+		initMathjaxTex(1);
 	}
+
 	function hiddenMathjax(){
 		mathjaxContainer.style.display = 'none';
 	}
+
 	function getBase64(tex){
 		try{
 			var svgData = new XMLSerializer().serializeToString( MathJax.tex2svg(tex).childNodes[0] );
