@@ -41,6 +41,24 @@
 				</div>
 			</div>
 		</div>
+		<div id="imageContainer">
+			<div id="image">
+				<div class="image">
+					<img id="showImage" />
+				</div>
+				<div id="imageTitle">
+					<input id="titleInput" type="text" >
+				</div>
+				<div class="button">
+					<div>
+						<input id="imageImport" type="file" name="">
+						导入
+					</div>
+					<div id="imageComfirm">确定</div>
+					<div id="imageCancel">取消</div>
+				</div>
+			</div>
+		</div>
 		<div class="editor_tool">
 			<div id="mathjaxButton" class="button"><icon class="iconfont icon-fsux_tubiao_gongshi_jisuan"></icon></div>
 			<div id="paragraphAndHeader" class="button">
@@ -52,6 +70,7 @@
 					<div class="selection">h3</div>
 				</div>
 			</div>
+			<div id="imageButton" class="button"><icon class="iconfont icon-tupian"></icon></div>
 		</div>
 		<div id="operation-index">
 			<div id="editor-english" class="editor"></div>
@@ -60,8 +79,10 @@
 	</body>
 	<script type="module">
 		import Editor from '../../src/editor.js';
-		import initMathjax from './mathjaxTex.js';
-		import initParagraphAndHeader from './paragraphAndHeader.js';
+		import initMathjax from './init_editor_tool/mathjax_tex.js';
+		import initParagraphAndHeader from './init_editor_tool/paragraph_and_header.js';
+		import initImage from './init_editor_tool/image.js';
+
 		import { original, translation } from '../paper/Simple and Efficient Bilayer Cross Counting/Simple and Efficient Bilayer Cross Counting.js';
 
 		let
@@ -71,7 +92,6 @@
 		window.editorChinese = editorChinese;
 
 		function rememberRange(){
-			console.log('rememberRange');
 			setTimeout(()=>{
 				editorChinese.setRange();
 			}, 0)
@@ -82,6 +102,7 @@
 
 		initMathjax(editorEnglish, editorChinese);
 		initParagraphAndHeader(editorEnglish, editorChinese);
+		initImage(editorEnglish, editorChinese);
 
 
 	</script>

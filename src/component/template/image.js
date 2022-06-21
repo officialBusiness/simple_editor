@@ -1,14 +1,21 @@
 import deleteOne from './default_container/operation/delete_one.js'
 
-export default {
+let imageComponent = {
 	type: 'image',
 	isBlock: true,
+	eventInterface: {
+		mousedown: ()=>{}
+	},
 	toDom(obj){
 		let imageContainer = this.nodeApi.createElement('div', {
 					class: 'image',
 					block: true,
 					singleBlock: true,
 					container: true
+				}, {
+					mousedown: (e)=>{
+						imageComponent.eventInterface.mousedown(this, obj);
+					},
 				}),
 				image = this.nodeApi.createElement('img', {
 					src: obj.src,
@@ -18,7 +25,8 @@ export default {
 							this.rangeApi.endNodeRange(image);
 						}
 					},
-				});
+				}),
+				imageTitle;
 		imageContainer.appendChild(image);
 
 		this.bindCustomEvent(imageContainer, {
@@ -36,6 +44,20 @@ export default {
 					console.error('不知道的特殊情况');
 				}
 			},
+			[this.customEventType.enterOne]: (e)=>{
+				let { startContainer, startOffset } = this.rangeApi.getRange();
+				if( startOffset === 0 ){
+					console.error('暂时还没完善');
+				}else if( startOffset === 1 ){
+					if(imageTitle){
+						this.rangeApi.startNodeRange(imageTitle);
+					}else{
+						let newBlock = this.getBlockDom('paragraph');
+						this.nodeApi.insertAfter( newBlock, imageContainer );
+						this.rangeApi.setCollapsedRange(newBlock, 0);
+					}
+				}
+			}
 		});
 
 		if(obj.width){
@@ -46,7 +68,7 @@ export default {
 		}
 
 		if( obj.title ){
-			let imageTitle = this.nodeApi.createElement('div', {
+			imageTitle = this.nodeApi.createElement('div', {
 				class: 'image_title',
 				container: true,
 				// contenteditable: false
@@ -61,6 +83,16 @@ export default {
 					this.rangeApi.endNodeRange(image);
 					if(this.nodeApi.isEmpty(imageTitle)){
 						this.nodeApi.removeNode(imageTitle);
+					}
+				},
+				[this.customEventType.enterOne]: ()=>{
+					let { startContainer, startOffset } = this.rangeApi.getRange();
+					if( startOffset === startContainer.length ){
+						let newBlock = this.getBlockDom('paragraph');
+						this.nodeApi.insertAfter( newBlock, imageContainer );
+						this.rangeApi.setCollapsedRange(newBlock, 0);
+					}else if( startOffset === 1 ){
+						console.error('暂时还没完善');
 					}
 				}
 			});
@@ -89,3 +121,5 @@ export default {
 
 	}
 }
+
+export default imageComponent;

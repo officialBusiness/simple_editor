@@ -27,10 +27,10 @@ export default function initMathjax(editorEnglish, editorChinese){
 	comfirm.onclick = comfirmMathJax
 
 	editorEnglish.addComponentEvent('mathjax', 'imgMousedown', (edtior, mathjaxObj)=>{
-		// console.log('edtior:', edtior);
-		console.log('mathjaxObj:', mathjaxObj);
-		showMathjax();
-		mathjaxTex.value = mathjaxObj.data;
+		if( edtior === editorEnglish ){
+			showMathjax();
+			mathjaxTex.value = mathjaxObj.data;
+		}
 	});
 
 	function comfirmMathJax(){
