@@ -85,7 +85,9 @@ export function createElement(nodeName, attributes, on){
 	let element = document.createElement(nodeName);
 	if(attributes){
 		Object.keys(attributes).forEach((key)=>{
-			element.setAttribute(key, attributes[key]);
+			if( attributes[key] !== null ){
+				element.setAttribute(key, attributes[key]);
+			}
 		});
 	}
 	if( on ){
@@ -139,8 +141,6 @@ export function emptyAllChild(node){
 		node.removeChild(node.childNodes[i]);
 	}
 }
-
-
 
 export function getNodeIndexOf(node){
 	let childNodes = node.parentNode.childNodes;

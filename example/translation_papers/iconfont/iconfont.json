@@ -6,6 +6,13 @@
   "description": "https://github.com/officialBusiness/simple_editor",
   "glyphs": [
     {
+      "icon_id": "201552",
+      "name": "列表模式",
+      "font_class": "liebiaomoshi",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "3851380",
       "name": "图片",
       "font_class": "tupian",

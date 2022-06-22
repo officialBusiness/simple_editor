@@ -10,6 +10,7 @@ export default {
 		if( !dom.nodeValue ){
 			return null;
 		}
+
 		return {
 			type: "text",
 			data: dom.nodeValue

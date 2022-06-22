@@ -83,6 +83,29 @@ export default {
 		return list;
 	},
 	toObj(dom){
+		let
+			obj = {
+				type: 'list',
+				title: dom.getAttribute('title'),
+				data: []
+			};
 
+		if( obj.title === 'custom' ){
+			obj.title = [];
+		}
+		
+		dom.childNodes.forEach((item)=>{
+			let container = [];
+
+			if( Array.isArray(obj.title) ){
+				obj.title.push(item.childNodes[0].innerText);
+			}
+			item.childNodes[1].childNodes.forEach((child)=>{
+				container.push(this.getComponentObj(child));
+			});
+
+			obj.data.push(container);
+		});
+		return obj;
 	}
 }
