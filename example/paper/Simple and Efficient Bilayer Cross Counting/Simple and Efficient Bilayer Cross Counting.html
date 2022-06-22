@@ -37,13 +37,14 @@
 	</body>
 	<script type="module">
 		import Editor from '../../../src/editor.js';
-		import { original, translation } from './Simple and Efficient Bilayer Cross Counting.js';
+		import chinese from './chinese.js';
+		import english from './english.js';
 
 		let editorEnglish =
-			new Editor(document.getElementById('editor-english'), original)
+			new Editor(document.getElementById('editor-english'), english)
 				.setEditable(false),
 			editorChinese =
-			new Editor(document.getElementById('editor-chinese'), translation)
+			new Editor(document.getElementById('editor-chinese'), chinese)
 				.setEditable(false);
 
 		window.editorEnglish = editorEnglish;
