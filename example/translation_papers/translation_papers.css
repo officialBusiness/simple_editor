@@ -154,7 +154,7 @@ body{
 	/*pointer-events: all;*/
 }
 
-#imageContainer > #image > .image{
+#imageContainer > #image > #imageContent{
 	display: flex;
 	justify-content: center;
 	padding: 20px;
@@ -162,7 +162,7 @@ body{
 	height: 200px;
 }
 
-#imageContainer > #image > .image > #showImage{
+#imageContainer > #image > #imageContent > #showImage{
 	max-width: 100%;
 	object-fit: contain;
 	cursor: default;
@@ -203,5 +203,33 @@ body{
 	opacity: 0;
 	position: absolute;
 	cursor: pointer;
+}
+
+#listButton{
+	position: relative;
+}
+
+#listButton > #listSelection{
+	position: absolute;
+	top: 100%;
+	left: 10px;
+	display: none;
+	width: 100px;
+	text-align: left;
+	pointer-events: none;
+	background-color: #ffffff;
+}
+
+#listButton > #listSelection > .selection{
+	padding-left: 10px;
+}
+
+#listButton > #listSelection > .selection:hover {
+	background-color: red;
+}
+
+#listButton:hover > #listSelection {
+	display: block;
+	pointer-events: initial;
 }
 

@@ -4,7 +4,7 @@ export default function initImage(editorEnglish, editorChinese){
 			imageComfirm = document.getElementById('imageComfirm'),
 			imageCancel = document.getElementById('imageCancel'),
 			image = document.getElementById('image'),
-			imageDrag = image.getElementsByClassName('image')[0],
+			imageDrag = document.getElementById('imageContent'),
 			imageShow = document.getElementById('showImage'),
 			imageImport = document.getElementById('imageImport'),
 			titleInput = document.getElementById('titleInput')
@@ -60,15 +60,18 @@ export default function initImage(editorEnglish, editorChinese){
 		let title = titleInput.value,
 				imageSrc = imageShow.src;
 
-		// console.log('title:', title, 'imageSrc:', imageSrc);
-		let blockDom = editorChinese.getComponentDom({
-				type: 'image',
-				src: imageSrc,
-				title,
-				width: '400px',
-				alignment: 'center'
-			})
-		editorChinese.editorDom.appendChild(blockDom);
+		let 
+				range = editorChinese.getRange(),
+				block = editorChinese.nodeApi.getBlock(range.startContainer),
+				imageDom = editorChinese.getComponentDom({
+					type: 'image',
+					src: imageSrc,
+					title,
+					width: '400px',
+					alignment: 'center'
+				});
+
+		editorChinese.nodeApi.insertAfter(imageDom, block);
 
 	}
 	function showImage(){

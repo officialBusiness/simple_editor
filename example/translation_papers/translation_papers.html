@@ -43,7 +43,7 @@
 		</div>
 		<div id="imageContainer">
 			<div id="image">
-				<div class="image">
+				<div id="imageContent">
 					<img id="showImage" />
 				</div>
 				<div id="imageTitle">
@@ -71,7 +71,15 @@
 				</div>
 			</div>
 			<div id="imageButton" class="button"><icon class="iconfont icon-tupian"></icon></div>
-			<div id="listButton" class="button"><icon class="iconfont icon-liebiaomoshi"></icon></div>
+			<div id="listButton" class="button">
+				<icon class="iconfont icon-liebiaomoshi"></icon>
+				<div id="listSelection">
+					<div class="selection">小写英文</div>
+					<div class="selection">大写英文</div>
+					<div class="selection">数字</div>
+					<div class="selection">自定义</div>
+				</div>
+			</div>
 		</div>
 		<div id="operation-index">
 			<div id="editor-english" class="editor"></div>
@@ -83,6 +91,7 @@
 		import initMathjax from './init_editor_tool/mathjax_tex.js';
 		import initParagraphAndHeader from './init_editor_tool/paragraph_and_header.js';
 		import initImage from './init_editor_tool/image.js';
+		import initList from './init_editor_tool/list.js';
 
 		import { original, translation } from '../paper/Simple and Efficient Bilayer Cross Counting/Simple and Efficient Bilayer Cross Counting.js';
 
@@ -90,7 +99,9 @@
 			editorEnglish = new Editor(document.getElementById('editor-english'), original)
 					.setEditable(false),
 			editorChinese = new Editor(document.getElementById('editor-chinese'), translation);
+
 		window.editorChinese = editorChinese;
+		window.editorEnglish = editorEnglish;
 
 		function rememberRange(){
 			setTimeout(()=>{
@@ -104,7 +115,7 @@
 		initMathjax(editorEnglish, editorChinese);
 		initParagraphAndHeader(editorEnglish, editorChinese);
 		initImage(editorEnglish, editorChinese);
-
+		initList(editorEnglish, editorChinese);
 
 	</script>
 </html>
