@@ -16,8 +16,45 @@ export default function enterOne(node, offset){
 			rangeApi.setCollapsedRange(node, offset);
 		}else{
 			console.log('需要拆分 node 节点');
-			
-			
+			// let index = nodeApi.getNodeIndexOf(node);
+			// console.log('node.nodeValue:', node.nodeValue);
+			node.splitText(offset);
+
+			console.log('需要拆分 node 节点');
+			let block = nodeApi.getBlock(node),
+					newBlock = this.getBlockDom('paragraph'),
+
+					startNode = node.nextSibling,
+					startNodeParent,
+					startNodeParentClone,
+					rememberStartNodeParentClone;
+
+			while( startNode.parentNode && this.nodeApi.isNotEditor(startNode.parentNode) ){
+				let	
+					nextSibling = startNode.nextSibling,
+					rememberNextSibling;
+
+				startNodeParent = startNode.parentNode;
+				startNodeParentClone = startNode.parentNode.cloneNode(false);
+
+				if( rememberStartNodeParentClone ){
+					startNodeParentClone.appendChild(rememberStartNodeParentClone);
+				}else{
+					startNodeParentClone.appendChild(startNode);
+				}
+				rememberStartNodeParentClone = startNodeParentClone;
+
+				while( nextSibling ){
+					rememberNextSibling = nextSibling.nextSibling;
+					startNodeParentClone.appendChild( nextSibling );
+					nextSibling = rememberNextSibling;
+				}
+
+				startNode = startNodeParent;
+			}
+			nodeApi.insertAfter( startNodeParentClone, block );
+			rangeApi.startNodeRange(startNodeParentClone);
+
 		}
 	}else if( node.nodeType === Node.ELEMENT_NODE ){
 		if( offset === 0 && node.childNodes.length === 0 && nodeApi.isBlock(node) ){
