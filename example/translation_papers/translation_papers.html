@@ -101,6 +101,9 @@
 					.setEditable(false),
 			editorChinese = new Editor(document.getElementById('editor-chinese'), chinese);
 
+		window.editorChinese = editorChinese;
+		window.editorEnglish = editorEnglish;
+
 		function rememberRange(){
 			setTimeout(()=>{
 				editorChinese.setRange();

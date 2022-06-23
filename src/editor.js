@@ -93,6 +93,10 @@ Editor.prototype.toObj = function(){
 	return obj;
 }
 
+Editor.prototype.toObjString = function(){
+	return JSON.stringify(this.toObj());
+}
+
 Editor.prototype.render = function(obj){
 	this.nodeApi.emptyAllChild(this.editorDom);
 	obj.blocks.forEach((block)=>{

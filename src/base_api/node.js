@@ -113,10 +113,15 @@ export function linkDomTree(tree){
 	return tree.node;
 }
 
-export function insertAfter(newNode, lastNode){
-	let parentNode = lastNode.parentNode;
-	if( lastNode.nextSibling ){
-		parentNode.insertBefore(newNode, lastNode.nextSibling);
+
+export function insertBefore(newNode, nextNode){
+	nextNode.parentNode.insertBefore(newNode, nextNode);
+}
+
+export function insertAfter(newNode, preNode){
+	let parentNode = preNode.parentNode;
+	if( preNode.nextSibling ){
+		parentNode.insertBefore(newNode, preNode.nextSibling);
 	}else{
 		parentNode.appendChild(newNode);
 	}
