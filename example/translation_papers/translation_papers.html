@@ -93,15 +93,13 @@
 		import initImage from './init_editor_tool/image.js';
 		import initList from './init_editor_tool/list.js';
 
-		import { original, translation } from '../paper/Simple and Efficient Bilayer Cross Counting/Simple and Efficient Bilayer Cross Counting.js';
+		import chinese from '../paper/Simple and Efficient Bilayer Cross Counting//chinese.js';
+		import english from '../paper/Simple and Efficient Bilayer Cross Counting//english.js';
 
 		let
-			editorEnglish = new Editor(document.getElementById('editor-english'), original)
+			editorEnglish = new Editor(document.getElementById('editor-english'), english)
 					.setEditable(false),
-			editorChinese = new Editor(document.getElementById('editor-chinese'), translation);
-
-		window.editorChinese = editorChinese;
-		window.editorEnglish = editorEnglish;
+			editorChinese = new Editor(document.getElementById('editor-chinese'), chinese);
 
 		function rememberRange(){
 			setTimeout(()=>{
