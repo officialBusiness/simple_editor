@@ -18,16 +18,18 @@ export default function enterOne(node, offset){
 			console.log('需要拆分 node 节点');
 			// let index = nodeApi.getNodeIndexOf(node);
 			// console.log('node.nodeValue:', node.nodeValue);
-			node.splitText(offset);
-
-			console.log('需要拆分 node 节点');
 			let block = nodeApi.getBlock(node),
-					newBlock = this.getBlockDom('paragraph'),
-
-					startNode = node.nextSibling,
+					startNode,
 					startNodeParent,
 					startNodeParentClone,
 					rememberStartNodeParentClone;
+
+			if( offset === node.length ){
+				startNode = nodeApi.getNextNodeInContainer(node);
+			}else{
+				node.splitText(offset);
+				startNode = node.nextSibling;
+			}
 
 			while( startNode.parentNode && this.nodeApi.isNotEditor(startNode.parentNode) ){
 				let	
@@ -78,8 +80,6 @@ export default function enterOne(node, offset){
 		}else{
 			console.log('需要拆分 node 节点');
 			let block = nodeApi.getBlock(node),
-					newBlock = this.getBlockDom('paragraph'),
-
 					startNode = offset === node.childNodes.length ? this.nodeApi.getNextNodeInContainer(node.childNodes[offset - 1]) : 
 												node.childNodes[offset],
 					startNodeParent,
