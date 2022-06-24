@@ -1,6 +1,6 @@
 import * as factories from './template/template.js';
 
-export function initComponent(factory){
+export function initComponent(context){
 	
 }
 

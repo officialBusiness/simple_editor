@@ -20,7 +20,7 @@ export default function Editor(dom, obj){
 	initEditorEvent(this);
 	this.customEventMap = new Map();
 
-	if(obj){
+	if(obj && obj.blocks.length > 0){
 		this.render(obj);
 	}else{
 		let blockDom = this.getBlockDom('paragraph');
@@ -193,7 +193,7 @@ Editor.prototype.insertText = function insertText(string, start, offset){
 	return this;
 }
 
-Editor.prototype.transformBlock = function transformBlock(type){
+Editor.prototype.transformBlock = function transformBlock(obj){
 	let range = this.getRange();
 	if( !range ){
 		throw new Error('range 不存在');
@@ -201,7 +201,10 @@ Editor.prototype.transformBlock = function transformBlock(type){
 	let 
 		{ startContainer, startOffset, endContainer, endOffset } = range,
 		oldBlock = nodeApi.getBlock(range.startContainer),
-		newBlock = this.getBlockDom(type, {type});
+		newBlock = this.getBlockDom(obj);
+	console.log('obj:', obj);
+	console.log('newBlock:', newBlock);
+	console.log('oldBlock:', oldBlock);
 
 	this.nodeApi.appendChildren(newBlock, oldBlock.childNodes);
 	this.nodeApi.insertAfter(newBlock, oldBlock);

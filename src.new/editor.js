@@ -10,14 +10,12 @@ export default function Editor(dom, contentObj){
 	this.editorDom.setAttribute('editor', true);
 
 	// 初始化组件生产工厂
-	this.defualtFactory = 'paragraph';
+	this.defualtBlockObj = {type: 'paragraph'};
 
 	if(contentObj){
 		this.render(contentObj);
 	}else{
-		let initDom = this.getComponentDom({
-			type: this.defualtFactory
-		});
+		let initDom = this.getComponentDom(this.defualtBlockObj);
 		if( initDom ){
 			this.editorDom.appendChild(initDom);
 		}else{

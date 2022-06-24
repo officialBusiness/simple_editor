@@ -18,10 +18,15 @@ export default function initParagraphAndHeader(editorEnglish, editorChinese){
 			case 'h1':
 			case 'h2':
 			case 'h3':
-				editorChinese.transformBlock(type);
+				editorChinese.transformBlock({
+					type: 'header',
+					level: type
+				});
 				break;
 			case '正文':
-				editorChinese.transformBlock('paragraph');
+				editorChinese.transformBlock({
+					type: 'paragraph'
+				});
 				break;
 		}
 	}
