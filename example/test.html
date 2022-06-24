@@ -27,7 +27,7 @@
 				overflow: auto;
 			}
 		</style>
-		<script type="text/javascript" src="../src/thirdparty/tex-svg.js"></script>
+		<script type="text/javascript" src="../src.new/thirdparty/tex-svg.js"></script>
 		<link rel="stylesheet" type="text/css" href="../src.new/editor.css" />
 	</head>
 	<body>
@@ -40,9 +40,8 @@
 		import english from './paper/Simple and Efficient Bilayer Cross Counting//english.js';
 
 		let
-			editor = new Editor(document.getElementById('editor'));
+			editor = new Editor(document.getElementById('editor'), chinese);
 
 			window.editor = editor;
-
 	</script>
 </html>

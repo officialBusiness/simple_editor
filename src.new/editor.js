@@ -51,3 +51,18 @@ Editor.prototype.render = function(obj){
 	});
 	return this;
 }
+
+Editor.prototype.toObj = function(){
+	let obj = {
+		blocks: []
+	}
+	this.editorDom.childNodes.forEach((blockDom)=>{
+		let blockObj = this.getComponentObj(blockDom);
+		if( blockObj ){
+			obj.blocks.push( blockObj );
+		}else{
+			console.error('block 转化失败:', blockDom);
+		}
+	});
+	return obj;
+}

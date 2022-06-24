@@ -36,6 +36,23 @@ export default {
 		});
 	},
 	toObj(dom){
+		let 
+			image = dom.childNodes[0],
+			title = dom.childNodes[1],
+			obj = {
+				type: 'image',
+				src: image.src
+			};
 
+		if(image.style.width){
+			obj.width = image.style.width;
+		}
+		if(dom.style['text-align']){
+			obj.alignment =  dom.style['text-align'];
+		}
+		if( title ){
+			obj.title = title.innerText;
+		}
+		return obj;
 	}
 }

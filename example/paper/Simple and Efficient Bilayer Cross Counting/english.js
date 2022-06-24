@@ -411,10 +411,10 @@ export default {
 					type: 'text',
 					data: ' and try to determine a permutation of the nodes in '
 				},
-        {
-            type: "mathjax",
-            data: "L_{fixed}"
-        },
+				{
+						type: "mathjax",
+						data: "L_{fixed}"
+				},
 				{
 					type: 'text',
 					data: ' that induces a small bi- layer cross count for the subgraph induced by the two layers, while keeping '
@@ -1761,10 +1761,13 @@ export default {
 					}
 				],
 				[
-					{
-						type: "mathjax",
-						data: "NorthNodePos \\left[k \\right] \\in \\{0,1,...,p−1\\}"
-					},
+                    {
+                        type: "mathjax",
+                        data: [
+                            "NorthNodePos",
+                            "\\left[k \\right] \\in \\{0,1,...,p−1\\}"
+                        ]
+                    },
 					{
 						type: "text",
 						data: " "
@@ -1792,8 +1795,11 @@ export default {
 				],
 				[
 					{
-						type: "mathjax",
-						data: "SouthNodePos \\left[k \\right] \\in \\{0,1,...,p−1\\}"
+							type: "mathjax",
+							data: [
+									"SouthNodePos",
+									"\\left[k \\right] \\in \\{0,1,...,p−1\\}"
+							]
 					},
 					{
 						type: "text",
@@ -1987,55 +1993,55 @@ export default {
 			level: "h2",
 			data: "5 Extension to the Weighted Case"
 		},
-    {
-        type: "paragraph",
-        data: [
-            {
-                type: "text",
-                data: "In certain applications, some edges are more important than others, and crossing such edges is even less desirable. Let us assume that the importance of edges is expressed by nonnegative (not necessarily integer) weights "
-            },
-            {
-                type: "mathjax",
-                data: "w(e)"
-            },
-            {
-                type: "text",
-                data: " for each edge "
-            },
-            {
-                type: "mathjax",
-                data: "e \\in E"
-            },
-            {
-                type: "text",
-                data: ", and that a crossing between the edges "
-            },
-            {
-                type: "mathjax",
-                data: "e_1"
-            },
-            {
-                type: "text",
-                data: " and "
-            },
-            {
-                type: "mathjax",
-                data: "e_2"
-            },
-            {
-                type: "text",
-                data: " is counted as "
-            },
-            {
-                type: "mathjax",
-                data: "w(e_1) ∗ w(e_2)"
-            },
-            {
-                type: "text",
-                data: ". Then an easy modification of our algorithm can compute the weighted bilayer cross count. This is obvious in the plain insertion sort version that we have explained in step 1: instead of accumulating 1’s we accumulate the weight products. The modifications in the accumulator tree version are straightforward as well, see Figure 10."
-            }
-        ]
-    },
+		{
+				type: "paragraph",
+				data: [
+						{
+								type: "text",
+								data: "In certain applications, some edges are more important than others, and crossing such edges is even less desirable. Let us assume that the importance of edges is expressed by nonnegative (not necessarily integer) weights "
+						},
+						{
+								type: "mathjax",
+								data: "w(e)"
+						},
+						{
+								type: "text",
+								data: " for each edge "
+						},
+						{
+								type: "mathjax",
+								data: "e \\in E"
+						},
+						{
+								type: "text",
+								data: ", and that a crossing between the edges "
+						},
+						{
+								type: "mathjax",
+								data: "e_1"
+						},
+						{
+								type: "text",
+								data: " and "
+						},
+						{
+								type: "mathjax",
+								data: "e_2"
+						},
+						{
+								type: "text",
+								data: " is counted as "
+						},
+						{
+								type: "mathjax",
+								data: "w(e_1) ∗ w(e_2)"
+						},
+						{
+								type: "text",
+								data: ". Then an easy modification of our algorithm can compute the weighted bilayer cross count. This is obvious in the plain insertion sort version that we have explained in step 1: instead of accumulating 1’s we accumulate the weight products. The modifications in the accumulator tree version are straightforward as well, see Figure 10."
+						}
+				]
+		},
 		{
 			type: 'code',
 			data: '/* build the accumulator tree */\n\nfirstindex = 1;\nwhile (firstindex<q) firstindex *= 2;\ntreesize = 2*firstindex - 1; /* number of tree nodes */\nfirstindex -= 1; /* index of leftmost leaf */\ntree = (int *) malloc(treesize*sizeof(int));\nfor (t=0; t<treesize; t++) tree[t] = 0;\n\n/* compute the total weight of the crossings */\n\ncrossweight = 0; /* total weight of the crossings */\nfor (k=0; k<r; k++) { /* insert edge k */\n  index = southsequence[k] + firstindex;\n  tree[index] += w[k];\n  weightsum = 0;\n  while (index>0) {\n    if (index%2) weightsum += tree[index+1];\n    index = (index - 1)/2;\n    tree[index] += w[k];\n  }\n  crossweight += (w[k]*weightsum);\n}\nprintf("Total weight of the crossings: %d\\n",crossweight);',
@@ -2056,374 +2062,374 @@ export default {
 			level: "h2",
 			data: "6 Complexity of Bilayer Cross Counting"
 		},
-    {
-        type: "paragraph",
-        data: [
-            {
-                type: "text",
-                data: "Finally, we would like to discuss the complexity of bilayer cross counting. As we have observed in Section 2, this problem is equivalent to the problem of counting the inversions in a sequence with "
-            },
-            {
-                type: "mathjax",
-                data: "\\left \\vert E \\right \\vert"
-            },
-            {
-                type: "text",
-                data: " elements. The fact that this can be done in "
-            },
-            {
-                type: "mathjax",
-                data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert E \\right \\vert) "
-            },
-            {
-                type: "text",
-                data: " time leads to our algorithm. However, our cross counting algorithm does more than just computing the number "
-            },
-            {
-                type: "mathjax",
-                data: "\\left \\vert C \\right \\vert"
-            },
-            {
-                type: "text",
-                data: " of edge crossings. In each iteration of the while-loop, it computes the number "
-            },
-            {
-                type: "mathjax",
-                data: "c(k)"
-            },
-            {
-                type: "text",
-                data: " of crossings (inversions) that the "
-            },
-            {
-                type: "mathjax",
-                data: "k"
-            },
-            {
-                type: "text",
-                data: "-th edge (the "
-            },
-            {
-                type: "mathjax",
-                data: "k"
-            },
-            {
-                type: "text",
-                data: "-th element), "
-            },
-            {
-                type: "mathjax",
-                data: " k \\in \\{0, 1, . . . , \\left \\vert E \\right \\vert − 1\\}"
-            },
-            {
-                type: "text",
-                data: " "
-            },
-            {
-                type: "text",
-                data: ", induces with all preceding edges (elements). These numbers are summed up to "
-            },
-            {
-                type: "mathjax",
-                data: "\\left \\vert C \\right \\vert"
-            },
-            {
-                type: "text",
-                data: " . All other algorithms known to us follow a similar strategy in the sense of these observations. The key question seems to be whether there is a way to compute "
-            },
-            {
-                type: "mathjax",
-                data: "\\left \\vert C \\right \\vert"
-            },
-            {
-                type: "text",
-                data: " without computing the "
-            },
-            {
-                type: "mathjax",
-                data: "c(k)"
-            },
-            {
-                type: "text",
-                data: " for each "
-            },
-            {
-                type: "mathjax",
-                data: "k"
-            },
-            {
-                type: "text",
-                data: " . As long as the "
-            },
-            {
-                type: "mathjax",
-                data: "c(k)"
-            },
-            {
-                type: "text",
-                data: " must be computed and the computations are based on pairwise comparisons only, there is no hope for an asymptotically faster algorithm. If there were such an algorithm, we could use it to compute not only the "
-            },
-            {
-                type: "mathjax",
-                data: "c(k)"
-            },
-            {
-                type: "text",
-                data: " but also the crossings (inversions) "
-            },
-            {
-                type: "mathjax",
-                data: "\\bar c(k)"
-            },
-            {
-                type: "text",
-                data: " of the "
-            },
-            {
-                type: "mathjax",
-                data: "k"
-            },
-            {
-                type: "text",
-                data: "-th edge (element) with all subsequent edges (elements) in the sequence. Once we have computed the "
-            },
-            {
-                type: "mathjax",
-                data: "c(k)"
-            },
-            {
-                type: "text",
-                data: " and the "
-            },
-            {
-                type: "mathjax",
-                data: "\\bar c(k)"
-            },
-            {
-                type: "text",
-                data: " , we can sort the sequence in linear time, because putting the "
-            },
-            {
-                type: "mathjax",
-                data: "k"
-            },
-            {
-                type: "text",
-                data: "-th edge (element) in position "
-            },
-            {
-                type: "mathjax",
-                data: "k − c(k) + \\bar c(k)"
-            },
-            {
-                type: "text",
-                data: " "
-            },
-            {
-                type: "text",
-                data: ", we obtain a sorted sequence. This sorting algorithm with running time less than "
-            },
-            {
-                type: "mathjax",
-                data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert E \\right \\vert)"
-            },
-            {
-                type: "text",
-                data: " could be applied to any sequence of pairwise comparable elements (not just integers in the range "
-            },
-            {
-                type: "mathjax",
-                data: "\\{0, 1, . . . , \\left \\vert S \\right \\vert − 1\\}"
-            },
-            {
-                type: "text",
-                data: " with "
-            },
-            {
-                type: "mathjax",
-                data: "\\left \\vert S \\right \\vert \\le \\left \\vert E \\right \\vert"
-            },
-            {
-                type: "text",
-                data: " as we have in our bilayer cross counting problem). This would contradict the well-known lower bound of "
-            },
-            {
-                type: "mathjax",
-                data: "\\Omega(\\left \\vert E \\right \\vert \\log \\left \\vert E \\right \\vert)"
-            },
-            {
-                type: "text",
-                data: " for sorting by comparisons."
-            }
-        ]
-    },
+		{
+				type: "paragraph",
+				data: [
+						{
+								type: "text",
+								data: "Finally, we would like to discuss the complexity of bilayer cross counting. As we have observed in Section 2, this problem is equivalent to the problem of counting the inversions in a sequence with "
+						},
+						{
+								type: "mathjax",
+								data: "\\left \\vert E \\right \\vert"
+						},
+						{
+								type: "text",
+								data: " elements. The fact that this can be done in "
+						},
+						{
+								type: "mathjax",
+								data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert E \\right \\vert) "
+						},
+						{
+								type: "text",
+								data: " time leads to our algorithm. However, our cross counting algorithm does more than just computing the number "
+						},
+						{
+								type: "mathjax",
+								data: "\\left \\vert C \\right \\vert"
+						},
+						{
+								type: "text",
+								data: " of edge crossings. In each iteration of the while-loop, it computes the number "
+						},
+						{
+								type: "mathjax",
+								data: "c(k)"
+						},
+						{
+								type: "text",
+								data: " of crossings (inversions) that the "
+						},
+						{
+								type: "mathjax",
+								data: "k"
+						},
+						{
+								type: "text",
+								data: "-th edge (the "
+						},
+						{
+								type: "mathjax",
+								data: "k"
+						},
+						{
+								type: "text",
+								data: "-th element), "
+						},
+						{
+								type: "mathjax",
+								data: " k \\in \\{0, 1, . . . , \\left \\vert E \\right \\vert − 1\\}"
+						},
+						{
+								type: "text",
+								data: " "
+						},
+						{
+								type: "text",
+								data: ", induces with all preceding edges (elements). These numbers are summed up to "
+						},
+						{
+								type: "mathjax",
+								data: "\\left \\vert C \\right \\vert"
+						},
+						{
+								type: "text",
+								data: " . All other algorithms known to us follow a similar strategy in the sense of these observations. The key question seems to be whether there is a way to compute "
+						},
+						{
+								type: "mathjax",
+								data: "\\left \\vert C \\right \\vert"
+						},
+						{
+								type: "text",
+								data: " without computing the "
+						},
+						{
+								type: "mathjax",
+								data: "c(k)"
+						},
+						{
+								type: "text",
+								data: " for each "
+						},
+						{
+								type: "mathjax",
+								data: "k"
+						},
+						{
+								type: "text",
+								data: " . As long as the "
+						},
+						{
+								type: "mathjax",
+								data: "c(k)"
+						},
+						{
+								type: "text",
+								data: " must be computed and the computations are based on pairwise comparisons only, there is no hope for an asymptotically faster algorithm. If there were such an algorithm, we could use it to compute not only the "
+						},
+						{
+								type: "mathjax",
+								data: "c(k)"
+						},
+						{
+								type: "text",
+								data: " but also the crossings (inversions) "
+						},
+						{
+								type: "mathjax",
+								data: "\\bar c(k)"
+						},
+						{
+								type: "text",
+								data: " of the "
+						},
+						{
+								type: "mathjax",
+								data: "k"
+						},
+						{
+								type: "text",
+								data: "-th edge (element) with all subsequent edges (elements) in the sequence. Once we have computed the "
+						},
+						{
+								type: "mathjax",
+								data: "c(k)"
+						},
+						{
+								type: "text",
+								data: " and the "
+						},
+						{
+								type: "mathjax",
+								data: "\\bar c(k)"
+						},
+						{
+								type: "text",
+								data: " , we can sort the sequence in linear time, because putting the "
+						},
+						{
+								type: "mathjax",
+								data: "k"
+						},
+						{
+								type: "text",
+								data: "-th edge (element) in position "
+						},
+						{
+								type: "mathjax",
+								data: "k − c(k) + \\bar c(k)"
+						},
+						{
+								type: "text",
+								data: " "
+						},
+						{
+								type: "text",
+								data: ", we obtain a sorted sequence. This sorting algorithm with running time less than "
+						},
+						{
+								type: "mathjax",
+								data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert E \\right \\vert)"
+						},
+						{
+								type: "text",
+								data: " could be applied to any sequence of pairwise comparable elements (not just integers in the range "
+						},
+						{
+								type: "mathjax",
+								data: "\\{0, 1, . . . , \\left \\vert S \\right \\vert − 1\\}"
+						},
+						{
+								type: "text",
+								data: " with "
+						},
+						{
+								type: "mathjax",
+								data: "\\left \\vert S \\right \\vert \\le \\left \\vert E \\right \\vert"
+						},
+						{
+								type: "text",
+								data: " as we have in our bilayer cross counting problem). This would contradict the well-known lower bound of "
+						},
+						{
+								type: "mathjax",
+								data: "\\Omega(\\left \\vert E \\right \\vert \\log \\left \\vert E \\right \\vert)"
+						},
+						{
+								type: "text",
+								data: " for sorting by comparisons."
+						}
+				]
+		},
 		{
 			type: "header",
 			level: "h2",
 			data: "7 Conclusion"
 		},
-    {
-        type: "paragraph",
-        data: [
-            {
-                type: "text",
-                data: "We have reduced the bilayer cross counting problem to the problem of counting the number of the inversions of a certain sequence "
-            },
-            {
-                type: "mathjax",
-                data: "\\pi"
-            },
-            {
-                type: "text",
-                data: " of length "
-            },
-            {
-                type: "mathjax",
-                data: "\\left \\vert E \\right \\vert"
-            },
-            {
-                type: "text",
-                data: " . This gave us immediately an "
-            },
-            {
-                type: "mathjax",
-                data: "O(\\left \\vert E \\right \\vert \\log RUN(\\pi))"
-            },
-            {
-                type: "text",
-                data: " algorithm (MER). Moreover, we have introduced an even simpler algorithm (BJM) based on the accumulator tree data structure with "
-            },
-            {
-                type: "mathjax",
-                data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert V_{small} \\right \\vert)"
-            },
-            {
-                type: "text",
-                data: " running time. A practical advantage of our new algorithm is its very easy implementation in a few lines of code, and this applies as well to its extension to the weighted case. We have also argued that it may be hard to find an asymptotically faster algorithm for bilayer cross counting."
-            }
-        ]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "Our extensive computational experiments show that BJM as well as MER are safe choices for efficient bilayer cross counting. It should be kept in mind that the running times of a MEDIAN step for bilayer crossing minimization and a bilayer cross counting step with one of the fast algorithms are similar, in fact, the latter is asymptotically slower. Therefore, bilayer cross counting may dominate the work in the second phase of a Sugiyama-style layout algorithm significantly, unless BJM, MER, WAM, or a method of comparable performance is used."
-    		}
-    	]
-    },
-    {
+		{
+				type: "paragraph",
+				data: [
+						{
+								type: "text",
+								data: "We have reduced the bilayer cross counting problem to the problem of counting the number of the inversions of a certain sequence "
+						},
+						{
+								type: "mathjax",
+								data: "\\pi"
+						},
+						{
+								type: "text",
+								data: " of length "
+						},
+						{
+								type: "mathjax",
+								data: "\\left \\vert E \\right \\vert"
+						},
+						{
+								type: "text",
+								data: " . This gave us immediately an "
+						},
+						{
+								type: "mathjax",
+								data: "O(\\left \\vert E \\right \\vert \\log RUN(\\pi))"
+						},
+						{
+								type: "text",
+								data: " algorithm (MER). Moreover, we have introduced an even simpler algorithm (BJM) based on the accumulator tree data structure with "
+						},
+						{
+								type: "mathjax",
+								data: "O(\\left \\vert E \\right \\vert \\log \\left \\vert V_{small} \\right \\vert)"
+						},
+						{
+								type: "text",
+								data: " running time. A practical advantage of our new algorithm is its very easy implementation in a few lines of code, and this applies as well to its extension to the weighted case. We have also argued that it may be hard to find an asymptotically faster algorithm for bilayer cross counting."
+						}
+				]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "Our extensive computational experiments show that BJM as well as MER are safe choices for efficient bilayer cross counting. It should be kept in mind that the running times of a MEDIAN step for bilayer crossing minimization and a bilayer cross counting step with one of the fast algorithms are similar, in fact, the latter is asymptotically slower. Therefore, bilayer cross counting may dominate the work in the second phase of a Sugiyama-style layout algorithm significantly, unless BJM, MER, WAM, or a method of comparable performance is used."
+				}
+			]
+		},
+		{
 			type: "header",
 			level: "h2",
-    	data: "References"
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[1] B. Chazelle, Reporting and counting segment intersections. Journal of Computer and System Sciences, vol. 32 (1986) 156–182."
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[2] B. Chazelle and H. Edelsbrunner, An optimal algorithm for intersecting line segments in the plane. Journal of the ACM, vol. 39 (1992) 1–54."
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[3] T. H. Cormen, C. E. Leiserson, and R. L. Rivest, Introduction to algorithms. MIT Press, Cambridge, MA, 1990."
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[4] P. Eades and N. Wormald, Edge crossings in drawings of bipartite graphs. Algorithmica, vol. 11 (1994) 379–403."
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[5] C. Gutwenger, M. Ju ̈nger, G. W. Klau, S. Leipert, and P. Mutzel, Graph Drawing Algorithm Engineering with AGD. in: S. Diehl (ed.), Software Visualization, International Dagstuhl Seminar on Software Visualization 2001, Lecture Notes in Computer Science, vol. 2269, Springer, 2002, pp. 307–323, see also: http://www.mpi-sb.mpg.de/AGD/"
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[6] M. Ju ̈nger and P. Mutzel, 2-layer straight line crossing minimization: per- formance of exact and heuristic algorithms. Journal of Graph Algorithms and Applications, vol. 1 (1997) 1–25."
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[7] D. E. Knuth, The Stanford GraphBase: A platform for combinatorial com- puting. Addison-Wesley, Reading, Massachusetts, 1993"
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[8] G. S. Lueker, A data structure for orthogonal range queries. Proceedings of the 19th IEEE Symposium on Foundations of Computer Science, 1978, pp. 28–34."
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[9] G. Sander, Graph Layout through the VCG Tool. in: R. Tamassia and I. G. Tollis (eds): Graph Drawing 1994, Lecture Notes in Computer Science, vol. 894, Springer, 1995, pp. 194-205, see also: http://rw4.cs.uni-sb.de/users/sander/html/gsvcg1.html"
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[10] G. Sander, Visualisierungstechniken fu ̈r den Compilerbau. Pirrot Verlag & Druck, Saarbru ̈cken, 1996."
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[11] K. Sugiyama, S. Tagawa, and M. Toda, Methods for visual understanding of hierarchical system structures. IEEE Transactions on Systems, Man, and Cybernetics, vol. 11 (1981) 109–125."
-    		}
-    	]
-    },
-    {
-    	type: "paragraph",
-    	data: [
-    		{
-    			type: "text",
-    			data: "[12] V. Waddle and A. Malhotra, An E log E line crossing algorithm for lev- elled graphs. in: J. Kratochv ́ıl (ed.) Graph Drawing 1999, Lecture Notes in Computer Science, vol. 1731, Springer, 1999, pp. 59–70."
-    		}
-    	]
-    },
+			data: "References"
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[1] B. Chazelle, Reporting and counting segment intersections. Journal of Computer and System Sciences, vol. 32 (1986) 156–182."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[2] B. Chazelle and H. Edelsbrunner, An optimal algorithm for intersecting line segments in the plane. Journal of the ACM, vol. 39 (1992) 1–54."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[3] T. H. Cormen, C. E. Leiserson, and R. L. Rivest, Introduction to algorithms. MIT Press, Cambridge, MA, 1990."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[4] P. Eades and N. Wormald, Edge crossings in drawings of bipartite graphs. Algorithmica, vol. 11 (1994) 379–403."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[5] C. Gutwenger, M. Ju ̈nger, G. W. Klau, S. Leipert, and P. Mutzel, Graph Drawing Algorithm Engineering with AGD. in: S. Diehl (ed.), Software Visualization, International Dagstuhl Seminar on Software Visualization 2001, Lecture Notes in Computer Science, vol. 2269, Springer, 2002, pp. 307–323, see also: http://www.mpi-sb.mpg.de/AGD/"
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[6] M. Ju ̈nger and P. Mutzel, 2-layer straight line crossing minimization: per- formance of exact and heuristic algorithms. Journal of Graph Algorithms and Applications, vol. 1 (1997) 1–25."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[7] D. E. Knuth, The Stanford GraphBase: A platform for combinatorial com- puting. Addison-Wesley, Reading, Massachusetts, 1993"
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[8] G. S. Lueker, A data structure for orthogonal range queries. Proceedings of the 19th IEEE Symposium on Foundations of Computer Science, 1978, pp. 28–34."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[9] G. Sander, Graph Layout through the VCG Tool. in: R. Tamassia and I. G. Tollis (eds): Graph Drawing 1994, Lecture Notes in Computer Science, vol. 894, Springer, 1995, pp. 194-205, see also: http://rw4.cs.uni-sb.de/users/sander/html/gsvcg1.html"
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[10] G. Sander, Visualisierungstechniken fu ̈r den Compilerbau. Pirrot Verlag & Druck, Saarbru ̈cken, 1996."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[11] K. Sugiyama, S. Tagawa, and M. Toda, Methods for visual understanding of hierarchical system structures. IEEE Transactions on Systems, Man, and Cybernetics, vol. 11 (1981) 109–125."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			data: [
+				{
+					type: "text",
+					data: "[12] V. Waddle and A. Malhotra, An E log E line crossing algorithm for lev- elled graphs. in: J. Kratochv ́ıl (ed.) Graph Drawing 1999, Lecture Notes in Computer Science, vol. 1731, Springer, 1999, pp. 59–70."
+				}
+			]
+		},
 	]
 }

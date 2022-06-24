@@ -39,6 +39,21 @@ export default {
 		});
 	},
 	toObj(dom){
-		
+		let 
+			codeContainer = dom.childNodes[0],
+			code = codeContainer.childNodes[0],
+			title = dom.childNodes[1],
+			obj = {
+				type: 'code',
+				data: code.innerText
+			};
+
+		if(code.style.width){
+			obj.width = code.style.width;
+		}
+		if( title ){
+			obj.title = title.innerText;
+		}
+		return obj;
 	}
 }

@@ -60,44 +60,33 @@ export default {
 			},
 			children: obj.data.map((li, index)=>{
 				return createLiDomObj.call(this, obj.title, index, li);
-				// return {
-				// 	nodeName: 'div',
-				// 	attributes: {
-				// 		class: 'li',
-				// 	},
-				// 	children: [
-				// 		{
-				// 			nodeName: 'div',
-				// 			attributes: {
-				// 				class: 'label',
-				// 				contenteditable: Array.isArray(obj.title) ? null : false,
-				// 				container: Array.isArray(obj.title) ? true : null
-				// 			},
-				// 			children: getLabel(index, obj.title)
-				// 		},
-				// 		{
-				// 			nodeName: 'div',
-				// 			attributes: {
-				// 				class: 'container',
-				// 				container: true
-				// 			},
-				// 			created: (container)=>{
-				// 				if( Array.isArray(li) ){
-				// 					li.forEach((child)=>{
-				// 						let childDom = this.getComponentDom(child);
-				// 						if( childDom ){
-				// 							container.appendChild( childDom );
-				// 						}
-				// 					});
-				// 				}
-				// 			}
-				// 		}
-				// 	]
-				// }
 			})
 		});
 	},
 	toObj(dom){
-		
+		let
+			obj = {
+				type: 'list',
+				title: dom.getAttribute('title'),
+				data: []
+			};
+
+		if( obj.title === 'custom' ){
+			obj.title = [];
+		}
+
+		dom.childNodes.forEach((item)=>{
+			let container = [];
+
+			if( Array.isArray(obj.title) ){
+				obj.title.push(item.childNodes[0].innerText);
+			}
+			item.childNodes[1].childNodes.forEach((child)=>{
+				container.push(this.getComponentObj(child));
+			});
+
+			obj.data.push(container);
+		});
+		return obj;
 	}
 }

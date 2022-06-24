@@ -1537,12 +1537,12 @@ export default {
             alignment: "center",
             title: "Figure 4: Building the accumulator tree and counting the crossings"
         },
-				{
-					type: 'code',
-					data: '/* build the accumulator tree */\nfirstindex = 1;\nwhile (firstindex<q) firstindex *= 2;\ntreesize = 2*firstindex - 1; /* number of tree nodes */\nfirstindex -= 1; /* index of leftmost leaf */\ntree = (int *) malloc(treesize*sizeof(int));\nfor (t=0; t<treesize; t++) tree[t] = 0;\n\n/* count the crossings */\n\ncrosscount = 0; /* number of crossings */\nfor (k=0; k<r; k++) { /* insert edge k */\n  index = southsequence[k] + firstindex;\n  tree[index]++;\n  while (index>0) {\n    if (index%2) crosscount += tree[index+1];\n    index = (index - 1)/2;\n    tree[index]++;\n  }\n}\nprintf("Number of crossings: %d\\n",crosscount);',
-					title: 'Figure 5: C program fragment for simple bilayer cross counting',
-					width: '400px',
-				},
+		{
+			type: 'code',
+			data: '/* build the accumulator tree */\nfirstindex = 1;\nwhile (firstindex<q) firstindex *= 2;\ntreesize = 2*firstindex - 1; /* number of tree nodes */\nfirstindex -= 1; /* index of leftmost leaf */\ntree = (int *) malloc(treesize*sizeof(int));\nfor (t=0; t<treesize; t++) tree[t] = 0;\n\n/* count the crossings */\n\ncrosscount = 0; /* number of crossings */\nfor (k=0; k<r; k++) { /* insert edge k */\n  index = southsequence[k] + firstindex;\n  tree[index]++;\n  while (index>0) {\n    if (index%2) crosscount += tree[index+1];\n    index = (index - 1)/2;\n    tree[index]++;\n  }\n}\nprintf("Number of crossings: %d\\n",crosscount);',
+			title: 'Figure 5: C program fragment for simple bilayer cross counting',
+			width: '400px',
+		},
         {
             type: "header",
             level: "h2",
@@ -1748,7 +1748,10 @@ export default {
                 [
                     {
                         type: "mathjax",
-                        data: "NorthNodePos \\left[k \\right] \\in \\{0,1,...,p−1\\}"
+                        data: [
+                            "NorthNodePos",
+                            "\\left[k \\right] \\in \\{0,1,...,p−1\\}"
+                        ]
                     },
                     {
                         type: "text",
@@ -1774,7 +1777,10 @@ export default {
                 [
                     {
                         type: "mathjax",
-                        data: "SouthNodePos \\left[k \\right] \\in \\{0,1,...,p−1\\}"
+                        data: [
+                            "SouthNodePos",
+                            "\\left[k \\right] \\in \\{0,1,...,p−1\\}"
+                        ]
                     },
                     {
                         type: "text",
@@ -2013,12 +2019,12 @@ export default {
                 }
             ]
         },
-				{
-					type: 'code',
-					data: '/* build the accumulator tree */\n\nfirstindex = 1;\nwhile (firstindex<q) firstindex *= 2;\ntreesize = 2*firstindex - 1; /* number of tree nodes */\nfirstindex -= 1; /* index of leftmost leaf */\ntree = (int *) malloc(treesize*sizeof(int));\nfor (t=0; t<treesize; t++) tree[t] = 0;\n\n/* compute the total weight of the crossings */\n\ncrossweight = 0; /* total weight of the crossings */\nfor (k=0; k<r; k++) { /* insert edge k */\n  index = southsequence[k] + firstindex;\n  tree[index] += w[k];\n  weightsum = 0;\n  while (index>0) {\n    if (index%2) weightsum += tree[index+1];\n    index = (index - 1)/2;\n    tree[index] += w[k];\n  }\n  crossweight += (w[k]*weightsum);\n}\nprintf("Total weight of the crossings: %d\\n",crossweight);',
-					title: 'Figure 10: C program fragment for the weighted case',
-					width: '500px',
-				},
+		{
+			type: 'code',
+			data: '/* build the accumulator tree */\n\nfirstindex = 1;\nwhile (firstindex<q) firstindex *= 2;\ntreesize = 2*firstindex - 1; /* number of tree nodes */\nfirstindex -= 1; /* index of leftmost leaf */\ntree = (int *) malloc(treesize*sizeof(int));\nfor (t=0; t<treesize; t++) tree[t] = 0;\n\n/* compute the total weight of the crossings */\n\ncrossweight = 0; /* total weight of the crossings */\nfor (k=0; k<r; k++) { /* insert edge k */\n  index = southsequence[k] + firstindex;\n  tree[index] += w[k];\n  weightsum = 0;\n  while (index>0) {\n    if (index%2) weightsum += tree[index+1];\n    index = (index - 1)/2;\n    tree[index] += w[k];\n  }\n  crossweight += (w[k]*weightsum);\n}\nprintf("Total weight of the crossings: %d\\n",crossweight);',
+			title: 'Figure 10: C program fragment for the weighted case',
+			width: '500px',
+		},
         {
             type: "paragraph",
             data: [

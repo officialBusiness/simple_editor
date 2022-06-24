@@ -17,18 +17,30 @@ export default {
 						if( childDom ){
 							header.appendChild( childDom );
 						}else{
-							console.error('组件 dom 读取解析失败:', child);
+							console.error('组件读取解析失败:', child);
 						}
 					});
 				}else if( typeof obj.data === 'string' ){
 					header.innerText = obj.data;
-				}else{
-					console.error('生产 header 组件 dom 是遇到的不知道的特殊情况:', 'obj:', obj);
 				}
 			}
 		});
 	},
 	toObj(dom){
-		
+		let obj = {
+			type: 'header',
+			level: dom.nodeName.toLowerCase()
+		};
+		if(dom.childNodes.length > 1){
+			obj.data = [];
+			dom.childNodes.forEach((child)=>{
+				obj.data.push(this.getComponentObj(child));
+			});
+		}else if( dom.childNodes.length === 1 && dom.childNodes[0].nodeType === Node.TEXT_NODE ){
+			obj.data = dom.innerText;
+		}else{
+			console.error('header 组件转化 dom 为 obj 时出错');
+		}
+		return obj;
 	}
 }
