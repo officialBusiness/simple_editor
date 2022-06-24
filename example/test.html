@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>test</title>
+		<style type="text/css">
+			html,body{
+				margin: 0;
+				padding: 0;
+				border: 0;
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				display: flex;
+				justify-content: center;
+			}
+			#editor{
+				box-sizing: border-box;
+				padding: 40px;
+				border: 0;
+				max-width: 900px;
+				width: 100%;
+				min-width: 350px;
+				height: 100%;
+				outline: none;
+				overflow: auto;
+			}
+		</style>
+		<script type="text/javascript" src="../src/thirdparty/tex-svg.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src.new/editor.css" />
+	</head>
+	<body>
+			<div id="editor"></div>
+	</body>
+	<script type="module">
+		import Editor from '../src.new/editor.js';
+		let
+			editor = new Editor(document.getElementById('editor'));
+
+			window.editor = editor;
+
+	</script>
+</html>

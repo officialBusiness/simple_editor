@@ -2,11 +2,13 @@
 export default {
     blocks: [
         {
-            type: "h1",
+            type: "header",
+            level: "h1",
             data: "简单高效的双层交叉计数"
         },
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: "摘要"
         },
         {
@@ -79,7 +81,8 @@ export default {
             ]
         },
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: "1 介绍"
         },
         {
@@ -540,7 +543,7 @@ export default {
                 },
                 {
                     type: "text",
-                    data: " 。对于双层交叉计数问题，在图形绘制软件中流行的一种替代方案是Sander[10]，时间复杂度为 "
+                    data: " 。对于双层交叉计数问题，在图形绘制软件中流行的一种替代方案是 Sander[10] ，时间复杂度为 "
                 },
                 {
                     type: "mathjax",
@@ -723,7 +726,8 @@ export default {
             ]
         },
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: "2 双层交叉计数和倒置计数"
         },
         {
@@ -1114,7 +1118,8 @@ export default {
             ]
         },
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: [
                 {
                     type: "text",
@@ -1539,7 +1544,8 @@ export default {
 					width: '400px',
 				},
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: "4计算实验"
         },
         {
@@ -1954,7 +1960,8 @@ export default {
             ]
         },
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: "5 加权情形的扩展"
         },
         {
@@ -2022,7 +2029,8 @@ export default {
             ]
         },
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: "6 双层交叉计数的复杂性"
         },
         {
@@ -2211,7 +2219,8 @@ export default {
             ]
         },
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: "7 结论"
         },
         {
@@ -2265,7 +2274,8 @@ export default {
             ]
         },
         {
-            type: "h2",
+            type: "header",
+            level: "h2",
             data: "参考文献"
         },
 		    {

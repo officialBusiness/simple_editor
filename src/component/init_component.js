@@ -21,14 +21,6 @@ function createComponent(factory){
 	if( factory.isBlock ){
 		blocks[factory.type] = factory;
 	}
-	if( factory.alias ){
-		factory.alias.forEach((type)=>{
-			components[type] = factory;
-			if( factory.isBlock ){
-				blocks[type] = factory;
-			}
-		});
-	}
 }
 
 for( let key in factories ){

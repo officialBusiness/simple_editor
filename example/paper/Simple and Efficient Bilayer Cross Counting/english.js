@@ -2,11 +2,13 @@
 export default {
 	blocks: [
 		{
-			type: "h1",
+			type: "header",
+			level: "h1",
 			data: "Simple and Efficient Bilayer Cross Counting"
 		},
 		{
-			type: "h2",
+			type: "header",
+			level: "h2",
 			data: "Abstract"
 		},
 		{
@@ -75,7 +77,8 @@ export default {
 			]
 		},
 		{
-			type: "h2",
+			type: "header",
+			level: "h2",
 			data: "1 Introduction"
 		},
 		{
@@ -711,7 +714,8 @@ export default {
 			]
 		},
 		{
-			type: 'h2',
+			type: "header",
+			level: "h2",
 			data: '2 Bilayer Cross Counts and Inversion Numbers'
 		},
 		{
@@ -1105,7 +1109,8 @@ export default {
 			]
 		},
 		{
-			type: 'h2',
+			type: "header",
+			level: "h2",
 			data: [
 				{
 					type: 'text',
@@ -1554,7 +1559,8 @@ export default {
 			width: '400px',
 		},
 		{
-			type: 'h2',
+			type: "header",
+			level: "h2",
 			data: '4 Computational Experiments'
 		},
 		{
@@ -1977,7 +1983,8 @@ export default {
 			]
 		},
 		{
-			type: "h2",
+			type: "header",
+			level: "h2",
 			data: "5 Extension to the Weighted Case"
 		},
     {
@@ -2045,7 +2052,8 @@ export default {
 			]
 		},
 		{
-			type: "h2",
+			type: "header",
+			level: "h2",
 			data: "6 Complexity of Bilayer Cross Counting"
 		},
     {
@@ -2250,7 +2258,8 @@ export default {
         ]
     },
 		{
-			type: "h2",
+			type: "header",
+			level: "h2",
 			data: "7 Conclusion"
 		},
     {
@@ -2304,7 +2313,8 @@ export default {
     	]
     },
     {
-    	type: "h2",
+			type: "header",
+			level: "h2",
     	data: "References"
     },
     {

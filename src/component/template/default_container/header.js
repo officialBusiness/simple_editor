@@ -6,12 +6,11 @@ import enterOne from './operation/enter_one.js';
 
 export default {
 	type: 'header',
-	alias: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
 	isBlock: true,
 	toDom(obj = {
 		type: "header"
 	}){
-		let header = this.nodeApi.createElement(obj.type, {
+		let header = this.nodeApi.createElement(obj.level, {
 			class: 'header',
 			block: true,
 			mergeBlock: true,
@@ -40,7 +39,8 @@ export default {
 	},
 	toObj(dom){
 		let obj = {
-			type: dom.nodeName.toLowerCase()
+			type: 'header',
+			level: dom.nodeName.toLowerCase()
 		};
 		if(dom.childNodes.length > 1){
 			obj.data = [];

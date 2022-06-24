@@ -99,6 +99,7 @@ Editor.prototype.toObjString = function(){
 
 Editor.prototype.render = function(obj){
 	this.nodeApi.emptyAllChild(this.editorDom);
+	// console.log('obj.blocks:', obj.blocks);
 	obj.blocks.forEach((block)=>{
 		let blockDom = this.getBlockDom(block);
 		if( blockDom ){
