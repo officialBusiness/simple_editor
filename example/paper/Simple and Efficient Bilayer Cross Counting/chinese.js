@@ -2015,7 +2015,7 @@ export default {
         },
 				{
 					type: 'code',
-					data: '/* build the accumulator tree */\n\nfirstindex = 1;\nwhile (firstindex<q) firstindex *= 2;\ntreesize = 2*firstindex - 1; /* number of tree nodes */\nfirstindex -= 1; /* index of leftmost leaf */\ntree = (int *) malloc(treesize*sizeof(int));\nfor (t=0; t<treesize; t++) tree[t] = 0;\n\n/* compute the total weight of the crossings */\n\ncrossweight = 0; /* total weight of the crossings */\nfor (k=0; k<r; k++) { /* insert edge k */\n  index = southsequence[k] + firstindex;\n  tree[index] += w[k];\n  weightsum = 0;\n  while (index>0) {\n    if (index%2) weightsum += tree[index+1];\n    index = (index - 1)/2;\n    tree[index] += w[k];\n}\n  crossweight += (w[k]*weightsum);\n}\nprintf("Total weight of the crossings: %d\\n",crossweight);',
+					data: '/* build the accumulator tree */\n\nfirstindex = 1;\nwhile (firstindex<q) firstindex *= 2;\ntreesize = 2*firstindex - 1; /* number of tree nodes */\nfirstindex -= 1; /* index of leftmost leaf */\ntree = (int *) malloc(treesize*sizeof(int));\nfor (t=0; t<treesize; t++) tree[t] = 0;\n\n/* compute the total weight of the crossings */\n\ncrossweight = 0; /* total weight of the crossings */\nfor (k=0; k<r; k++) { /* insert edge k */\n  index = southsequence[k] + firstindex;\n  tree[index] += w[k];\n  weightsum = 0;\n  while (index>0) {\n    if (index%2) weightsum += tree[index+1];\n    index = (index - 1)/2;\n    tree[index] += w[k];\n  }\n  crossweight += (w[k]*weightsum);\n}\nprintf("Total weight of the crossings: %d\\n",crossweight);',
 					title: 'Figure 10: C program fragment for the weighted case',
 					width: '500px',
 				},

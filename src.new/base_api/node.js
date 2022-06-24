@@ -98,6 +98,65 @@ export function createElement(nodeName, attributes, on){
   return element;
 }
 
+export function createComonentDom(obj){
+	if( obj.if !== void 0 && !obj.if ){
+		return ;
+	}
+	if( typeof obj === 'string' ){
+		return document.createTextNode(text);
+	}else if( typeof obj === 'object' ){
+		let
+			{ nodeName, attributes, style, children, created } = obj,
+			element = document.createElement(nodeName);
+
+		if( attributes ){
+			if(typeof attributes === 'object'){
+				Object.keys(attributes).forEach((key)=>{
+					if( attributes[key] !== void 0 ){
+						element.setAttribute(key, attributes[key]);
+					}
+				});
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 attributes 类型', attributes);
+			}
+		}
+		if( style ){
+			if(typeof style === 'object'){
+				Object.keys(style).forEach((key)=>{
+					if( style[key] !== void 0 ){
+						element.style[key] = style[key];
+					}
+				});
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 style 类型', attributes);
+			}
+		}
+		if( children ){
+			if( Array.isArray(children) ){
+				children.forEach((child)=>{
+					element.appendChild(createComonentDom(child));
+				});
+			}else if( typeof children === 'object' ){
+				element.appendChild(createComonentDom(children));
+			}else if( typeof children === 'string' ){
+				element.appendChild(document.createTextNode(children));
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 children 类型', children);
+			}
+		}
+		if( created ){
+			if( typeof created === 'function'){
+				created(element);
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 created 类型', created, obj);
+			}
+		}
+		return element;
+	}else{
+		console.error('创建组件 dom 时遇到情况外的 obj 类型', obj);
+	}
+}
+
 export function linkDomTree(tree){
 	let parent = tree,
 			nodes = [parent],
