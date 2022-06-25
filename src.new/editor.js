@@ -1,6 +1,7 @@
 import * as rangeApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
+import EditorEvent from './event/event.js';
 
 export default function Editor(dom, contentObj){
 
@@ -8,6 +9,9 @@ export default function Editor(dom, contentObj){
 	this.editorDom.style['white-space'] = 'pre-wrap';
 	this.editorDom.contentEditable = this.editable = true;
 	this.editorDom.setAttribute('editor', true);
+
+	// 初始化事件
+	this.event = new EditorEvent(this);
 
 	// 初始化组件生产工厂
 	this.defualtBlockObj = {type: 'paragraph'};
@@ -64,3 +68,9 @@ Editor.prototype.toObj = function(){
 	});
 	return obj;
 }
+
+Editor.prototype.addEvent = function(eventType, event){
+	this.event.addEvent(eventType, event);
+	return this;
+}
+
