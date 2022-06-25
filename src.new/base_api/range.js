@@ -17,6 +17,17 @@ export function getRange(){
 	}
 }
 
+export function consoleRange(){
+	let range = getRange();
+	if( range ){
+		console.log('collapsed:', range.collapsed);
+		console.log('startContainer:', range.startContainer);
+		console.log('startOffset:', range.startOffset);
+		console.log('endContainer:', range.endContainer);
+		console.log('endOffset:', range.endOffset);
+	}
+}
+
 export function setRange(startNode, startOffset, endNode, endOffset){
 	let range = document.getSelection().getRangeAt(0);
 	range.setStart(startNode, startOffset);

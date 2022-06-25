@@ -1,4 +1,6 @@
 import handleOnKeydown from './native/keydown.js';
+import { handleCompositionStart, handleCompositionEnd } from './native/composition.js';
+import handleOnPaste from './native/paste.js';
 
 export default class EditorEvent{
 	constructor(editor){
@@ -8,44 +10,34 @@ export default class EditorEvent{
 			keydown: [],
 		}
 
-		this.keydown = function(e){
-			console.log('keydown e:', e);
-			e.preventDefault();
+		let editorEvent = this;
 
-		}
+		this.keydown = handleOnKeydown.bind(this);
 		editor.editorDom.addEventListener('keydown', this.keydown);
 
+		this.compositionstart = handleCompositionStart.bind(this);
+		editor.editorDom.addEventListener('compositionstart', this.compositionstart);
 
-		this.compositionstart = function(e){
-			e.preventDefault();
-			
-		}
-		editor.editorDom.addEventListener('compositionstart', this.compositionend);
+		// 用于测试
+		// this.compositionupdate = (function(e){
+		// 	console.log('compositionupdate e:', e);
+		// 	this.editor.rangeApi.consoleRange();
+		// }).bind(this);
+		// editor.editorDom.addEventListener('compositionupdate', this.compositionupdate);
 
-
-		this.compositionend = function(e){
-			e.preventDefault();
-			
-		}
+		this.compositionend = handleCompositionEnd.bind(this);
 		editor.editorDom.addEventListener('compositionend', this.compositionend);
 
-
-		this.paste = function(e){
-			console.log('paste');
-			e.preventDefault();
-		}
+		this.paste = handleOnPaste.bind(this);
 		editor.editorDom.addEventListener('paste', this.paste);
 
 
+		// 拖拽相关暂不实现，直接禁止，目前格式就先和上面一样吧，说不准哪天就想实现了
 		this.dragstart = function(e){
-			console.log('dragstart');
 			e.preventDefault();
 		}
 		editor.editorDom.addEventListener('dragstart', this.dragstart);
-
-
 		this.drop = function(e){
-			console.log('drop');
 			e.preventDefault();
 		}
 		editor.editorDom.addEventListener('drop', this.drop);
@@ -53,7 +45,8 @@ export default class EditorEvent{
 	}
 	addEvent(eventType, event){
 		if( !this.events[eventType] ){
-			this.events[eventType] = [];
+			console.error('目前不支持该事件', eventType);
+			return ;
 		}
 		this.events[eventType].push(event);
 	}
