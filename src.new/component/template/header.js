@@ -7,7 +7,6 @@ export default {
 			attributes: {
 				class: 'header',
 				block: true,
-				mergeBlock: true,
 				container: true,
 			},
 			created: (header)=>{

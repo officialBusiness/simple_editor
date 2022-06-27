@@ -7,7 +7,6 @@ export default {
 			attributes: {
 				class: 'image',
 				block: true,
-				singleBlock: true,
 				container: true
 			},
 			style: {

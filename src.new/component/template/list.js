@@ -56,7 +56,6 @@ export default {
 				class: 'list',
 				title: Array.isArray(obj.title) ? 'custom' : obj.title,
 				block: true,
-				mergeBlock: true
 			},
 			children: obj.data.map((li, index)=>{
 				return createLiDomObj.call(this, obj.title, index, li);

@@ -2,6 +2,32 @@ import handleOnKeydown from './native/keydown.js';
 import { handleCompositionStart, handleCompositionEnd } from './native/composition.js';
 import handleOnPaste from './native/paste.js';
 
+import deleteForward from './default_operation/delete_forward.js'
+
+export const defaultOperation = {
+	deleteForward,
+}
+
+export const editorEventType = {
+	deleteForward: 'deleteForward',									//	向前删除单个
+	deleteForwardOnStart: 'deleteForwardOnStart',
+	deleteBackward: 'deleteBackward',								//	向后删除单个
+	deleteFragment: 'deleteFragment',								//	删除片段
+
+	enter: 'enter',
+	enterFragment: 'enterFragment'
+}
+
+export const editorEvent = {
+	deleteForward: new Event('deleteForward'),
+	deleteForwardOnStart: new Event('deleteForwardOnStart'),
+	deleteBackward: new Event('deleteBackward'),
+	deleteFragment: new Event('deleteFragment'),
+
+	enter: new Event('enter'),
+	enterFragment: new Event('enterFragment'),
+}
+
 export default class EditorEvent{
 	constructor(editor){
 		this.editor = editor;
@@ -32,7 +58,7 @@ export default class EditorEvent{
 		editor.editorDom.addEventListener('paste', this.paste);
 
 
-		// 拖拽相关暂不实现，直接禁止，目前格式就先和上面一样吧，说不准哪天就想实现了
+		// 拖拽相关暂不实现，直接禁止，目前就先和上面一样用 addEventListener 吧，说不准哪天就想实现了
 		this.dragstart = function(e){
 			e.preventDefault();
 		}
@@ -41,7 +67,6 @@ export default class EditorEvent{
 			e.preventDefault();
 		}
 		editor.editorDom.addEventListener('drop', this.drop);
-
 	}
 	addEvent(eventType, event){
 		if( !this.events[eventType] ){
@@ -51,7 +76,6 @@ export default class EditorEvent{
 		this.events[eventType].push(event);
 	}
 	destroy(){
-
 		this.editor.editorDom.removeEventListener('keydown', this.keydown);
 		this.editor.editorDom.removeEventListener('compositionstart', this.compositionstart);
 		this.editor.editorDom.removeEventListener('compositionend', this.compositionend);
@@ -60,61 +84,3 @@ export default class EditorEvent{
 		this.editor.editorDom.removeEventListener('drop', this.drop);
 	}
 }
-
-// export function initEvent(context){
-// 	// 键盘事件
-
-// 	context.editorDom.addEventListener('keydown', handleOnKeydown);
-
-// 	context.editorDom.addEventListener('compositionend', (e) => {
-// 	  let range = context.rangeApi.getRange(),
-// 	  		{ startContainer, startOffset } = range;
-// 	  if( startContainer.nodeType === Node.TEXT_NODE ){
-// 	  	// console.log(e.data);
-// 	  	if( startContainer.length === e.data.length && startOffset === e.data.length ){
-// 	  		context.nodeApi.removeNode(startContainer);
-// 	  	}else{
-// 	  		startContainer.deleteData(startOffset - e.data.length, e.data.length);
-// 	  	}
-// 	  }
-
-// 	});
-// 	// 复制事件
-// 	context.editorDom.onpaste = (e)=>{
-// 		e.preventDefault();
-// 		// let clipboardData = e.clipboardData,
-// 		// 	index = 0,
-// 		// 	length = clipboardData.items.length,
-// 		// 	string = '';
-// 		// for(let item of clipboardData.items){
-// 		// 	index ++;
-// 		// 	if( item.kind === 'string' 
-// 		// 		&& item.type === 'text/plain' ){
-// 		// 		item.getAsString((str)=>{
-// 		// 			string += str;
-// 		// 			// console.log('item:', item);
-// 		// 			if( length === index ){
-// 		// 				// console.info('paste 事件待完善');
-// 		// 				// console.log('string:', string);
-// 		// 				triggerEvent['paste'].call(context, string);
-// 		// 			}
-// 		// 		});
-// 		// 	}
-// 		// }
-// 	}
-// 	context.editorDom.oncopy = (e)=>{
-// 		// e.preventDefault();
-// 	}
-
-// 	// 禁止拖拽
-// 	context.editorDom.ondragstart = (e)=>{
-// 		e.preventDefault();
-// 	}
-// 	context.editorDom.ondrop = (e)=>{
-// 		e.preventDefault();
-// 	}
-// }
-
-// export function destroyEvent(){
-
-// }

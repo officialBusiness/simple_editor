@@ -17,6 +17,25 @@ export function getRange(){
 	}
 }
 
+export function checkRange(){
+	let range = getRange(),
+			{ collapsed, startContainer, startOffset, endContainer, endOffset } = range;
+
+	if( startContainer.nodeType === Node.ELEMENT_NODE ){
+		let node = startContainer.childNodes[startOffset > 0 ? startOffset - 1 : 0];
+		if( node.childNodes.length > 0 ){
+			console.error('startContainer range 的位置不符合预期，检查是否是浏览器自动的选择导致的，如是，需要优化完善代码');
+		}
+	}
+	if( !collapsed && endContainer.nodeType === Node.ELEMENT_NODE ){
+		let node = endContainer.childNodes[endOffset > 0 ? endOffset - 1 : 0];
+		if( node.childNodes.length > 0 ){
+			console.error('endContainer range 的位置不符合预期，检查是否是浏览器自动的选择导致的，如是，需要优化完善代码');
+		}
+	}
+
+}
+
 export function consoleRange(){
 	let range = getRange();
 	if( range ){
@@ -141,19 +160,5 @@ export function startNodeNewRange(node){
 		setNewCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node));
 	}else{
 		console.error('没有处理的节点类型');
-	}
-}
-
-export function isRangeInOneNode(){
-	let selection = document.getSelection()
-	return selection.anchorNode === selection.focusNode
-}
-
-export function getRangeOneNode(){
-	let selection = document.getSelection()
-	if( selection.anchorNode === selection.focusNode ){
-		return selection.anchorNode;
-	}else{
-		return null;
 	}
 }

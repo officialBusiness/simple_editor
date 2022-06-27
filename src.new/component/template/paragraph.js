@@ -7,8 +7,10 @@ export default {
 			attributes: {
 				class: 'paragraph',
 				block: true,
-				mergeBlock: true,
 				container: true,
+			},
+			on: {
+				[this.editorEventType.deleteForward]: this.defaultOperation.deleteForward
 			},
 			created: (paragraph)=>{
 				if(Array.isArray(obj.data)){

@@ -7,7 +7,6 @@ export default {
 			attributes: {
 				class: 'code',
 				block: true,
-				singleBlock: true
 			},
 			children: [
 				{

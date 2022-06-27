@@ -1,7 +1,7 @@
 import * as rangeApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
-import EditorEvent from './event/event.js';
+import EditorEvent, { editorEventType, editorEvent, defaultOperation } from './event/event.js';
 
 export default function Editor(dom, contentObj){
 
@@ -12,6 +12,10 @@ export default function Editor(dom, contentObj){
 
 	// 初始化事件
 	this.event = new EditorEvent(this);
+	this.defaultOperation = {}
+	Object.keys(defaultOperation).forEach((key)=>{
+		this.defaultOperation[key] = defaultOperation[key].bind(this);
+	});
 
 	// 初始化组件生产工厂
 	this.defualtBlockObj = {type: 'paragraph'};
@@ -26,11 +30,19 @@ export default function Editor(dom, contentObj){
 			console.error(this.defualtFactory, '读取解析失败');
 		}
 	}
-}
 
+	// 检验
+	document.addEventListener("selectionchange", () => {
+		// console.log('检验 checkRange');
+		this.rangeApi.checkRange();
+	});
+}
 
 Editor.prototype.rangeApi = rangeApi;
 Editor.prototype.nodeApi = nodeApi;
+
+Editor.prototype.editorEventType = editorEventType;
+Editor.prototype.editorEvent = editorEvent;
 
 Editor.prototype.getComponentDom = function(obj){
 	return componentApi.getComponentDom(this, obj);

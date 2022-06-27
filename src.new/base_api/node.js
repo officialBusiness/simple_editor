@@ -106,7 +106,7 @@ export function createComonentDom(obj){
 		return document.createTextNode(text);
 	}else if( typeof obj === 'object' ){
 		let
-			{ nodeName, attributes, style, children, created } = obj,
+			{ nodeName, attributes, on, style, children, created } = obj,
 			element = document.createElement(nodeName);
 
 		if( attributes ){
@@ -120,6 +120,20 @@ export function createComonentDom(obj){
 				console.error('创建组件 dom 时遇到情况外的 attributes 类型', attributes);
 			}
 		}
+		if( on ){
+			if(typeof on === 'object'){
+				Object.keys(on).forEach((key)=>{
+					if( typeof on[key] === 'function' ){
+						element.addEventListener(key, on[key]);
+					}else{
+						console.error(`创建组件 dom 时 on[${key}] 不为 function`, on[key]);
+					}
+				});
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 on 类型', on);
+			}
+
+		}
 		if( style ){
 			if(typeof style === 'object'){
 				Object.keys(style).forEach((key)=>{
@@ -128,7 +142,7 @@ export function createComonentDom(obj){
 					}
 				});
 			}else{
-				console.error('创建组件 dom 时遇到情况外的 style 类型', attributes);
+				console.error('创建组件 dom 时遇到情况外的 style 类型', style);
 			}
 		}
 		if( children ){
@@ -148,7 +162,7 @@ export function createComonentDom(obj){
 			if( typeof created === 'function'){
 				created(element);
 			}else{
-				console.error('创建组件 dom 时遇到情况外的 created 类型', created, obj);
+				console.error('创建组件 dom 时遇到情况外的 created 类型', created);
 			}
 		}
 		return element;

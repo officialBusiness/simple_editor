@@ -1,8 +1,15 @@
-import * as factories from './template/template.js';
+import * as factories from './template/templates.js';
 
 export function initComponent(context){
 	
 }
+
+// export function getComponent(type){
+// 	if(!factories[type]){
+// 		return null;
+// 	}
+// 	return factories[type];
+// }
 
 export function getComponentDom(context, obj){
 	if(!factories[obj.type]){
