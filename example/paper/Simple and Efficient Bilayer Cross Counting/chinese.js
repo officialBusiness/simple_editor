@@ -407,17 +407,39 @@ export default {
                 },
                 {
                     type: "mathjax",
-                    data: [
-                        "(L_{fixed},L_{free})=",
-                        "(L_0,L_1),",
-                        "(L_1,L_2),...,",
-                        "(L_{m−2},",
-                        "L_{m−1}),",
-                        "(L_{m−1},",
-                        "L_{m−2}),...,",
-                        "(L_1,L_0),",
-                        "(L_0,L_1),..."
-                    ]
+                    data: "(L_{fixed},L_{free})=",
+                },
+                {
+                    type: "mathjax",
+                    data: "(L_0,L_1),",
+                },
+                {
+                    type: "mathjax",
+                    data: "(L_1,L_2),...,",
+                },
+                {
+                    type: "mathjax",
+                    data: "(L_{m−2},",
+                },
+                {
+                    type: "mathjax",
+                    data: "L_{m−1}),",
+                },
+                {
+                    type: "mathjax",
+                    data: "(L_{m−1},",
+                },
+                {
+                    type: "mathjax",
+                    data: "L_{m−2}),...,",
+                },
+                {
+                    type: "mathjax",
+                    data: "(L_1,L_0),",
+                },
+                {
+                    type: "mathjax",
+                    data: "(L_0,L_1),..."
                 },
                 {
                     type: "text",
@@ -1445,12 +1467,19 @@ export default {
                 },
                 {
                     type: "mathjax",
-                    data: [
-                        "e_3,",
-                        "e_6,",
-                        "e_7,",
-                        "e_8,"
-                    ]
+                    data: "e_3,"
+                },
+                {
+                    type: "mathjax",
+                    data: "e_6,"
+                },
+                {
+                    type: "mathjax",
+                    data: "e_7,"
+                },
+                {
+                    type: "mathjax",
+                    data: "e_8,"
                 },
                 {
                     type: "text",
@@ -1748,10 +1777,11 @@ export default {
                 [
                     {
                         type: "mathjax",
-                        data: [
-                            "NorthNodePos",
-                            "\\left[k \\right] \\in \\{0,1,...,p−1\\}"
-                        ]
+                        data: "NorthNodePos"
+                    },
+                    {
+                        type: "mathjax",
+                        data: "\\left[k \\right] \\in \\{0,1,...,p−1\\}"
                     },
                     {
                         type: "text",
@@ -1777,10 +1807,11 @@ export default {
                 [
                     {
                         type: "mathjax",
-                        data: [
-                            "SouthNodePos",
-                            "\\left[k \\right] \\in \\{0,1,...,p−1\\}"
-                        ]
+                        data: "SouthNodePos"
+                    },
+                    {
+                        type: "mathjax",
+                        data: "\\left[k \\right] \\in \\{0,1,...,p−1\\}"
                     },
                     {
                         type: "text",

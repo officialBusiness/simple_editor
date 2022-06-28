@@ -18,7 +18,7 @@ export default function Editor(dom, contentObj){
 	});
 
 	// 初始化组件生产工厂
-	this.defualtBlockObj = {type: 'paragraph'};
+	this.defualtBlockObj = { type: 'paragraph' };
 
 	if(contentObj){
 		this.render(contentObj);
