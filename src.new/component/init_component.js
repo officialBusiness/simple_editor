@@ -5,7 +5,7 @@ export function initComponent(context){
 }
 
 export function supportOperation(supportOperationType, node){
-	return factories[node.className].supportOperation[supportOperationType](node);
+	return factories[node.className].supportOperation[supportOperationType].call(this, node);
 }
 
 export function getComponent(type){

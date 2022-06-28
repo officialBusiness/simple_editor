@@ -10,8 +10,9 @@ export default {
 				[this.nodeLabel.container]: true,
 			},
 			on: {
-				[this.operationType.deleteForward]: this.operation.deleteForward,
-				[this.operationType.deleteForwardOnStart]: this.operation.deleteForwardOnStart,
+				[this.operationType.deleteForward]: this.defaultOperation.deleteForward,
+				[this.operationType.deleteForwardOnStart]: this.defaultOperation.deleteForwardOnStart,
+				[this.operationType.enter]: this.defaultOperation.enter,
 			},
 			created: (header)=>{
 				if(Array.isArray(obj.data)){

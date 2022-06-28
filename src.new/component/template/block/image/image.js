@@ -68,6 +68,6 @@ export default {
 	supportOperation: {
 		getLastContainer(image){
 			return image.childNodes[1] ? image.childNodes[1] : image.childNodes[0];
-		}
+		},
 	}
 }

@@ -85,7 +85,13 @@ function enter(){
 	if( !range ){
 		return ;
 	}
-	
+	let	{ collapsed, startContainer, startOffset, endContainer, endOffset } = range;
+	if(collapsed){
+		nodeApi.getContainer(startContainer).dispatchEvent(operationEvent.enter);
+	}else{
+		console.log('enter 事件待完善');
+	}
+
 }
 
 

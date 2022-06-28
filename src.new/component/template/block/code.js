@@ -19,9 +19,6 @@ export default {
 						attributes: {
 							[this.nodeLabel.container]: true,
 						},
-						// on: {
-						// 
-						// },
 						style: {
 							width: obj.width
 						},

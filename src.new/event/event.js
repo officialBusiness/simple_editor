@@ -2,16 +2,21 @@ import handleOnKeydown from './native/keydown.js';
 import { handleCompositionStart, handleCompositionEnd } from './native/composition.js';
 import handleOnPaste from './native/paste.js';
 
-import deleteForward from './operation/delete_forward.js';
-import deleteForwardOnStart from './operation/delete_forward_on_start.js';
-import deleteFragment from './operation/delete_fragment.js';
-import enter from './operation/enter.js';
+import deleteForward from './default_operation/delete_forward.js';
+import deleteBackward from './default_operation/delete_backward.js';
+import deleteForwardOnStart from './default_operation/delete_forward_on_start.js';
+import deleteFragment from './default_operation/delete_fragment.js';
+import enter from './default_operation/enter.js';
+import enterFragment from './default_operation/enter_fragment.js';
 
-export const operation = {
+export const defaultOperation = {
 	deleteForward,
 	deleteForwardOnStart,
+	deleteBackward,
 	deleteFragment,
+
 	enter,
+	enterFragment,
 }
 
 export const operationType = {
