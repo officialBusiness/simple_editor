@@ -6,7 +6,7 @@ export default {
 			nodeName: 'div',
 			attributes: {
 				class: 'code',
-				block: true,
+				[this.nodeLabel.block]: true,
 			},
 			children: [
 				{
@@ -17,8 +17,11 @@ export default {
 					children: {
 						nodeName: 'code',
 						attributes: {
-							container: true,
+							[this.nodeLabel.container]: true,
 						},
+						// on: {
+						// 
+						// },
 						style: {
 							width: obj.width
 						},
@@ -30,8 +33,11 @@ export default {
 					if: !!obj.title,
 					attributes: {
 						class: 'code_title',
-						container: true
+						[this.nodeLabel.container]: true,
 					},
+					// on: {
+					// 
+					// },
 					children: obj.title
 				}
 			]
@@ -54,5 +60,10 @@ export default {
 			obj.title = title.innerText;
 		}
 		return obj;
+	},
+	supportOperation: {
+		getLastContainer(code){
+			return code.childNodes[1] ? code.childNodes[1] : code.childNodes[0].childNodes[0];
+		}
 	}
 }

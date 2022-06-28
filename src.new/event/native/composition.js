@@ -18,7 +18,7 @@ export function handleCompositionEnd(e){
 			{ collapsed, endContainer, endOffset } = range;
 
 	if( !collapsed ){
-		console.error('测试一下，按道理，collapsed 一定为 true，看看存不存在为 false 的情况');
+		console.error('测试一下, 按道理, collapsed 一定为 true, 看看存不存在为 false 的情况');
 	}
 
 	if( this.compositionStartCollapsed ){//	只需要删除插入的 text 即可

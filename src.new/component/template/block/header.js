@@ -6,8 +6,12 @@ export default {
 			nodeName: obj.level,
 			attributes: {
 				class: 'header',
-				block: true,
-				container: true,
+				[this.nodeLabel.block]: true,
+				[this.nodeLabel.container]: true,
+			},
+			on: {
+				[this.operationType.deleteForward]: this.operation.deleteForward,
+				[this.operationType.deleteForwardOnStart]: this.operation.deleteForwardOnStart,
 			},
 			created: (header)=>{
 				if(Array.isArray(obj.data)){
@@ -41,5 +45,10 @@ export default {
 			console.error('header 组件转化 dom 为 obj 时出错');
 		}
 		return obj;
+	},
+	supportOperation: {
+		getLastContainer(header){
+			return header;
+		}
 	}
 }

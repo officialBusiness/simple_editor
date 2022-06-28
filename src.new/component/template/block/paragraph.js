@@ -6,11 +6,12 @@ export default {
 			nodeName: 'div',
 			attributes: {
 				class: 'paragraph',
-				block: true,
-				container: true,
+				[this.nodeLabel.block]: true,
+				[this.nodeLabel.container]: true,
 			},
 			on: {
-				[this.editorEventType.deleteForward]: this.defaultOperation.deleteForward
+				[this.operationType.deleteForward]: this.operation.deleteForward,
+				[this.operationType.deleteForwardOnStart]: this.operation.deleteForwardOnStart,
 			},
 			created: (paragraph)=>{
 				if(Array.isArray(obj.data)){
@@ -35,5 +36,10 @@ export default {
 			obj.data.push(this.getComponentObj(child));
 		});
 		return obj;
+	},
+	supportOperation: {
+		getLastContainer(paragraph){
+			return paragraph;
+		}
 	}
 }

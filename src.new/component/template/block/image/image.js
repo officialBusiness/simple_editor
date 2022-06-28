@@ -1,4 +1,8 @@
 
+function imgContainerDeleteForward(){
+
+}
+
 export default {
 	type: 'image',
 	toDom(obj){
@@ -6,12 +10,16 @@ export default {
 			nodeName: 'div',
 			attributes: {
 				class: 'image',
-				block: true,
-				container: true
+				[this.nodeLabel.block]: true,
+				[this.nodeLabel.single]: true,
+				[this.nodeLabel.container]: true
 			},
 			style: {
 				'text-align': obj.alignment
 			},
+			// on: {
+
+			// },
 			children: [
 				{
 					nodeName: 'img',
@@ -27,8 +35,11 @@ export default {
 					nodeName: 'div',
 					attributes: {
 						class: 'image_title',
-						container: true,
+						[this.nodeLabel.container]: true,
 					},
+					// on: {
+
+					// },
 					children: obj.title
 				}
 			]
@@ -53,5 +64,10 @@ export default {
 			obj.title = title.innerText;
 		}
 		return obj;
+	},
+	supportOperation: {
+		getLastContainer(image){
+			return image.childNodes[1] ? image.childNodes[1] : image.childNodes[0];
+		}
 	}
 }

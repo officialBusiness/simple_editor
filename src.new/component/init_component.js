@@ -4,12 +4,17 @@ export function initComponent(context){
 	
 }
 
-// export function getComponent(type){
-// 	if(!factories[type]){
-// 		return null;
-// 	}
-// 	return factories[type];
-// }
+export function supportOperation(supportOperationType, node){
+	return factories[node.className].supportOperation[supportOperationType](node);
+}
+
+export function getComponent(type){
+	console.log(`factories[${type}]:`, factories[type]);
+	if(!factories[type]){
+		return null;
+	}
+	return factories[type];
+}
 
 export function getComponentDom(context, obj){
 	if(!factories[obj.type]){

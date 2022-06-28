@@ -22,7 +22,7 @@ function createLiDomObj(title, index, li){
 				attributes: {
 					class: 'label',
 					contenteditable: Array.isArray(title) ? null : false,
-					container: Array.isArray(title) ? true : null
+					[this.nodeLabel.container]: Array.isArray(title) ? true : null
 				},
 				children: getLabel(index, title)
 			},
@@ -30,7 +30,7 @@ function createLiDomObj(title, index, li){
 				nodeName: 'div',
 				attributes: {
 					class: 'container',
-					container: true
+					[this.nodeLabel.container]: true
 				},
 				created: (container)=>{
 					if( Array.isArray(li) ){
@@ -55,7 +55,7 @@ export default {
 			attributes: {
 				class: 'list',
 				title: Array.isArray(obj.title) ? 'custom' : obj.title,
-				block: true,
+				[this.nodeLabel.block]: true,
 			},
 			children: obj.data.map((li, index)=>{
 				return createLiDomObj.call(this, obj.title, index, li);
@@ -87,5 +87,10 @@ export default {
 			obj.data.push(container);
 		});
 		return obj;
+	},
+	supportOperation: {
+		getLastContainer(list){
+			return list.childNodes[list.childNodes.length].childNodes[1];
+		}
 	}
 }

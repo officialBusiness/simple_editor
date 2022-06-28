@@ -25,7 +25,7 @@ export default function handleOnKeydown(e){
 
 			break;
 		case 13://	enter
-			// enter.call(this.editor);
+			enter.call(this.editor);
 			break;
 		case 37://	ArrowLeft
 		case 38://	ArrowUp
@@ -48,7 +48,7 @@ export default function handleOnKeydown(e){
 
 function backspace(){
 	let 
-		{ rangeApi, nodeApi, editorEvent } = this,
+		{ rangeApi, nodeApi, operationEvent } = this,
 		range = rangeApi.getRange();
 	if( !range ){
 		return ;
@@ -57,7 +57,7 @@ function backspace(){
 	// console.log('range:', range);
 	if(collapsed){
 		// console.log('触发 deleteForward');
-		nodeApi.getContainer(startContainer).dispatchEvent( editorEvent.deleteForward );
+		nodeApi.getContainer(startContainer).dispatchEvent( operationEvent.deleteForward );
 	}else{
 		let startContainerNode = nodeApi.getContainer(startContainer),
 				endContainerNode= nodeApi.getContainer(endContainer);
@@ -75,6 +75,17 @@ function backspace(){
 			}
 		}
 	}
+}
+
+
+function enter(){
+	let 
+		{ rangeApi, nodeApi, operationEvent } = this,
+		range = rangeApi.getRange();
+	if( !range ){
+		return ;
+	}
+	
 }
 
 

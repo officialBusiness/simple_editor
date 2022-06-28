@@ -2,23 +2,29 @@ import handleOnKeydown from './native/keydown.js';
 import { handleCompositionStart, handleCompositionEnd } from './native/composition.js';
 import handleOnPaste from './native/paste.js';
 
-import deleteForward from './default_operation/delete_forward.js'
+import deleteForward from './operation/delete_forward.js';
+import deleteForwardOnStart from './operation/delete_forward_on_start.js';
+import deleteFragment from './operation/delete_fragment.js';
+import enter from './operation/enter.js';
 
-export const defaultOperation = {
+export const operation = {
 	deleteForward,
+	deleteForwardOnStart,
+	deleteFragment,
+	enter,
 }
 
-export const editorEventType = {
+export const operationType = {
 	deleteForward: 'deleteForward',									//	向前删除单个
-	deleteForwardOnStart: 'deleteForwardOnStart',
+	deleteForwardOnStart: 'deleteForwardOnStart',		//	向前删除单个删到了 container 头部
 	deleteBackward: 'deleteBackward',								//	向后删除单个
 	deleteFragment: 'deleteFragment',								//	删除片段
 
-	enter: 'enter',
-	enterFragment: 'enterFragment'
+	enter: 'enter',																	//	光标 collapsed 的时候回车
+	enterFragment: 'enterFragment'									//	光标不为 collapsed 的时候回车
 }
 
-export const editorEvent = {
+export const operationEvent = {
 	deleteForward: new Event('deleteForward'),
 	deleteForwardOnStart: new Event('deleteForwardOnStart'),
 	deleteBackward: new Event('deleteBackward'),
@@ -26,6 +32,10 @@ export const editorEvent = {
 
 	enter: new Event('enter'),
 	enterFragment: new Event('enterFragment'),
+}
+
+export const supportOperationType = {
+	getLastContainer: 'getLastContainer',
 }
 
 export default class EditorEvent{
@@ -58,7 +68,7 @@ export default class EditorEvent{
 		editor.editorDom.addEventListener('paste', this.paste);
 
 
-		// 拖拽相关暂不实现，直接禁止，目前就先和上面一样用 addEventListener 吧，说不准哪天就想实现了
+		// 拖拽相关暂不实现, 直接禁止, 目前就先和上面一样用 addEventListener 吧, 说不准哪天就想实现了
 		this.dragstart = function(e){
 			e.preventDefault();
 		}

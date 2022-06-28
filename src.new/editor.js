@@ -1,7 +1,7 @@
 import * as rangeApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
-import EditorEvent, { editorEventType, editorEvent, defaultOperation } from './event/event.js';
+import EditorEvent, { operationType, operationEvent, operation, supportOperationType } from './event/event.js';
 
 export default function Editor(dom, contentObj){
 
@@ -12,9 +12,9 @@ export default function Editor(dom, contentObj){
 
 	// 初始化事件
 	this.event = new EditorEvent(this);
-	this.defaultOperation = {}
-	Object.keys(defaultOperation).forEach((key)=>{
-		this.defaultOperation[key] = defaultOperation[key].bind(this);
+	this.operation = {}
+	Object.keys(operation).forEach((key)=>{
+		this.operation[key] = operation[key].bind(this);
 	});
 
 	// 初始化组件生产工厂
@@ -40,9 +40,13 @@ export default function Editor(dom, contentObj){
 
 Editor.prototype.rangeApi = rangeApi;
 Editor.prototype.nodeApi = nodeApi;
+Editor.prototype.nodeLabel = nodeApi.nodeLabel;
 
-Editor.prototype.editorEventType = editorEventType;
-Editor.prototype.editorEvent = editorEvent;
+Editor.prototype.operationType = operationType;
+Editor.prototype.operationEvent = operationEvent;
+Editor.prototype.supportOperationType = supportOperationType;
+
+Editor.prototype.supportOperation = componentApi.supportOperation;
 
 Editor.prototype.getComponentDom = function(obj){
 	return componentApi.getComponentDom(this, obj);
