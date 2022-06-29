@@ -1,7 +1,6 @@
 
-function imgContainerDeleteForward(){
+// const 
 
-}
 
 export default {
 	type: 'image',
@@ -17,9 +16,6 @@ export default {
 			style: {
 				'text-align': obj.alignment
 			},
-			// on: {
-
-			// },
 			children: [
 				{
 					nodeName: 'img',
@@ -37,9 +33,6 @@ export default {
 						class: 'image_title',
 						[this.nodeLabel.container]: true,
 					},
-					// on: {
-
-					// },
 					children: obj.title
 				}
 			]

@@ -4,6 +4,7 @@ import deleteRange from './operation/delete_range.js';
 import mergeNode from './operation/merge_node.js';
 import enterOne from './operation/enter_one.js';
 
+
 export default {
 	type: 'header',
 	isBlock: true,

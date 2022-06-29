@@ -1,7 +1,16 @@
 import * as factories from './template/templates.js';
 
 export function initComponent(context){
-	
+	// factories
+	for( let factorieKey in factories ){
+		// context.operation
+		if( factories[factorieKey].event ){
+			factories[factorieKey].event.forEach((event)=>{
+				context.operation[event.name] = event.operation;
+			});
+		}
+	}
+	// console.log('context.operation:', context.operation);
 }
 
 export function supportOperation(supportOperationType, node){

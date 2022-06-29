@@ -1,7 +1,7 @@
 import * as rangeApi from './base_api/range.js';
 import * as nodeApi from './base_api/node.js';
 import * as componentApi from './component/init_component.js';
-import EditorEvent, { operationType, operationEvent, defaultOperation, supportOperationType } from './event/event.js';
+import EditorEvent, { supportOperationType } from './event/event.js';
 
 export default function Editor(dom, contentObj){
 
@@ -12,10 +12,8 @@ export default function Editor(dom, contentObj){
 
 	// 初始化事件
 	this.event = new EditorEvent(this);
-	this.defaultOperation = {}
-	Object.keys(defaultOperation).forEach((key)=>{
-		this.defaultOperation[key] = defaultOperation[key].bind(this);
-	});
+	this.operation = {}
+	componentApi.initComponent(this);
 
 	// 初始化组件生产工厂
 	this.defualtBlockObj = { type: 'paragraph' };
@@ -42,11 +40,12 @@ Editor.prototype.rangeApi = rangeApi;
 Editor.prototype.nodeApi = nodeApi;
 Editor.prototype.nodeLabel = nodeApi.nodeLabel;
 
-Editor.prototype.operationType = operationType;
-Editor.prototype.operationEvent = operationEvent;
 Editor.prototype.supportOperationType = supportOperationType;
-
 Editor.prototype.supportOperation = componentApi.supportOperation;
+
+Editor.prototype.getOperaion = function(container){
+	return this.operation[container.getAttribute('event')]
+}
 
 Editor.prototype.getComponentDom = function(obj){
 	return componentApi.getComponentDom(this, obj);

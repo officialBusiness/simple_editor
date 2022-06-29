@@ -2,43 +2,6 @@ import handleOnKeydown from './native/keydown.js';
 import { handleCompositionStart, handleCompositionEnd } from './native/composition.js';
 import handleOnPaste from './native/paste.js';
 
-import deleteForward from './default_operation/delete_forward.js';
-import deleteBackward from './default_operation/delete_backward.js';
-import deleteForwardOnStart from './default_operation/delete_forward_on_start.js';
-import deleteFragment from './default_operation/delete_fragment.js';
-import enter from './default_operation/enter.js';
-import enterFragment from './default_operation/enter_fragment.js';
-
-export const defaultOperation = {
-	deleteForward,
-	deleteForwardOnStart,
-	deleteBackward,
-	deleteFragment,
-
-	enter,
-	enterFragment,
-}
-
-export const operationType = {
-	deleteForward: 'deleteForward',									//	向前删除单个
-	deleteForwardOnStart: 'deleteForwardOnStart',		//	向前删除单个删到了 container 头部
-	deleteBackward: 'deleteBackward',								//	向后删除单个
-	deleteFragment: 'deleteFragment',								//	删除片段
-
-	enter: 'enter',																	//	光标 collapsed 的时候回车
-	enterFragment: 'enterFragment'									//	光标不为 collapsed 的时候回车
-}
-
-export const operationEvent = {
-	deleteForward: new Event('deleteForward'),
-	deleteForwardOnStart: new Event('deleteForwardOnStart'),
-	deleteBackward: new Event('deleteBackward'),
-	deleteFragment: new Event('deleteFragment'),
-
-	enter: new Event('enter'),
-	enterFragment: new Event('enterFragment'),
-}
-
 export const supportOperationType = {
 	getLastContainer: 'getLastContainer',
 }
@@ -46,10 +9,6 @@ export const supportOperationType = {
 export default class EditorEvent{
 	constructor(editor){
 		this.editor = editor;
-		// 目前只支持添加键盘事件
-		this.events = {
-			keydown: [],
-		}
 
 		let editorEvent = this;
 
@@ -83,13 +42,13 @@ export default class EditorEvent{
 		}
 		editor.editorDom.addEventListener('drop', this.drop);
 	}
-	addEvent(eventType, event){
-		if( !this.events[eventType] ){
-			console.error('目前不支持该事件', eventType);
-			return ;
-		}
-		this.events[eventType].push(event);
-	}
+	// addEvent(eventType, event){
+	// 	if( !this.events[eventType] ){
+	// 		console.error('目前不支持该事件', eventType);
+	// 		return ;
+	// 	}
+	// 	this.events[eventType].push(event);
+	// }
 	destroy(){
 		this.editor.editorDom.removeEventListener('keydown', this.keydown);
 		this.editor.editorDom.removeEventListener('compositionstart', this.compositionstart);

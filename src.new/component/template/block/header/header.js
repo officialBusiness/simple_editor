@@ -1,4 +1,6 @@
 
+
+
 export default {
 	type: 'header',
 	toDom(obj){
@@ -8,11 +10,6 @@ export default {
 				class: 'header',
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true,
-			},
-			on: {
-				[this.operationType.deleteForward]: this.defaultOperation.deleteForward,
-				[this.operationType.deleteForwardOnStart]: this.defaultOperation.deleteForwardOnStart,
-				[this.operationType.enter]: this.defaultOperation.enter,
 			},
 			created: (header)=>{
 				if(Array.isArray(obj.data)){

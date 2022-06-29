@@ -1,13 +1,10 @@
 // 默认的 当前 block 为 paragraph 类型, block 即为 container
 
-export default function enter(){
+export default function enter(node, offset){
 
-	let { rangeApi, nodeApi } = this,
-			range = rangeApi.getRange(),
-			node = range.startContainer,
-			offset = range.startOffset;
+	let { rangeApi, nodeApi } = this;
+
 	console.log('执行 enter:', node, offset);
-
 	if( node.nodeType === Node.TEXT_NODE ){
 		if( offset === node.length && nodeApi.isEndInContainer(node) ){
 			console.log('在末端');
@@ -18,13 +15,11 @@ export default function enter(){
 		}else if( offset === 0 && nodeApi.isStartInContainer(node) ){
 			console.log('在头部');
 			let block = nodeApi.getBlock(node),
-					newBlock = this.getComponentDom({type: block.className, level: block.nodeName.toLowerCase()});
+					newBlock = block.cloneNode();
 			nodeApi.insertBefore( newBlock, block );
 			rangeApi.setCollapsedRange(node, offset);
 		}else{
 			console.log('需要拆分 node 节点');
-			// let index = nodeApi.getNodeIndexOf(node);
-			// console.log('node.nodeValue:', node.nodeValue);
 			let block = nodeApi.getBlock(node),
 					startNode;
 
@@ -53,7 +48,7 @@ export default function enter(){
 		}else if( offset === 0 && nodeApi.isStartInContainer(node) ){
 			console.log('在头部');
 			let block = nodeApi.getBlock(node),
-					newBlock = this.getComponentDom({type: block.className, level: block.nodeName.toLowerCase()});
+					newBlock = block.cloneNode();
 			nodeApi.insertBefore( newBlock, block );
 			rangeApi.setCollapsedRange(node, offset);
 		}else{
@@ -81,13 +76,7 @@ export function cloneNodeAfterStartNode(block, startNode){
 			rememberNextSibling;
 
 		startNodeParent = startNode.parentNode;
-		// 以后需要优化的地方, 目前就暂时先这样吧
-		// 以后打算使用树结构替换直接的 dom 操作, 起码要等下一次重构
-		if( this.nodeApi.isBlock(startNode.parentNode) ){
-			startNodeParentClone = this.getComponentDom({type: startNode.parentNode.className, level: block.nodeName.toLowerCase()})
-		}else{
-			startNodeParentClone = startNode.parentNode.cloneNode(false);
-		}
+		startNodeParentClone = startNode.parentNode.cloneNode(false);
 
 		if( rememberStartNodeParentClone ){
 			startNodeParentClone.appendChild(rememberStartNodeParentClone);

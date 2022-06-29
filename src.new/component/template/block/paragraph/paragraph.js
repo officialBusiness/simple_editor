@@ -1,18 +1,18 @@
+import paragraphOperation from './operation/operation.js';
 
 export default {
 	type: 'paragraph',
+	event: [
+		paragraphOperation
+	],
 	toDom(obj){
 		return this.nodeApi.createComonentDom({
 			nodeName: 'div',
 			attributes: {
 				class: 'paragraph',
+				event: paragraphOperation.name,
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true,
-			},
-			on: {
-				[this.operationType.deleteForward]: this.defaultOperation.deleteForward,
-				[this.operationType.deleteForwardOnStart]: this.defaultOperation.deleteForwardOnStart,
-				[this.operationType.enter]: this.defaultOperation.enter,
 			},
 			created: (paragraph)=>{
 				if(Array.isArray(obj.data)){

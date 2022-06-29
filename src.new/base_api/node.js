@@ -2,6 +2,7 @@ export const nodeLabel = {
 
 	//	container 容器用于存放元素,一般是 editor 下的第二级节点
 	//	允许 childNodes 空, 空的情况下再删一次才能删除
+	// container 里的内容, element 元素必须是单个, text 无要求
 	container: 'container',
 	
 	// block 为 editorDom 的下级节点, 即富文本的内容就是由 block 组成的, block 任意组织 container
@@ -130,20 +131,19 @@ export function createComonentDom(obj){
 				console.error('创建组件 dom 时遇到情况外的 attributes 类型', attributes);
 			}
 		}
-		if( on ){
-			if(typeof on === 'object'){
-				Object.keys(on).forEach((key)=>{
-					if( typeof on[key] === 'function' ){
-						element.addEventListener(key, on[key]);
-					}else{
-						console.error(`创建组件 dom 时 on[${key}] 不为 function`, on[key]);
-					}
-				});
-			}else{
-				console.error('创建组件 dom 时遇到情况外的 on 类型', on);
-			}
-
-		}
+		// if( on ){
+		// 	if(typeof on === 'object'){
+		// 		Object.keys(on).forEach((key)=>{
+		// 			if( typeof on[key] === 'function' ){
+		// 				element.addEventListener(key, on[key]);
+		// 			}else{
+		// 				console.error(`创建组件 dom 时 on[${key}] 不为 function`, on[key]);
+		// 			}
+		// 		});
+		// 	}else{
+		// 		console.error('创建组件 dom 时遇到情况外的 on 类型', on);
+		// 	}
+		// }
 		if( style ){
 			if(typeof style === 'object'){
 				Object.keys(style).forEach((key)=>{
@@ -261,6 +261,40 @@ export function getStartNodeInContainer(node){
 		node = node.childNodes[0];
 	}
 	// console.log('node:', node);
+	return node;
+}
+
+export function getPreEndNodeInContainer(node){
+	if( isContainer(node) ){
+		console.error('getPreEndNodeInContainer 函数出错:', node);
+	}
+	while( !node.previousSibling ){
+		node = node.parentNode;
+		if( isContainer(node) ){
+			return null;
+		} 
+	}
+	node = node.previousSibling;
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[node.childNodes.length - 1];
+	}
+	return node;
+}
+
+export function getNextStartNodeInContainer(node){
+	if( isContainer(node) ){
+		console.error('getNextStartNodeInContainer 函数出错:', node);
+	}
+	while( !node.nextSibling ){
+		node = node.parentNode;
+		if( isContainer(node) ){
+			return null;
+		}
+	}
+	node = node.nextSibling;
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[0];
+	}
 	return node;
 }
 
