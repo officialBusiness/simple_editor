@@ -1,4 +1,4 @@
-
+import paragraphOperation from '../paragraph/operation/operation.js';
 
 
 export default {
@@ -8,6 +8,7 @@ export default {
 			nodeName: obj.level,
 			attributes: {
 				class: 'header',
+				event: paragraphOperation.name,
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true,
 			},

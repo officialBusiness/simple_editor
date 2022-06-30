@@ -54,7 +54,7 @@ function backspace(){
 	if( !range ){
 		return ;
 	}
-	let	{ collapsed, startContainer, startOffset, endContainer, endOffset } = range;
+	let	{ collapsed, startContainer, startOffset, endContainer, endOffset, commonAncestorContainer } = range;
 	// console.log('range:', range);
 	if(collapsed){
 		// console.log('触发 deleteForward');
@@ -64,15 +64,17 @@ function backspace(){
 				endContainerNode= nodeApi.getContainer(endContainer);
 		if( startContainerNode === endContainerNode ){//	在同一个 container 中
 			console.log('在同一个 container 中, 触发 deleteFragment');
-			this.getOperaion(nodeApi.getContainer(startContainer)).deleteFragment.call(this, startContainer, startOffset, endContainer, endOffset);
+			this.getOperaion(nodeApi.getContainer(startContainer)).deleteFragment.call(this, commonAncestorContainer, startContainer, startOffset, endContainer, endOffset);
 		}else{//	不同的 container
 			console.log('不同的 container ');
 			let startBlock = nodeApi.getBlock(startContainer),
 					endBlock = nodeApi.getBlock(endContainer);
 			if( startBlock === endBlock ){//	在同一个 block 中
 				console.log('在同一个 block 中');
+
 			}else{
 				console.log('不同的 block ');
+				
 			}
 		}
 	}

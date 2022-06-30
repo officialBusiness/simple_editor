@@ -1,15 +1,24 @@
 export const nodeLabel = {
-	// 基础的节点类型
-	// format: 'format',//	格式用于存放 text
-	// leaf: 'leaf',	//	元素是叶子节点
-	
-	//	容器用于存放元素,一般是 editor 下的第二级节点
-	//	允许 childNodes 空，空的情况下再删一次才能删除
+
+	//	container 容器用于存放元素,一般是 editor 下的第二级节点
+	//	允许 childNodes 空, 空的情况下再删一次才能删除
+	// container 里的内容, element 元素必须是单个, text 无要求
 	container: 'container',
+	
+	// block 为 editorDom 的下级节点, 即富文本的内容就是由 block 组成的, block 任意组织 container
 	block: 'block',
+	// block 的标签用于处理 deleteForwardOnStart 的情况, 目前只有一种 single
+	// 表明 block 是一个整体, 受到删除就会整个删掉
+	single: 'single',
+
+	//	container 的天然属性，表示包容所有类型的节点还是只有 text
+	// merge: 'merge',
+	// mergeAll: 'merge-all',
+	mergeText: 'merge-text',
 	// mergeText: 'merge-text',
-	mergeBlock: 'mergeBlock',
-	singleBlock: 'singleBlock',
+
+	// mergeAll: 'merge-all',
+
 }
 
 export function isNotEditor(dom){
@@ -24,6 +33,10 @@ export function isBlock(dom){
 	return dom.getAttribute && !!dom.getAttribute('block');
 }
 
+export function isSingle(dom){
+	return isBlock(dom) && !!dom.getAttribute('single');
+}
+
 export function isContainer(dom){
 	return dom.getAttribute && !!dom.getAttribute('container');
 }
@@ -32,12 +45,8 @@ export function isNotContainer(dom){
 	return !dom.getAttribute || !dom.getAttribute('container');
 }
 
-export function isMerge(dom){
-	return dom.getAttribute && dom.getAttribute('mergeBlock');
-}
-
-export function isSingle(dom){
-	return dom.getAttribute && dom.getAttribute('singleBlock');
+export function isMergeText(dom){
+	return isContainer(dom) && !!dom.getAttribute('merge-text');
 }
 
 export function isNotEditable(dom){
@@ -48,6 +57,7 @@ export function isNotEditable(dom){
 	}
 }
 
+// 判断是否是 container 的第一个的节点
 export function isStartInContainer(node){
 	let parentNode = node.parentNode;
 	while( isNotContainer(node) ){
@@ -60,6 +70,7 @@ export function isStartInContainer(node){
 	return true;
 }
 
+// 判断是否是 container 的最后一个的节点
 export function isEndInContainer(node){
 	let parentNode = node.parentNode;
 	while( isNotContainer(node) ){
@@ -98,21 +109,77 @@ export function createElement(nodeName, attributes, on){
   return element;
 }
 
-export function linkDomTree(tree){
-	let parent = tree,
-			nodes = [parent],
-			children;
-  while (parent = nodes.pop()) {
-    if (children = parent.children) {
-      for (let i = 0, len = children.length; i < len; i++) {
-      	parent.node.appendChild(children[i].node);
-        nodes.push(children[i]);
-      }
-    }
-  }
-	return tree.node;
-}
+export function createComonentDom(obj){
+	if( obj.if !== void 0 && !obj.if ){
+		return ;
+	}
+	if( typeof obj === 'string' ){
+		return document.createTextNode(text);
+	}else if( typeof obj === 'object' ){
+		let
+			{ nodeName, attributes, on, style, children, created } = obj,
+			element = document.createElement(nodeName);
 
+		if( attributes ){
+			if(typeof attributes === 'object'){
+				Object.keys(attributes).forEach((key)=>{
+					if( attributes[key] !== void 0 ){
+						element.setAttribute(key, attributes[key]);
+					}
+				});
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 attributes 类型', attributes);
+			}
+		}
+		// if( on ){
+		// 	if(typeof on === 'object'){
+		// 		Object.keys(on).forEach((key)=>{
+		// 			if( typeof on[key] === 'function' ){
+		// 				element.addEventListener(key, on[key]);
+		// 			}else{
+		// 				console.error(`创建组件 dom 时 on[${key}] 不为 function`, on[key]);
+		// 			}
+		// 		});
+		// 	}else{
+		// 		console.error('创建组件 dom 时遇到情况外的 on 类型', on);
+		// 	}
+		// }
+		if( style ){
+			if(typeof style === 'object'){
+				Object.keys(style).forEach((key)=>{
+					if( style[key] !== void 0 ){
+						element.style[key] = style[key];
+					}
+				});
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 style 类型', style);
+			}
+		}
+		if( children ){
+			if( Array.isArray(children) ){
+				children.forEach((child)=>{
+					element.appendChild(createComonentDom(child));
+				});
+			}else if( typeof children === 'object' ){
+				element.appendChild(createComonentDom(children));
+			}else if( typeof children === 'string' ){
+				element.appendChild(document.createTextNode(children));
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 children 类型', children);
+			}
+		}
+		if( created ){
+			if( typeof created === 'function'){
+				created(element);
+			}else{
+				console.error('创建组件 dom 时遇到情况外的 created 类型', created);
+			}
+		}
+		return element;
+	}else{
+		console.error('创建组件 dom 时遇到情况外的 obj 类型', obj);
+	}
+}
 
 export function insertBefore(newNode, nextNode){
 	nextNode.parentNode.insertBefore(newNode, nextNode);
@@ -156,15 +223,40 @@ export function getNodeIndexOf(node){
 	}
 }
 
-export function getEndNode(node){
+export function getPreNodeInContainer(node){
+	if( isContainer(node) ){
+		console.error('getPreNodeInContainer 函数出错:', node);
+	}
+	while( !node.previousSibling ){
+		node = node.parentNode;
+		if( isContainer(node) ){
+			return null;
+		} 
+	}
+	return node.previousSibling;
+}
+
+export function getNextNodeInContainer(node){
+	if( isContainer(node) ){
+		console.error('getNextNodeInContainer 函数出错:', node);
+	}
+	while( !node.nextSibling ){
+		node = node.parentNode;
+		if( isContainer(node) ){
+			return null;
+		} 
+	}
+	return node.nextSibling;
+}
+
+export function getEndNodeInContainer(node){
 	while( node.childNodes.length > 0 ){
 		node = node.childNodes[node.childNodes.length - 1];
 	}
 	return node;
 }
 
-
-export function getStartNode(node){
+export function getStartNodeInContainer(node){
 	while( node.childNodes.length > 0 ){
 		node = node.childNodes[0];
 	}
@@ -172,78 +264,39 @@ export function getStartNode(node){
 	return node;
 }
 
-export function getPreEndNodeInBlock(node){
-	// console.log('测试 getPreEndNodeInBlock:', node);
-	let hasPreNode = node;
-
-	if( isBlock(hasPreNode) ){
-		console.error('getPreEndNodeInBlock 函数出错:', node);
+export function getPreEndNodeInContainer(node){
+	if( isContainer(node) ){
+		console.error('getPreEndNodeInContainer 函数出错:', node);
 	}
-	while( !hasPreNode.previousSibling ){
-		hasPreNode = hasPreNode.parentNode;
-		if( isBlock(hasPreNode) ){
+	while( !node.previousSibling ){
+		node = node.parentNode;
+		if( isContainer(node) ){
 			return null;
 		} 
 	}
-	hasPreNode = hasPreNode.previousSibling;
-	while( hasPreNode.childNodes.length ){
-		hasPreNode = hasPreNode.childNodes[hasPreNode.childNodes.length - 1];
+	node = node.previousSibling;
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[node.childNodes.length - 1];
 	}
-
-	return hasPreNode;
+	return node;
 }
 
-export function getNextStartNodeInBlock(node){
-	// console.log('测试 getNextStartNodeInBlock:', node);
-	let hasNextNode = node;
-
-	if( isBlock(hasNextNode) ){
-		console.error('getNextStartNodeInBlock 函数出错:', node);
+export function getNextStartNodeInContainer(node){
+	if( isContainer(node) ){
+		console.error('getNextStartNodeInContainer 函数出错:', node);
 	}
-	while( !hasNextNode.nextSibling ){
-		hasNextNode = hasNextNode.parentNode;
-		if( isBlock(hasNextNode) ){
+	while( !node.nextSibling ){
+		node = node.parentNode;
+		if( isContainer(node) ){
 			return null;
 		}
 	}
-	hasNextNode = hasNextNode.nextSibling;
-	while( hasNextNode.childNodes.length ){
-		hasNextNode = hasNextNode.childNodes[0];
+	node = node.nextSibling;
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[0];
 	}
-
-	return hasNextNode;
+	return node;
 }
-
-export function getPreNodeInContainer(node){
-	let hasPreNode = node;
-
-	if( isContainer(hasPreNode) ){
-		console.error('getPreNodeInContainer 函数出错:', node);
-	}
-	while( !hasPreNode.previousSibling ){
-		hasPreNode = hasPreNode.parentNode;
-		if( isContainer(hasPreNode) ){
-			return null;
-		} 
-	}
-	return hasPreNode.previousSibling;
-}
-
-export function getNextNodeInContainer(node){
-	let hasNextNode = node;
-
-	if( isContainer(hasNextNode) ){
-		console.error('getNextNodeInContainer 函数出错:', node);
-	}
-	while( !hasNextNode.nextSibling ){
-		hasNextNode = hasNextNode.parentNode;
-		if( isContainer(hasNextNode) ){
-			return null;
-		} 
-	}
-	return hasNextNode.nextSibling;
-}
-
 
 export function getSingleNodeInContainer(node){
 	if( node && isNotContainer(node) ){
