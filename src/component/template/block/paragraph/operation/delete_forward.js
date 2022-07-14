@@ -1,5 +1,3 @@
-import deleteForwardOnStart from './delete_forward_on_start.js';
-
 // container 的默认操作
 export default function deleteForward(node, offset){
 	let { rangeApi, nodeApi } = this;
@@ -32,7 +30,7 @@ export default function deleteForward(node, offset){
 			console.log('在 text 头部, text 存在字符');
 			if( nodeApi.isStartInContainer(singleNode) ){
 				console.log('根据 container 所在的组件, 触发对应的 deleteForwardOnStart 事件');
-				deleteForwardOnStart.call(this, node, offset);
+				this.dealOperaion(node, 'deleteForwardOnStart', [node, offset]);
 			}else{
 				console.error('不知道的特殊情况,按照浏览 range 的标准以及之前设置 range 的代码,应该是 container 内的第一个独立节点')
 			}
@@ -90,11 +88,11 @@ export default function deleteForward(node, offset){
 			console.log('在元素头部');
 			if( nodeApi.isContainer(node) ){
 				console.log('元素是 container, 根据 container 所在的组件, 触发对应的 deleteForwardOnStart 事件');
-				deleteForwardOnStart.call(this, node, offset);
+				this.dealOperaion(node, 'deleteForwardOnStart', [node, offset]);
 			}else{
 				if( nodeApi.isStartInContainer(singleNode) ){
 					console.log('根据 container 所在的组件, 触发对应的 deleteForwardOnStart 事件');
-					deleteForwardOnStart.call(this, node, offset);
+					this.dealOperaion(node, 'deleteForwardOnStart', [node, offset]);
 				}else{
 					console.error('不知道的特殊情况,按照常理, node 应该是 container 内的第一个独立节点');
 				}

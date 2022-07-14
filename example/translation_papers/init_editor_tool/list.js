@@ -1,4 +1,4 @@
-export default function initList(editorEnglish, editorChinese){
+export default function initList(){
 	let
 		listSelection = document.getElementById('listSelection'),
 		selections = listSelection.getElementsByClassName('selection');;
@@ -27,16 +27,18 @@ export default function initList(editorEnglish, editorChinese){
 				listType = [''];
 				break;
 		}
+		console.log('window.editor:', window.editor);
 		let 
-				range = editorChinese.getRange(),
-				block = editorChinese.nodeApi.getBlock(range.startContainer),
-				listDom = editorChinese.getComponentDom({
+				editor = window.editor,
+				range = editor.range,
+				block = editor.nodeApi.getBlock(range.startContainer),
+				listDom = editor.getComponentDom({
 					type: 'list',
 					title: listType,
 					data: [[]]
 				});
-		console.log('block:', block);
-		console.log('listDom:', listDom);
-		editorChinese.nodeApi.insertAfter(listDom, block);
+		// console.log('block:', block);
+		// console.log('listDom:', listDom);
+		editor.nodeApi.insertAfter(listDom, block);
 	}
 }

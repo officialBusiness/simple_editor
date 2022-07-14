@@ -29,16 +29,24 @@ export default function Editor(dom, contentObj){
 		}
 	}
 
-	// 检验
-	document.addEventListener("selectionchange", () => {
-		// console.log('检验 checkRange');
-		this.rangeApi.checkRange();
-	});
+	this.range = {};
 }
 
 Editor.prototype.setEditable = function(editable){
 	this.editorDom.contentEditable = this.editable = editable;
 	return this;
+}
+
+Editor.prototype.rememberRange = function(){
+	let range = this.rangeApi.getRange();
+	if( range && this.editorDom.contains(range.commonAncestorContainer) ){
+		this.range.collapsed = range.collapsed;
+		this.range.commonAncestorContainer = range.commonAncestorContainer;
+		this.range.endContainer = range.endContainer;
+		this.range.endOffset = range.endOffset;
+		this.range.startContainer = range.startContainer;
+		this.range.startOffset = range.startOffset;
+	}
 }
 
 Editor.prototype.rangeApi = rangeApi;
@@ -48,8 +56,14 @@ Editor.prototype.nodeLabel = nodeApi.nodeLabel;
 Editor.prototype.supportOperationType = supportOperationType;
 Editor.prototype.supportOperation = componentApi.supportOperation;
 
-Editor.prototype.getOperaion = function(container){
-	return this.operation[container.getAttribute('event')]
+Editor.prototype.dealOperaion = function(container, operationType, params){
+	container = this.nodeApi.getContainer(container);			
+	let event = this.operation[ container.getAttribute('event') ];
+	if( event && event[operationType] ){
+		event[operationType].apply(this, params);
+	}else{
+		console.error(container.className, 'dealOperaion找不到相关操作,操作待完善:', operationType);
+	}
 }
 
 Editor.prototype.getComponentDom = function(obj){
@@ -93,4 +107,5 @@ Editor.prototype.addEvent = function(eventType, event){
 	this.event.addEvent(eventType, event);
 	return this;
 }
+
 

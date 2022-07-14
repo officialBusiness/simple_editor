@@ -36,6 +36,7 @@ export default function handleOnKeydown(e){
 			break;
 		default:
 			if( e.key.length === 1 && e.keyCode !== 229 ){// 输入普通字符串
+				preventDefault = false;
 				// console.log('输入普通字符串')
 				// this.editor.defaultOperation.insertText(e.key);
 			}
@@ -49,7 +50,7 @@ export default function handleOnKeydown(e){
 
 function backspace(){
 	let 
-		{ rangeApi, nodeApi, operationEvent } = this,
+		{ rangeApi, nodeApi } = this,
 		range = rangeApi.getRange();
 	if( !range ){
 		return ;
@@ -58,13 +59,13 @@ function backspace(){
 	// console.log('range:', range);
 	if(collapsed){
 		// console.log('触发 deleteForward');
-		this.getOperaion(nodeApi.getContainer(startContainer)).deleteForward.call(this, startContainer, startOffset);
+		this.dealOperaion(startContainer, 'deleteForward', [startContainer, startOffset]);
 	}else{
 		let startContainerNode = nodeApi.getContainer(startContainer),
 				endContainerNode= nodeApi.getContainer(endContainer);
 		if( startContainerNode === endContainerNode ){//	在同一个 container 中
 			console.log('在同一个 container 中, 触发 deleteFragment');
-			this.getOperaion(nodeApi.getContainer(startContainer)).deleteFragment.call(this, commonAncestorContainer, startContainer, startOffset, endContainer, endOffset);
+			this.dealOperaion(startContainer, 'deleteFragment', [commonAncestorContainer, startContainer, startOffset, endContainer, endOffset]);
 		}else{//	不同的 container
 			console.log('不同的 container ');
 			let startBlock = nodeApi.getBlock(startContainer),
@@ -83,14 +84,14 @@ function backspace(){
 
 function enter(){
 	let 
-		{ rangeApi, nodeApi, operationEvent } = this,
+		{ rangeApi, nodeApi } = this,
 		range = rangeApi.getRange();
 	if( !range ){
 		return ;
 	}
 	let	{ collapsed, startContainer, startOffset, endContainer, endOffset } = range;
 	if(collapsed){
-		this.getOperaion(nodeApi.getContainer(startContainer)).enter.call(this, startContainer, startOffset);
+		this.dealOperaion(startContainer, 'enter', [startContainer, startOffset]);
 	}else{
 		console.log('enter 事件待完善');
 	}

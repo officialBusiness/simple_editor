@@ -1,5 +1,5 @@
 
-export default function initMathjax(editorEnglish, editorChinese){
+export default function initMathjax(){
 	let
 		mathjaxButton = document.getElementById('mathjaxButton'),
 		mathjaxContainer = document.getElementById('mathjaxContainer'),
@@ -18,6 +18,7 @@ export default function initMathjax(editorEnglish, editorChinese){
 	cancelMathjaxButton.onclick = hiddenMathjax
 	comfirmMathjaxButton.onclick = comfirmMathjax
 	addMathjaxButton.onclick = ()=>{
+		// 添加 textarea
 		addMathjaxTex();
 	}
 	reduceMathjaxButton.onclick = ()=>{
@@ -27,39 +28,43 @@ export default function initMathjax(editorEnglish, editorChinese){
 		initMathjaxTexImage();
 	}
 
-	editorEnglish.addComponentEvent('mathjax', 'imgMousedown', (edtior, mathjaxObj)=>{
-		if( edtior === editorEnglish ){
-			showMathjax();
-			// console.log('mathjaxObj.data:', Array.isArray(mathjaxObj.data));
-			if( Array.isArray(mathjaxObj.data) ){
-				initMathjaxTex(mathjaxObj.data.length);
-				for( let i = 0, len = mathjaxObj.data.length; i < len; i++ ){
-					// console.log('mathjaxTexContainer.childNodes[i]:', mathjaxTexContainer.childNodes[i]);
-					mathjaxTexContainer.childNodes[i].value = mathjaxObj.data[i];
-				}
-			}else{
-				mathjaxTexContainer.childNodes[0].value = mathjaxObj.data;
-			}
-			initMathjaxTexImage();
-		}
-	});
+	// editorEnglish.addComponentEvent('mathjax', 'imgMousedown', (edtior, mathjaxObj)=>{
+	// 	if( edtior === editorEnglish ){
+	// 		showMathjax();
+	// 		// console.log('mathjaxObj.data:', Array.isArray(mathjaxObj.data));
+	// 		if( Array.isArray(mathjaxObj.data) ){
+	// 			initMathjaxTex(mathjaxObj.data.length);
+	// 			for( let i = 0, len = mathjaxObj.data.length; i < len; i++ ){
+	// 				// console.log('mathjaxTexContainer.childNodes[i]:', mathjaxTexContainer.childNodes[i]);
+	// 				mathjaxTexContainer.childNodes[i].value = mathjaxObj.data[i];
+	// 			}
+	// 		}else{
+	// 			mathjaxTexContainer.childNodes[0].value = mathjaxObj.data;
+	// 		}
+	// 		initMathjaxTexImage();
+	// 	}
+	// });
 
 	function initMathjaxTexImage(){
-		editorEnglish.nodeApi.emptyAllChild(imgConatienr);
-		// console.log('imgConatienr:', imgConatienr);
-		imgConatienr.appendChild(editorChinese.getComponentDom({
-			type: 'mathjax',
-			data: getMathjaxTexValue()
-		}));
+		window.editor.nodeApi.emptyAllChild(imgConatienr);
+		let texDom = getMathjaxTexDom();
+		if( Array.isArray(texDom) ){
+			texDom.forEach((dom)=>{
+				imgConatienr.appendChild(dom);
+			});
+		}else{
+			imgConatienr.appendChild(texDom);
+		}
 	}
 
 	function initMathjaxTex(num = 1){
-		editorEnglish.nodeApi.emptyAllChild(mathjaxTexContainer);
+		window.editor.nodeApi.emptyAllChild(mathjaxTexContainer);
 		for( let i = 0; i < num; i++ ){
 			addMathjaxTex();
 		}
 	}
 
+	// 添加 textarea
 	function addMathjaxTex(){
 		let mathjaxTex = document.createElement('textarea');
 		mathjaxTex.className = 'mathjaxTex';
@@ -81,32 +86,50 @@ export default function initMathjax(editorEnglish, editorChinese){
 			mathjaxTex.focus();
 		}, 0);
 	}
-
-	function getMathjaxTexValue(){
-		let tex ;
+	// getMathjaxTexValue
+	function getMathjaxTexDom(){
+		let tex, dom ;
 		if( mathjaxTexContainer.childNodes.length > 1 ){
 			tex = [];
+			dom = [];
 			for( let i = 0, len = mathjaxTexContainer.childNodes.length; i < len; i++ ){
 				let mathjaxTex = mathjaxTexContainer.childNodes[i];
 				if( mathjaxTex.value && mathjaxTex.value.trim() ){
-					tex.push(mathjaxTex.value);
+
+					dom.push(window.editor.getComponentDom({
+						type: 'mathjax',
+						data: mathjaxTex.value
+					}));
 				}
 			}
+
 		}else{
 			tex = mathjaxTexContainer.childNodes[0].value;
+			dom = window.editor.getComponentDom({
+				type: 'mathjax',
+				data: tex
+			})
 		}
-		return tex;
+		return dom;
 	}
 
 	function comfirmMathjax(){
 		hiddenMathjax();
-		let tex = getMathjaxTexValue();
-		if( tex ){
-			let range = editorChinese.getRange();
-			editorChinese.insertElement( editorChinese.getComponentDom({
-				type: 'mathjax',
-				data: tex
-			}), range.startContainer, range.startOffset );
+		let texDom = getMathjaxTexDom();
+		if( texDom ){
+			let range = window.editor.range,
+					{ startContainer, startOffset } = range;
+			console.log('startContainer:', startContainer);
+			window.editor.dealOperaion(startContainer, 'insertElement', [
+				texDom,
+				startContainer,
+				startOffset
+			]);
+
+			// window.editor.insertElement( window.editor.getComponentDom({
+			// 	type: 'mathjax',
+			// 	data: tex
+			// }), range.startContainer, range.startOffset );
 		}
 	}
 

@@ -16,7 +16,10 @@ export default {
 			},
 			created: (paragraph)=>{
 				if(Array.isArray(obj.data)){
-					obj.data.forEach((child)=>{
+					obj.data.forEach((child, index, array)=>{
+						if( array[index + 1] && array[index + 1].type === child.type && child.type === 'text' ){
+							console.error('存在两个连续的 text', child, array[index + 1]);
+						}
 						let childDom = this.getComponentDom(child);
 						if( childDom ){
 							paragraph.appendChild( childDom );
@@ -33,7 +36,7 @@ export default {
 			type: "paragraph",
 			data: []
 		};
-		dom.childNodes.forEach((child)=>{
+		dom.childNodes.forEach((child, index, array)=>{
 			obj.data.push(this.getComponentObj(child));
 		});
 		return obj;

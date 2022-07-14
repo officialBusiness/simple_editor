@@ -1,4 +1,7 @@
-function getLabel(index, title){
+import liOperation from './operation/li/li_operation.js';
+import labelOperation from './operation/label/label_operation.js';
+
+export function getLabel(index, title){
 	if( title === 'english' ){
 		return String.fromCharCode(97 + index) + '.';
 	}else if( title === 'English' ){
@@ -7,10 +10,12 @@ function getLabel(index, title){
 		return 1 + index + '.';
 	}else if( Array.isArray(title) ){
 		return title[index];
+	}else if( title === 'custom' ){
+		return '';
 	}
 }
 
-function createLiDomObj(title, index, li){
+export function createLiDomObj(title, index, li){
 	return {
 		nodeName: 'div',
 		attributes: {
@@ -21,8 +26,9 @@ function createLiDomObj(title, index, li){
 				nodeName: 'div',
 				attributes: {
 					class: 'label',
-					contenteditable: Array.isArray(title) ? null : false,
-					[this.nodeLabel.container]: Array.isArray(title) ? true : null
+					event: Array.isArray(title) || title === 'custom' ? labelOperation.name : null,
+					contenteditable: Array.isArray(title) || title === 'custom' ? null : false,
+					[this.nodeLabel.container]: Array.isArray(title) || title === 'custom' ? true : null
 				},
 				children: getLabel(index, title)
 			},
@@ -30,6 +36,7 @@ function createLiDomObj(title, index, li){
 				nodeName: 'div',
 				attributes: {
 					class: 'container',
+					event: liOperation.name,
 					[this.nodeLabel.container]: true
 				},
 				created: (container)=>{
@@ -49,6 +56,10 @@ function createLiDomObj(title, index, li){
 
 export default {
 	type: 'list',
+	event: [
+		liOperation,
+		labelOperation
+	],
 	toDom(obj){
 		return this.nodeApi.createComonentDom({
 			nodeName: 'div',

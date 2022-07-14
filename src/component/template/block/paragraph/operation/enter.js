@@ -30,7 +30,9 @@ export default function enter(node, offset){
 				startNode = node.nextSibling;
 			}
 
-			cloneNodeAfterStartNode.call(this, block, startNode);
+			let startNodeParentClone = cloneContainerAfterStartNode.call(this, block, startNode);
+			this.nodeApi.insertAfter( startNodeParentClone, block );
+			this.rangeApi.setRangeOfNodeStart(startNodeParentClone);
 		}
 	}else if( node.nodeType === Node.ELEMENT_NODE ){
 		if( offset === 0 && node.childNodes.length === 0 && nodeApi.isBlock(node) ){
@@ -57,7 +59,9 @@ export default function enter(node, offset){
 					startNode = offset === node.childNodes.length ? this.nodeApi.getNextNodeInContainer(node.childNodes[offset - 1]) : 
 												node.childNodes[offset];
 
-			cloneNodeAfterStartNode.call(this, block, startNode);
+			let startNodeParentClone = cloneContainerAfterStartNode.call(this, block, startNode);
+			this.nodeApi.insertAfter( startNodeParentClone, block );
+			this.rangeApi.setRangeOfNodeStart(startNodeParentClone);
 		}
 	}else{
 		console.error('不知道的特殊情况');
@@ -65,7 +69,7 @@ export default function enter(node, offset){
 }
 
 
-export function cloneNodeAfterStartNode(block, startNode){
+export function cloneContainerAfterStartNode(block, startNode){
 	let	startNodeParent,
 			startNodeParentClone,
 			rememberStartNodeParentClone;
@@ -93,7 +97,6 @@ export function cloneNodeAfterStartNode(block, startNode){
 
 		startNode = startNodeParent;
 	}
-	this.nodeApi.insertAfter( startNodeParentClone, block );
-	this.rangeApi.setRangeOfNodeStart(startNodeParentClone);
+	return startNodeParentClone;
 }
 

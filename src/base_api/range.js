@@ -22,7 +22,10 @@ export function checkRange(){
 			{ collapsed, startContainer, startOffset, endContainer, endOffset } = range;
 
 	if( startContainer.nodeType === Node.ELEMENT_NODE ){
+		// console.log('是元素');
 		let node = startContainer.childNodes[startOffset > 0 ? startOffset - 1 : 0];
+		// console.log('node:', node);
+		// console.log('node.childNodes.length:', node.childNodes.length);
 		if( node && node.childNodes.length > 0 ){
 			console.error('startContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
 		}

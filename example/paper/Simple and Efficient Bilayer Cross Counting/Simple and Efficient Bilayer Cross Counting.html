@@ -42,10 +42,10 @@
 		import english from './english.js';
 
 		let editorEnglish =
-			new Editor(document.getElementById('editor-english'), english)
+			new Editor(document.getElementById('editor-english'), JSON.parse(english))
 				.setEditable(false),
 			editorChinese =
-			new Editor(document.getElementById('editor-chinese'), chinese)
+			new Editor(document.getElementById('editor-chinese'), JSON.parse(chinese))
 				.setEditable(false);
 
 		window.editorEnglish = editorEnglish;

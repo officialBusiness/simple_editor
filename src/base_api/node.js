@@ -123,7 +123,7 @@ export function createComonentDom(obj){
 		if( attributes ){
 			if(typeof attributes === 'object'){
 				Object.keys(attributes).forEach((key)=>{
-					if( attributes[key] !== void 0 ){
+					if( attributes[key] !== void 0 && attributes[key] !== null){
 						element.setAttribute(key, attributes[key]);
 					}
 				});
@@ -131,7 +131,8 @@ export function createComonentDom(obj){
 				console.error('创建组件 dom 时遇到情况外的 attributes 类型', attributes);
 			}
 		}
-		// if( on ){
+		if( on ){
+			console.error('暂时取消 on 事件添加');
 		// 	if(typeof on === 'object'){
 		// 		Object.keys(on).forEach((key)=>{
 		// 			if( typeof on[key] === 'function' ){
@@ -143,11 +144,11 @@ export function createComonentDom(obj){
 		// 	}else{
 		// 		console.error('创建组件 dom 时遇到情况外的 on 类型', on);
 		// 	}
-		// }
+		}
 		if( style ){
 			if(typeof style === 'object'){
 				Object.keys(style).forEach((key)=>{
-					if( style[key] !== void 0 ){
+					if( style[key] !== void 0 && style[key] !== null ){
 						element.style[key] = style[key];
 					}
 				});
@@ -192,6 +193,10 @@ export function insertAfter(newNode, preNode){
 	}else{
 		parentNode.appendChild(newNode);
 	}
+}
+
+export function appendChild(parentNode, newNode){
+	parentNode.appendChild(newNode);
 }
 
 export function appendChildren(parentNode, childrenNodes){
@@ -312,6 +317,16 @@ export function getSingleNodeInContainer(node){
 		console.error('getSingleNodeInContainer 函数出错:', node);
 		return null;
 	}
+}
+
+export function getNodeUntilContainerChild(node){
+	if( isContainer(node) ){
+		console.error('getContainerChildNode 函数出错:', node);
+	}
+	while( isNotContainer(node.parentNode) ){
+		node = node.parentNode;
+	}
+	return node;
 }
 
 export function getContainer(node){

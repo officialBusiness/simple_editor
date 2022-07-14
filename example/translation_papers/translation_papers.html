@@ -68,6 +68,7 @@
 					<div class="selection">h1</div>
 					<div class="selection">h2</div>
 					<div class="selection">h3</div>
+					<div class="selection">h4</div>
 				</div>
 			</div>
 			<div id="imageButton" class="button"><icon class="iconfont icon-tupian"></icon></div>
@@ -97,26 +98,92 @@
 		import english from '../paper/A Technique for Drawing Directed Graphs/english.js';
 
 		let
-			editorEnglish = new Editor(document.getElementById('editor-english'), english)
-					.setEditable(false),
-			editorChinese = new Editor(document.getElementById('editor-chinese'), chinese);
+			editorEnglish = new Editor(document.getElementById('editor-english'), JSON.parse(english)),
+			editorChinese = new Editor(document.getElementById('editor-chinese'), JSON.parse(chinese));
 
-		window.editorChinese = editorChinese;
+
+		document.addEventListener('selectionchange', ()=>{
+			// console.log('selectionchange');
+			let range = document.getSelection().getRangeAt(0);
+			if( range ){
+				if( editorEnglish.editorDom.contains( range.startContainer ) ){
+					editorEnglish.rememberRange();
+					window.editor = editorEnglish;
+				}
+				if( editorChinese.editorDom.contains( range.startContainer ) ){
+					editorChinese.rememberRange();
+					window.editor = editorChinese;
+				}
+			}
+		});
+
 		window.editorEnglish = editorEnglish;
+		window.editorChinese = editorChinese;
 
-		function rememberRange(){
-			setTimeout(()=>{
-				editorChinese.setRange();
-			}, 0)
+		initMathjax();
+		initParagraphAndHeader();
+		initImage();
+		initList();
+
+		function getTitle(editor){
+			let titleTree = {level: 0,children: []},
+					preTitle ;
+
+			editor.editorDom.childNodes.forEach((node)=>{
+				if(node.className === 'header'){
+					console.log('node:', node);
+					let titleNode = {
+						title: node.innerText,
+						node: node,
+						nodeName: node.nodeName,
+						level: node.nodeName === 'H1' ? 1 : 
+										node.nodeName  === 'H2' ? 2 : 
+										node.nodeName  === 'H3' ? 3 :
+										node.nodeName  === 'H4' ? 4 : null,
+						children: []
+					}
+					if( !titleNode.level ){
+							throw new Error('节点解析出错', node);
+					}
+					console.log('titleNode:', titleNode);
+
+					if( preTitle ){
+						if( preTitle.level === titleNode.level ){
+							preTitle.parent.children.push(titleNode);
+							titleNode.parent = preTitle.parent;
+						}else if( preTitle.level - titleNode.level === -1 ){
+							preTitle.children.push(titleNode);
+							titleNode.parent = preTitle;
+						}else if( preTitle.level > titleNode.level ){
+							let template = preTitle;
+							// console.log('preTitle:', preTitle);
+							// console.log('titleNode:', titleNode);
+							// console.log('template:', template);
+							while( template.level > titleNode.level ){
+								template = template.parent;
+							}
+							template.parent.children.push(titleNode);
+							titleNode.parent = template.parent;
+						}else{
+							throw new Error('节点层级排序出错', 'preTitle:', preTitle, 'titleNode:', titleNode);
+						}
+
+						// preTitle = titleNode;
+					}else{
+						titleTree.children.push(titleNode);
+
+						titleNode.parent = titleTree;
+						// preTitle = titleNode;
+					}
+
+					preTitle = titleNode;
+				}
+			});
+
+			console.log('titleTree:', titleTree);
 		}
 
-		editorChinese.editorDom.addEventListener('mousedown', rememberRange);
-		editorChinese.editorDom.addEventListener('keydown', rememberRange);
-
-		initMathjax(editorEnglish, editorChinese);
-		initParagraphAndHeader(editorEnglish, editorChinese);
-		initImage(editorEnglish, editorChinese);
-		initList(editorEnglish, editorChinese);
+		window.getTitle = getTitle;
 
 	</script>
 </html>

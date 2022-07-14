@@ -47,23 +47,24 @@ export default function initImage(editorEnglish, editorChinese){
 		}
 	}
 
-	editorEnglish.addComponentEvent('image', 'mousedown', (edtior, imageObj)=>{
-		if( edtior === editorEnglish ){
-			showImage();
-			titleInput.value = imageObj.title;
-			imageShow.src = imageObj.src;
-		}
-	});
+	// editorEnglish.addComponentEvent('image', 'mousedown', (edtior, imageObj)=>{
+	// 	if( edtior === editorEnglish ){
+	// 		showImage();
+	// 		titleInput.value = imageObj.title;
+	// 		imageShow.src = imageObj.src;
+	// 	}
+	// });
 
 	function comfirmImage(){
 		hiddenImage();
 		let title = titleInput.value,
-				imageSrc = imageShow.src;
+				imageSrc = imageShow.src,
 
-		let 
-				range = editorChinese.getRange(),
-				block = editorChinese.nodeApi.getBlock(range.startContainer),
-				imageDom = editorChinese.getComponentDom({
+				editor = window.editor,
+
+				range = editor.range,
+				block = editor.nodeApi.getBlock(range.startContainer),
+				imageDom = editor.getComponentDom({
 					type: 'image',
 					src: imageSrc,
 					title,
@@ -71,7 +72,7 @@ export default function initImage(editorEnglish, editorChinese){
 					alignment: 'center'
 				});
 
-		editorChinese.nodeApi.insertAfter(imageDom, block);
+		editor.nodeApi.insertAfter(imageDom, block);
 
 	}
 	function showImage(){
