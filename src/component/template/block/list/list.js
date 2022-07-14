@@ -65,7 +65,7 @@ export default {
 			nodeName: 'div',
 			attributes: {
 				class: 'list',
-				title: Array.isArray(obj.title) ? 'custom' : obj.title,
+				label: Array.isArray(obj.title) ? 'custom' : obj.title,
 				[this.nodeLabel.block]: true,
 			},
 			children: obj.data.map((li, index)=>{
@@ -77,7 +77,7 @@ export default {
 		let
 			obj = {
 				type: 'list',
-				title: dom.getAttribute('title'),
+				title: dom.getAttribute('label'),
 				data: []
 			};
 
