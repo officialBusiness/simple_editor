@@ -1,21 +1,21 @@
 import liOperation from './operation/li/li_operation.js';
 import labelOperation from './operation/label/label_operation.js';
 
-export function getLabel(index, title){
-	if( title === 'english' ){
+export function getLabel(index, label){
+	if( label === 'english' ){
 		return String.fromCharCode(97 + index) + '.';
-	}else if( title === 'English' ){
+	}else if( label === 'English' ){
 		return String.fromCharCode(65 + index) + '.';
-	}else if( title === 'number' ){
+	}else if( label === 'number' ){
 		return 1 + index + '.';
-	}else if( Array.isArray(title) ){
-		return title[index];
-	}else if( title === 'custom' ){
+	}else if( Array.isArray(label) ){
+		return label[index];
+	}else if( label === 'custom' ){
 		return '';
 	}
 }
 
-export function createLiDomObj(title, index, li){
+export function createLiDomObj(label, index, li){
 	return {
 		nodeName: 'div',
 		attributes: {
@@ -26,11 +26,11 @@ export function createLiDomObj(title, index, li){
 				nodeName: 'div',
 				attributes: {
 					class: 'label',
-					event: Array.isArray(title) || title === 'custom' ? labelOperation.name : null,
-					contenteditable: Array.isArray(title) || title === 'custom' ? null : false,
-					[this.nodeLabel.container]: Array.isArray(title) || title === 'custom' ? true : null
+					event: Array.isArray(label) || label === 'custom' ? labelOperation.name : null,
+					contenteditable: Array.isArray(label) || label === 'custom' ? null : false,
+					[this.nodeLabel.container]: Array.isArray(label) || label === 'custom' ? true : null
 				},
-				children: getLabel(index, title)
+				children: getLabel(index, label)
 			},
 			{
 				nodeName: 'div',
@@ -65,11 +65,11 @@ export default {
 			nodeName: 'div',
 			attributes: {
 				class: 'list',
-				label: Array.isArray(obj.title) ? 'custom' : obj.title,
+				label: Array.isArray(obj.label) ? 'custom' : obj.label,
 				[this.nodeLabel.block]: true,
 			},
 			children: obj.data.map((li, index)=>{
-				return createLiDomObj.call(this, obj.title, index, li);
+				return createLiDomObj.call(this, obj.label, index, li);
 			})
 		});
 	},
@@ -77,19 +77,19 @@ export default {
 		let
 			obj = {
 				type: 'list',
-				title: dom.getAttribute('label'),
+				label: dom.getAttribute('label'),
 				data: []
 			};
 
-		if( obj.title === 'custom' ){
-			obj.title = [];
+		if( obj.label === 'custom' ){
+			obj.label = [];
 		}
 
 		dom.childNodes.forEach((item)=>{
 			let container = [];
 
-			if( Array.isArray(obj.title) ){
-				obj.title.push(item.childNodes[0].innerText);
+			if( Array.isArray(obj.label) ){
+				obj.label.push(item.childNodes[0].innerText);
 			}
 			item.childNodes[1].childNodes.forEach((child)=>{
 				container.push(this.getComponentObj(child));

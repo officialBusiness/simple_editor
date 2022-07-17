@@ -45,7 +45,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "A1.",
                 "A2.",
                 "A3.",
@@ -119,7 +119,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "xsize(v),ysize(v)",
                 "nodesep(G)",
                 "ranksep(G)",
@@ -691,7 +691,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "2:",
                 "3:",
                 "4:",
@@ -755,7 +755,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "2:",
                 "3:",
                 "4-8:",
@@ -1311,7 +1311,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "2:",
                 "4-9:"
             ],
@@ -1356,7 +1356,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "1-10:",
                 "12-26:",
                 "13:",
@@ -1423,7 +1423,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "3-15:",
                 "7-12:"
             ],
@@ -1758,7 +1758,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "2: ",
                 "4-12:",
                 "5:",
@@ -3171,7 +3171,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "2:",
                 "3:",
                 "4-7:",
@@ -3373,7 +3373,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "2:",
                 "3:",
                 "4:",
@@ -3634,7 +3634,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":"number",
+            "label":"number",
             "data":[
                 [
                     {

@@ -40,11 +40,7 @@ export default `{
                 },
                 {
                     "type":"text",
-                    "data":" "
-                },
-                {
-                    "type":"text",
-                    "data":"时，计算内边交叉的问题。二分图的两个边的节点在两条平行线上被绘制为不同的点，而边被绘制为直线段。这一问题的有效解决对分层图形绘制具有重要意义。我们的主要观察结果是，它可以简化为计算某个序列的倒数。这直接导致了一个基于合并排序的 "
+                    "data":" 时，计算内边交叉的问题。二分图的两个边的节点在两条平行线上被绘制为不同的点，而边被绘制为直线段。这一问题的有效解决对分层图形绘制具有重要意义。我们的主要观察结果是，它可以简化为计算某个序列的倒数。这直接导致了一个基于合并排序的 "
                 },
                 {
                     "type":"mathjax",
@@ -1217,7 +1213,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":"english",
+            "label":"english",
             "data":[
                 [
                     {
@@ -1597,7 +1593,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "SAN",
                 "WAM",
                 "MER",
@@ -1728,7 +1724,7 @@ export default `{
         },
         {
             "type":"list",
-            "title":[
+            "label":[
                 "int p:",
                 "int q:",
                 "int r:",
@@ -2380,11 +2376,8 @@ export default `{
         },
         {
             "type":"paragraph",
-            "dta":[
-                {
-                    "type":"text",
-                    "data":"[8] G. S. Lueker, 一个用于正交范围查询的数据结构。 Proceedings of the 19th IEEE Symposium on Foundations of Computer Science, 1978, pp. 28–34."
-                }
+            "data":[
+
             ]
         },
         {
