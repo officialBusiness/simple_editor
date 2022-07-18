@@ -38,8 +38,6 @@
 	</body>
 	<script type="module">
 		import Editor from '../../../src/editor.js';
-		import chinese from './chinese.js';
-		import english from './english.js';
 
 		let editorEnglish =
 			new Editor(document.getElementById('editor-english'))
@@ -52,10 +50,5 @@
 
 		window.editorEnglish = editorEnglish;
 		window.editorChinese = editorChinese;
-
-		setTimeout(()=>{
-			editorEnglish.compareObj(JSON.parse(english));
-			editorChinese.compareObj(JSON.parse(chinese));
-		}, 2000);
 	</script>
 </html>

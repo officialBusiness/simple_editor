@@ -38,14 +38,14 @@
 	</body>
 	<script type="module">
 		import Editor from '../../../src/editor.js';
-		import chinese from './chinese.js';
-		import english from './english.js';
 
 		let editorEnglish =
-			new Editor(document.getElementById('editor-english'), JSON.parse(english))
+			new Editor(document.getElementById('editor-english'))
+				.loadJson('./english.json')
 				.setEditable(false),
 			editorChinese =
-			new Editor(document.getElementById('editor-chinese'), JSON.parse(chinese))
+			new Editor(document.getElementById('editor-chinese'))
+				.loadJson('./chinese.json')
 				.setEditable(false);
 
 		window.editorEnglish = editorEnglish;
