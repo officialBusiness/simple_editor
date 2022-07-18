@@ -42,13 +42,20 @@
 		import english from './english.js';
 
 		let editorEnglish =
-			new Editor(document.getElementById('editor-english'), JSON.parse(english))
+			new Editor(document.getElementById('editor-english'))
+				.loadJson('./english.json')
 				.setEditable(false),
 			editorChinese =
-			new Editor(document.getElementById('editor-chinese'), JSON.parse(chinese))
+			new Editor(document.getElementById('editor-chinese'))
+				.loadJson('./chinese.json')
 				.setEditable(false);
 
 		window.editorEnglish = editorEnglish;
 		window.editorChinese = editorChinese;
+
+		setTimeout(()=>{
+			editorEnglish.compareObj(JSON.parse(english));
+			editorChinese.compareObj(JSON.parse(chinese));
+		}, 2000);
 	</script>
 </html>

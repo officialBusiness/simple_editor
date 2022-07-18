@@ -103,9 +103,85 @@ Editor.prototype.toObj = function(){
 	return obj;
 }
 
+Editor.prototype.loadJson = function(jsonUrl){
+	var xmlhttp = new XMLHttpRequest(),
+			editor = this;
+	xmlhttp.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200) {
+			var json = JSON.parse(this.responseText);
+			editor.render(json);
+		}
+	};
+	xmlhttp.open("GET", jsonUrl, true);
+	xmlhttp.send();
+	return this;
+}
+
+Editor.prototype.exportObjJsonFormatting = function(filename){
+	var eleLink = document.createElement('a');
+	eleLink.download = filename;
+	eleLink.style.display = 'none';
+	// 字符内容转变成blob地址
+	var blob = new Blob([JSON.stringify(this.toObj(), null, 4)]);
+	eleLink.href = URL.createObjectURL(blob);
+	// 触发点击
+	document.body.appendChild(eleLink);
+	eleLink.click();
+	// 然后移除
+	document.body.removeChild(eleLink);
+}
+
+
+
 Editor.prototype.addEvent = function(eventType, event){
 	this.event.addEvent(eventType, event);
 	return this;
 }
 
+
+Editor.prototype.compareObj = function(obj){
+	let editorObj = this.toObj(),
+			compare = isObjectValueEqual(editorObj, obj);
+	if( compare ){
+		console.log('editor 的 obj 与传入的 obj 内容一样');
+	}else{
+		console.log('editor 的 obj 与传入的 obj 内容不一样');
+	}
+	return compare;
+}
+
+function isObjectValueEqual(a, b) {
+  // 判断两个对象是否指向同一内存，指向同一内存返回true
+  if (a === b) return true
+  // 获取两个对象键值数组
+  let aProps = Object.getOwnPropertyNames(a)
+  let bProps = Object.getOwnPropertyNames(b)
+  // 判断两个对象键值数组长度是否一致，不一致返回false
+  if (aProps.length !== bProps.length) {
+  	console.log(aProps, `aProps.length`, aProps.length);
+  	console.log(bProps, `bProps.length`, bProps.length);
+  	return false
+  }
+  // 遍历对象的键值
+  for (let prop in a) {
+    // 判断a的键值，在b中是否存在，不存在，返回false
+    if (b.hasOwnProperty(prop)) {
+      // 判断a的键值是否为对象，是则递归，不是对象直接判断键值是否相等，不相等返回false
+      if (typeof a[prop] === 'object') {
+        if (!isObjectValueEqual(a[prop], b[prop])) {
+        	// console.log(`a[${prop}]`, a[prop])
+        	return false;
+        }
+      } else if (a[prop] !== b[prop]) {
+      	console.log(`a[${prop}]`, a[prop]);
+      	console.log(`b[${prop}]`, b[prop]);
+        return false;
+      }
+    } else {
+      	console.log(`prop`, prop);
+      return false;
+    }
+  }
+  return true;
+}
 
