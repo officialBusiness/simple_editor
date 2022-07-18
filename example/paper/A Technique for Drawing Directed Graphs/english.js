@@ -1390,7 +1390,7 @@ export default `{
         },
         {
             "type":"code",
-            "data":"procedure wmedian(order,iter)\\n    if iter mod 2 == 0 then\\n        for r = 1 to Max_rank do\\n            for v in order[r] do\\n                median[v] = median_value(v,r-1);\\n            sort(order[r],median);\\n        end\\n    else . . .\\n    endif\\nend\\nprocedure median_value(v,adj_rank)\\n    P = adj_position(v,adj_rank);\\n    m=|P|/2;\\n    if |P| = 0 then\\n        return -1.0;\\n    elseif |P| mod 2 == 1 then\\n        return P[m];\\n    elseif |P| = 2 then\\n        return (P[0] + P[1])/2;\\n    else\\n        left = P[m-1] - P[0];\\n        right = P[|P| -1] - P[m];\\n        return (P[m-1]*right + P[m]*left)/(left+right);\\n    endif\\nend",
+            "data":"procedure wmedian(order,iter)\\n    if iter mod 2 == 0 then\\n        for r = 1 to Max_rank do\\n            for v in order[r] do\\n                median[v] = median_value(v,r-1);\\n            sort(order[r],median);\\n        end\\n    else . . .\\n    endif\\nend\\n\\nprocedure median_value(v,adj_rank)\\n    P = adj_position(v,adj_rank);\\n    m=|P|/2;\\n    if |P| = 0 then\\n        return -1.0;\\n    elseif |P| mod 2 == 1 then\\n        return P[m];\\n    elseif |P| = 2 then\\n        return (P[0] + P[1])/2;\\n    else\\n        left = P[m-1] - P[0];\\n        right = P[|P| -1] - P[m];\\n        return (P[m-1]*right + P[m]*left)/(left+right);\\n    endif\\nend",
             "width":"500px",
             "title":"Figure 3-2. The weighted median heuristic"
         },
@@ -1458,7 +1458,7 @@ export default `{
         {
             "type":"code",
             "data":"procedure transpose(rank)\\n    improved=True;\\n    while improved do\\n        improved=False;\\n        for r = 0 to Max_rank do\\n            for i = 0 to |rank[r]|-2 do\\n                v = rank[r][i];\\n                w = rank[r][i+1];\\n                if crossing(v,w) > crossing(w,v) then\\n                    improved=True;\\n                    exchange(rank[r][i],rank[r][i+1]);\\n                endif\\n            end\\n        end\\n    end\\nend",
-            "width":"400px",
+            "width":"500px",
             "title":"Figure 3-3. The transposition heuristic for reducing edge crossings"
         },
         {
@@ -3411,7 +3411,7 @@ export default `{
         },
         {
             "type":"code",
-            "data":"procedure compute_p_array (B_array, L_array, q, s)\\n    if line_fits (B_array, L_array, q, s) then return;\\n    p = compute_linesplit (B_array, L_array); addto_p_array (p);\\n    compute_p_array (B_array1, L_array1, q, p);\\n    compute_p_array (B_array2, L_array2, p, s);\\nend\\nprocedure compute_s_array (B_array, L_array, p_array, vector_q, vector_s)\\n    spline = generate_spline (p_array, vector_q, vector_s);\\n    if size (p_array) == 2 then\\n        while spline_fits (spline, B_array, L_array) == False do\\n            straighten_spline (spline);\\n    elseif spline_fits (spline, B_array, L_array) == False then\\n        count = 0;\\n        ospline = spline;\\n        repeat\\n            spline = refine_spline (p_array, ospline,\\n                                mode (count, max_iterations));\\n            fits = spline_fits (spline, B_array, L_array);\\n            count = count + 1;\\n            while (fits == False) and (count <= max_iterations);\\n                if fits == False then\\n                p = compute_splinesplit (spline, p_array);\\n                compute_s_array (B_array1, L_array1, p_array1,\\n                    vector_q, vector_p);\\n                compute_s_array (B_array2, L_array2, p_array2,\\n                    reverse (vector_p), vector_s);\\n                return;\\n            endif\\n        endif\\n    addto_s_array (spline);\\nend",
+            "data":"procedure compute_p_array (B_array, L_array, q, s)\\n    if line_fits (B_array, L_array, q, s) then return;\\n    p = compute_linesplit (B_array, L_array);\\n    addto_p_array (p);\\n    compute_p_array (B_array1, L_array1, q, p);\\n    compute_p_array (B_array2, L_array2, p, s);\\nend\\n\\nprocedure compute_s_array (B_array, L_array, p_array, vector_q, vector_s)\\n    spline = generate_spline (p_array, vector_q, vector_s);\\n    if size (p_array) == 2 then\\n        while spline_fits (spline, B_array, L_array) == False do\\n            straighten_spline (spline);\\n    elseif spline_fits (spline, B_array, L_array) == False then\\n        count = 0;\\n        ospline = spline;\\n        repeat\\n            spline = refine_spline (p_array, ospline,\\n                                mode (count, max_iterations));\\n            fits = spline_fits (spline, B_array, L_array);\\n            count = count + 1;\\n            while (fits == False) and (count <= max_iterations);\\n                if fits == False then\\n                p = compute_splinesplit (spline, p_array);\\n                compute_s_array (B_array1, L_array1, p_array1,\\n                    vector_q, vector_p);\\n                compute_s_array (B_array2, L_array2, p_array2,\\n                    reverse (vector_p), vector_s);\\n                return;\\n            endif\\n        endif\\n    addto_s_array (spline);\\nend",
             "width":"600px",
             "title":"Figure 5-3. Spline drawing"
         },
