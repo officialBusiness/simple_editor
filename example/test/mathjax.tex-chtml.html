@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>mathjax.tex-chtml</title>
+		<style type="text/css">
+			html,body{
+				margin: 0;
+				padding: 0;
+				border: 0;
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				display: flex;
+				justify-content: center;
+			}
+		</style>
+		<script type="text/javascript" src="../../src.new/thirdparty/tex-chtml.js"></script>
+	</head>
+	<body>
+			<div id="editor"></div>
+	</body>
+	<script type="module">
+		document.body.appendChild(MathJax.tex2chtml('\\rho(a,b)=\\dfrac{xsize(a) + xsize(b)}{2}+nodesep(G)\\Omega(e)').childNodes[0]);
+		console.log(MathJax)
+	</script>
+</html>
