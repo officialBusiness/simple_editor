@@ -94,12 +94,11 @@
 		import initImage from './init_editor_tool/image.js';
 		import initList from './init_editor_tool/list.js';
 
-		import chinese from '../paper/A Technique for Drawing Directed Graphs/chinese.js';
-		import english from '../paper/A Technique for Drawing Directed Graphs/english.js';
-
 		let
-			editorEnglish = new Editor(document.getElementById('editor-english'), JSON.parse(english)),
-			editorChinese = new Editor(document.getElementById('editor-chinese'), JSON.parse(chinese));
+			editorEnglish = new Editor(document.getElementById('editor-english'))
+				.loadJson('../paper/A Technique for Drawing Directed Graphs/english.json'),
+			editorChinese = new Editor(document.getElementById('editor-chinese'))
+				.loadJson('../paper/A Technique for Drawing Directed Graphs/chinese.json');
 
 
 		document.addEventListener('selectionchange', ()=>{
