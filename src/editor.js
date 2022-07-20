@@ -169,7 +169,6 @@ function isObjectValueEqual(a, b) {
       // 判断a的键值是否为对象，是则递归，不是对象直接判断键值是否相等，不相等返回false
       if (typeof a[prop] === 'object') {
         if (!isObjectValueEqual(a[prop], b[prop])) {
-        	// console.log(`a[${prop}]`, a[prop])
         	return false;
         }
       } else if (a[prop] !== b[prop]) {

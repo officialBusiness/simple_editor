@@ -41,6 +41,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- 图片添加 -->
 		<div id="imageContainer">
 			<div id="image">
 				<div id="imageContent">
@@ -60,7 +61,11 @@
 			</div>
 		</div>
 		<div class="editor_tool">
-			<div id="mathjaxButton" class="button"><icon class="iconfont icon-fsux_tubiao_gongshi_jisuan"></icon></div>
+			<!-- json导出 console.log(JSON.stringify(editor.toObj(), null, 4)) -->
+			<div id="jsonExport" class="button"><div class="iconfont icon-json"></div></div>
+			<!-- 数学公式输入 -->
+			<div id="mathjaxButton" class="button"><div class="iconfont icon-fsux_tubiao_gongshi_jisuan"></div></div>
+			<!-- 段落标题切换 -->
 			<div id="paragraphAndHeader" class="button">
 				<div id="paragraphAndHeaderSelected">正文和标题</div>
 				<div id="paragraphAndHeaderSelection">
@@ -71,9 +76,11 @@
 					<div class="selection">h4</div>
 				</div>
 			</div>
-			<div id="imageButton" class="button"><icon class="iconfont icon-tupian"></icon></div>
+			<!-- 图片添加 -->
+			<div id="imageButton" class="button"><div class="iconfont icon-tupian"></div></div>
+			<!-- 列表修改 -->
 			<div id="listButton" class="button">
-				<icon class="iconfont icon-liebiaomoshi"></icon>
+				<div class="iconfont icon-liebiaomoshi"></div>
 				<div id="listSelection">
 					<div class="selection">小写英文</div>
 					<div class="selection">大写英文</div>
@@ -93,12 +100,17 @@
 		import initParagraphAndHeader from './init_editor_tool/paragraph_and_header.js';
 		import initImage from './init_editor_tool/image.js';
 		import initList from './init_editor_tool/list.js';
+		import initExportJson from './init_editor_tool/export_json.js';
 
 		let
+			// chineseFile = '../paper/Simple and Efficient Bilayer Cross Counting/chinese.json',
+			// englishFile = '../paper/Simple and Efficient Bilayer Cross Counting/english.json',
+			chineseFile = '../paper/A Technique for Drawing Directed Graphs/chinese.json',
+			englishFile = '../paper/A Technique for Drawing Directed Graphs/english.json',
 			editorEnglish = new Editor(document.getElementById('editor-english'))
-				.loadJson('../paper/A Technique for Drawing Directed Graphs/english.json'),
+				.loadJson(englishFile),
 			editorChinese = new Editor(document.getElementById('editor-chinese'))
-				.loadJson('../paper/A Technique for Drawing Directed Graphs/chinese.json');
+				.loadJson(chineseFile);
 
 
 		document.addEventListener('selectionchange', ()=>{
@@ -123,6 +135,7 @@
 		initParagraphAndHeader();
 		initImage();
 		initList();
+		initExportJson();
 
 		function getTitle(editor){
 			let titleTree = {level: 0,children: []},

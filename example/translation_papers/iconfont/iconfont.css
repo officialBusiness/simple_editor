@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3460624 */
-  src: url('iconfont.woff2?t=1655864398278') format('woff2'),
-       url('iconfont.woff?t=1655864398278') format('woff'),
-       url('iconfont.ttf?t=1655864398278') format('truetype');
+  src: url('iconfont.woff2?t=1658196905022') format('woff2'),
+       url('iconfont.woff?t=1658196905022') format('woff'),
+       url('iconfont.ttf?t=1658196905022') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-json:before {
+  content: "\e60e";
+}
+
+.icon--baocun:before {
+  content: "\e606";
+}
+
+.icon-yuandaimaxiayoudaima:before {
+  content: "\e7ae";
 }
 
 .icon-liebiaomoshi:before {

@@ -1,29 +1,22 @@
 
-// const 
-
-
 export default {
 	type: 'image',
 	toDom(obj){
-		return this.nodeApi.createComonentDom({
+		return this.nodeApi.createDom({
 			nodeName: 'div',
 			attributes: {
 				class: 'image',
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true
 			},
-			style: {
-				'text-align': obj.alignment
-			},
+			style: obj.imageStyle,
 			children: [
 				{
 					nodeName: 'img',
 					attributes: {
 						src: obj.src
 					},
-					style: {
-						width: obj.width
-					}
+					style: obj.imgStyle
 				},
 				{
 					if: !!obj.title,
@@ -45,25 +38,18 @@ export default {
 				type: 'image',
 				src: img.src
 			},
-			imgStyle = {},
-			imageStyle = {};
+			imageStyle = this.nodeApi.getNodeStyle(dom),
+			imgStyle = this.nodeApi.getNodeStyle(img);
 
-		if(img.style.width){
-			imgStyle.width = img.style.width;
-			obj.imgStyle = imgStyle;
-		}
-		if(dom.style['text-align']){
-			imageStyle['text-align'] =  dom.style['text-align'];
-			obj.imageStyle = imageStyle;
-		}
 		if( title ){
 			obj.title = title.innerText;
 		}
+		if( imageStyle ){
+			obj.imageStyle = imageStyle;
+		}
+		if( imgStyle ){
+			obj.imgStyle = imgStyle;
+		}
 		return obj;
-	},
-	supportOperation: {
-		getLastContainer(image){
-			return image.childNodes[1] ? image.childNodes[1] : image.childNodes[0];
-		},
 	}
 }

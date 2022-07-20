@@ -26,7 +26,7 @@ export function createLiDomObj(label, index, li){
 				nodeName: 'div',
 				attributes: {
 					class: 'label',
-					event: Array.isArray(label) || label === 'custom' ? labelOperation.name : null,
+					// event: Array.isArray(label) || label === 'custom' ? labelOperation.name : null,
 					contenteditable: Array.isArray(label) || label === 'custom' ? null : false,
 					[this.nodeLabel.container]: Array.isArray(label) || label === 'custom' ? true : null
 				},
@@ -35,8 +35,8 @@ export function createLiDomObj(label, index, li){
 			{
 				nodeName: 'div',
 				attributes: {
-					class: 'container',
-					event: liOperation.name,
+					class: 'li_content',
+					// event: liOperation.name,
 					[this.nodeLabel.container]: true
 				},
 				created: (container)=>{

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>test_json_equal</title>
+	</head>
+	<body>
+		<div class="editor"></div>
+		<div class="editor"></div>
+	</body>
+	<script type="module">
+		import Editor from '../../src.new/editor.js';
+		import OldEditor from '../../src/editor.js';
+
+		window.xmlSerializer = new XMLSerializer();
+
+		let
+			// file = '../paper/A Technique for Drawing Directed Graphs/chinese.json',
+			// file = '../paper/A Technique for Drawing Directed Graphs/english.json',
+			// file = '../paper/Simple and Efficient Bilayer Cross Counting/chinese.json',
+			// file = '../paper/Simple and Efficient Bilayer Cross Counting/english.json',
+
+			// file = '../paper/Simple and Efficient Bilayer Cross Counting/chinese.new.test.json',
+			// oldfile = '../paper/Simple and Efficient Bilayer Cross Counting/chinese.new.json',
+			// file = '../paper/Simple and Efficient Bilayer Cross Counting/english.new.json',
+			// oldfile = '../paper/Simple and Efficient Bilayer Cross Counting/english.json',
+			// file = '../paper/A Technique for Drawing Directed Graphs/english.new.json',
+			// oldfile = '../paper/A Technique for Drawing Directed Graphs/english.json',
+			file = '../paper/A Technique for Drawing Directed Graphs/chinese.new.test.json',
+			oldfile = '../paper/A Technique for Drawing Directed Graphs/chinese.new.json',
+
+			json, oldJson ;
+
+		var xmlhttp = new XMLHttpRequest()
+		xmlhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				json = JSON.parse(this.responseText);
+			}
+		};
+		xmlhttp.open("GET", file, true);
+		xmlhttp.send();
+
+		var xmlhttp = new XMLHttpRequest()
+		xmlhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				oldJson = JSON.parse(this.responseText);
+			}
+		};
+		xmlhttp.open("GET", oldfile, true);
+		xmlhttp.send();
+		setTimeout(()=>{
+			if( isObjectValueEqual( json, oldJson ) ){
+				console.log('editor 的 obj 内容一样');
+			}else{
+				console.log('editor 的 obj 内容不一样');
+			}
+		}, 2000);
+
+		function isObjectValueEqual(a, b) {
+		  // 判断两个对象是否指向同一内存，指向同一内存返回true
+		  if (a === b) return true
+		  // 获取两个对象键值数组
+		  let aProps = Object.getOwnPropertyNames(a)
+		  let bProps = Object.getOwnPropertyNames(b)
+		  // 判断两个对象键值数组长度是否一致，不一致返回false
+		  if (aProps.length !== bProps.length) {
+		  	console.log(aProps, `aProps.length`, aProps.length);
+		  	console.log(bProps, `bProps.length`, bProps.length);
+		  	return false
+		  }
+		  // 遍历对象的键值
+		  for (let prop in a) {
+		    // 判断a的键值，在b中是否存在，不存在，返回false
+		    if (b.hasOwnProperty(prop)) {
+		      // 判断a的键值是否为对象，是则递归，不是对象直接判断键值是否相等，不相等返回false
+		      if (typeof a[prop] === 'object') {
+		        if (!isObjectValueEqual(a[prop], b[prop])) {
+		        	return false;
+		        }
+		      } else if (a[prop] !== b[prop]) {
+		      	console.log(`a[${prop}]`, a[prop]);
+		      	console.log(`b[${prop}]`, b[prop]);
+		        return false;
+		      }
+		    } else {
+	      	console.log(`prop`, prop);
+	      	console.log(`a`, a);
+	      	console.log(`b`, b);
+		      return false;
+		    }
+		  }
+		  return true;
+		}
+
+	</script>
+</html>

@@ -29,24 +29,24 @@
 				overflow: auto;
 			}
 		</style>
-		<script type="text/javascript" src="../../../src/thirdparty/tex-svg.js"></script>
-		<link rel="stylesheet" type="text/css" href="../../../src/editor.css" />
+		<script type="text/javascript" src="../../../src.new/thirdparty/tex-svg.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../src.new/editor.css" />
 	</head>
 	<body>
 		<div id="editor-english"></div>
 		<div id="editor-chinese"></div>
 	</body>
 	<script type="module">
-		import Editor from '../../../src/editor.js';
+		import Editor from '../../../src.new/editor.js';
 
 		let editorEnglish =
 			new Editor(document.getElementById('editor-english'))
-				.loadJson('./english.json')
-				.setEditable(false),
+				.loadJson('./english.json'),
+				// .setEditable(false),
 			editorChinese =
 			new Editor(document.getElementById('editor-chinese'))
 				.loadJson('./chinese.json')
-				.setEditable(false);
+				// .setEditable(false);
 
 		window.editorEnglish = editorEnglish;
 		window.editorChinese = editorChinese;

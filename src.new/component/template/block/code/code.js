@@ -2,7 +2,7 @@
 export default {
 	type: 'code',
 	toDom(obj){
-		return this.nodeApi.createComonentDom({
+		return this.nodeApi.createDom({
 			nodeName: 'div',
 			attributes: {
 				class: 'code',
@@ -19,9 +19,7 @@ export default {
 						attributes: {
 							[this.nodeLabel.container]: true,
 						},
-						style: {
-							width: obj.width
-						},
+						style: obj.codeStyle,
 						children: obj.data
 					}
 				},
@@ -32,9 +30,6 @@ export default {
 						class: 'code_title',
 						[this.nodeLabel.container]: true,
 					},
-					// on: {
-					// 
-					// },
 					children: obj.title
 				}
 			]
@@ -49,20 +44,14 @@ export default {
 				type: 'code',
 				data: code.innerText
 			},
-			codeStyle = {};
+			codeStyle = this.nodeApi.getNodeStyle(code);
 
-		if(code.style.width){
-			codeStyle.width = code.style.width;
-			obj.codeStyle = codeStyle;
-		}
 		if( title ){
 			obj.title = title.innerText;
 		}
-		return obj;
-	},
-	supportOperation: {
-		getLastContainer(code){
-			return code.childNodes[1] ? code.childNodes[1] : code.childNodes[0].childNodes[0];
+		if( codeStyle ){
+			obj.codeStyle = codeStyle;
 		}
+		return obj;
 	}
 }

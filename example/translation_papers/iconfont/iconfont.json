@@ -6,6 +6,27 @@
   "description": "https://github.com/officialBusiness/simple_editor",
   "glyphs": [
     {
+      "icon_id": "15214524",
+      "name": "json",
+      "font_class": "json",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "1635103",
+      "name": "02-保存",
+      "font_class": "-baocun",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "688138",
+      "name": "源代码 下游代码",
+      "font_class": "yuandaimaxiayoudaima",
+      "unicode": "e7ae",
+      "unicode_decimal": 59310
+    },
+    {
       "icon_id": "201552",
       "name": "列表模式",
       "font_class": "liebiaomoshi",
