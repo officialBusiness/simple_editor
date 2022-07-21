@@ -98,7 +98,7 @@ span.mathjax > img{
 	user-select: none;
 }
 
-.list > .li > .container{
+.list > .li > .li_content{
 	padding: 0 0 10px 0;
 	flex: 1;
 	width: 0;

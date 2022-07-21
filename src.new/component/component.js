@@ -1,6 +1,5 @@
 import * as factories from './template/templates.js';
 
-
 export function getComponentDom(context, obj){
 	if( typeof obj !== 'object' ){
 		console.error('obj', obj);

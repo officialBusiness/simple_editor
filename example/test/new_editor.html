@@ -40,113 +40,19 @@
 		import Editor from '../../src.new/editor.js';
 
 		let
-			englishFile = '../paper/A Technique for Drawing Directed Graphs/english.new.test.json',
-			chineseFile = ('../paper/A Technique for Drawing Directed Graphs/chinese.new.test.json'),
-			// englishFile = '../paper/Simple and Efficient Bilayer Cross Counting/english.new.json',
-			// chineseFile = ('../paper/Simple and Efficient Bilayer Cross Counting/chinese.new.json'),
+			englishFile = '../paper/A Technique for Drawing Directed Graphs/english.json',
+			chineseFile = ('../paper/A Technique for Drawing Directed Graphs/chinese.json'),
+			// englishFile = '../paper/Simple and Efficient Bilayer Cross Counting/english.json',
+			// chineseFile = ('../paper/Simple and Efficient Bilayer Cross Counting/chinese.json'),
 
 			editorEnglish = new Editor(document.getElementsByClassName('editor')[0])
+				// .init(),
 				.loadJson(englishFile),
 			editorChinese = new Editor(document.getElementsByClassName('editor')[1])
-				.loadJson(chineseFile);
+				.init()
+				// .loadJson(chineseFile);
 
 		window.editorEnglish = editorEnglish;
 		window.editorChinese = editorChinese;
-
-
-		setTimeout(()=>{
-			let compare = isNodeValueEqual(editorEnglish.editorDom, editorChinese.editorDom);
-			if( compare ){
-				console.log('node 内容一样');
-			}else{
-				console.log('node 内容不一样');
-			}
-		}, 2000);
-
-		function isNodeValueEqual(a, b) {
-		  // 判断两个对象是否指向同一内存，指向同一内存返回true
-		  if (a === b) return true
-		  // 获取两个对象键值数组
-		  let aProps = Object.getOwnPropertyNames(a)
-		  let bProps = Object.getOwnPropertyNames(b)
-
-		  // 遍历对象的键值
-		  if( a.nodeType !== b.nodeType ){
-		  	console.log('node 类型不同', 'a:', a, 'b:', b);
-		  	return false;
-		  }
-
-		  if( a.nodeType === Node.ELEMENT_NODE ){
-		  	if( a.attributes.length !== b.attributes.length ){
-		  		console.log('attributes 长度不一样');
-		  		console.log('a:', a, 'attribute', a.attributes);
-		  		console.log('b:', b, 'attribute', b.attributes);
-		  		return false;
-		  	}
-
-		  	for(let i = 0; i < a.attributes.length; i++){
-		  		let aAttribute = a.attributes.item(i),
-		  				bAttribute = b.attributes.item(i);
-
-		  		if( a.className === 'mathjax' && aAttribute.name === 'src' ){
-		  			// continue;
-		  		}else if( aAttribute.name !== bAttribute.name || 
-		  				aAttribute.value  !== bAttribute.value ){
-			  		console.log('attributes 属性不一样');
-			  		console.log('a:', a, 'attribute', a.attributes.item(i));
-			  		console.log('b:', b, 'attribute', b.attributes.item(i));
-			  		return false;
-		  		}
-		  	}
-
-		  	if( a.style.length !== b.style.length ){
-		  		console.log('style 长度不一样');
-		  		console.log('a:', a, 'style', a.style);
-		  		console.log('b:', b, 'style', b.style);
-		  		return false;
-		  	}
-
-		  	for(let i = 0; i < a.style.length; i++){
-		  		let aStyle = a.style[i],
-		  				bStyle = b.style[i];
-		  		if( aStyle !== bStyle ){
-			  		console.log('style 属性不一样');
-			  		console.log('a:', a, 'style', a.style[i]);
-			  		console.log('b:', b, 'style', b.style[i]);
-		  			return false;
-		  		}
-
-		  		if( a.style[aStyle] !== b.style[bStyle] ){
-			  		console.log('style 属性不一样');
-			  		console.log('a:', a, `a.style[${aStyle}]`, a.style[aStyle]);
-			  		console.log('b:', b, `b.style[${bStyle}]`, b.style[bStyle]);
-		  			return false;
-		  		}
-
-		  	}
-
-		  	if( a.childNodes.length !== b.childNodes.length ){
-			  	console.log('childNoes 内包含的元素长度不同', 'a:', a, 'b:', b);
-		  		console.log('a:', a, 'childNoes', a.childNodes);
-		  		console.log('b:', b, 'childNoes', b.childNodes);
-			  	return false;
-		  	}
-
-		  	if( a.childNodes.length > 0 ){
-		  		for( let i = 0; i < a.childNodes.length; i++ ){
-		  			if( !isNodeValueEqual(a.childNodes[i], b.childNodes[i]) ){
-		  				return false;
-		  			}
-		  		}
-		  	}
-		  }else if( a.nodeType === Node.TEXT_NODE ){
-		  	if( a.nodeValue  !== b.nodeValue ){
-			  	console.log('text 内容不一样', 'a:', a, 'b:', b);
-		  		return false;
-		  	}
-		  }
-
-		  return true;
-		}
 	</script>
 </html>

@@ -15,6 +15,7 @@
 			body{
 				display: flex;
 				justify-content: center;
+				min-width: 700px;
 			}
 			#editor-english,
 			#editor-chinese{
@@ -41,12 +42,12 @@
 
 		let editorEnglish =
 			new Editor(document.getElementById('editor-english'))
-				.loadJson('./english.json'),
-				// .setEditable(false),
+				.loadJson('./english.json')
+				.setEditable(false),
 			editorChinese =
 			new Editor(document.getElementById('editor-chinese'))
 				.loadJson('./chinese.json')
-				// .setEditable(false);
+				.setEditable(false);
 
 		window.editorEnglish = editorEnglish;
 		window.editorChinese = editorChinese;

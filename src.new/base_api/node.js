@@ -88,6 +88,10 @@ export function emptyAllChild(node){
 	}
 }
 
+export function removeChild(parentNode, node){
+	parentNode.removeChild(newNode);
+}
+
 export function getNodeStyle(node){
 	let style ;
 	if( node.style.length > 0 ){
