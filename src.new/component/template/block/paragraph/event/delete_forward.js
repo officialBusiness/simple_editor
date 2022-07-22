@@ -35,7 +35,7 @@ export default function deleteForward(node, offset){
 			deleteNodeInContainer.call(this, node);
 		}else if( offset === 0 ){//	在 text 头部
 			if( nodeApi.isStartInContainer(singleNode) ){
-				console.log('执行 deleteForwardOnStart 事件');
+				// console.log('执行 deleteForwardOnStart 事件');
 				deleteForwardOnStart.call(this, node, offset);
 			}else{
 				throw new Error('未知情况, 按照浏览 range 的标准以及之前设置 range 的代码,应该是 container 内的第一个独立节点');
@@ -47,15 +47,13 @@ export default function deleteForward(node, offset){
 		console.log('为 ELEMENT_NODE');
 		let element = node.childNodes[ offset !== 0 ? offset - 1 : 0 ];
 		if( element ){
-			console.log('element 存在');
-			let 
-				singleNode = nodeApi.getSingleNodeInContainer(element);
-			console.log('删除元素', singleNode);
+			let singleNode = nodeApi.getSingleNodeInContainer(element);
+			console.log('element 存在, 删除元素', singleNode);
 			deleteNodeInContainer.call(this, singleNode);
 		}else{
 			console.log('element 不存在');
 			if( nodeApi.isContainer(node) && offset === 0 ){
-				console.log('执行 deleteForwardOnStart 事件');
+				// console.log('执行 deleteForwardOnStart 事件');
 				deleteForwardOnStart.call(this, node, offset);
 			}else{
 				throw new Error('未知情况, 按照常理, node 应该是 container');
@@ -66,7 +64,6 @@ export default function deleteForward(node, offset){
 		throw new Error('deleteForward node 类型未知');
 	}
 }
-
 
 export function deleteNodeInContainer(node){
 	let 
@@ -83,7 +80,7 @@ export function deleteNodeInContainer(node){
 		rangeApi.setRangeOfNodeEndInContainer(preNode);
 		nodeApi.removeNode(singleNode);//	删除独立节点
 		if( previousSibling && nextSibling ){
-			mergeNodeAfterDeleteNodeInContainer.call(this, previousSibling, nextSibling);
+			nodeApi.mergeTwoNodesInContainer(previousSibling, nextSibling);
 		}
 	}else{//	前面没有节点
 		console.log('前面没有节点');
@@ -99,25 +96,6 @@ export function deleteNodeInContainer(node){
 			}else{
 				throw new Error('特殊情况,按照常理,前后都没有的话, parentNode 应该是 container,不会打印此信息');
 			}
-		}
-	}
-}
-
-export function mergeNodeAfterDeleteNodeInContainer(pre, next){
-	let { rangeApi, nodeApi } = this;
-
-	if( pre.nodeType === Node.TEXT_NODE &&
-			next.nodeType === Node.TEXT_NODE ){//	前后节点都是text
-		console.log('前后节点都是 text');
-		pre.parentNode.normalize();//	合并前后 text
-	}else if( nodeApi.isNodeEqual( pre, next ) ){// 	前后节点一样，可以合并
-		if( pre.childNodes.length > 0 && next.childNodes.length > 0 ){
-			console.log('前后节点一致，可以合并');
-			let preEnd = pre.childNodes[pre.childNodes.length - 1],
-					nextStart = next.childNodes[0];
-			nodeApi.appendChildren(pre, next.childNodes);
-			nodeApi.removeNode(next);
-			mergeNodeAfterDeleteNodeInContainer.call(this, preEnd, nextStart);
 		}
 	}
 }

@@ -8,7 +8,7 @@ export default {
 			nodeName: obj.level,
 			attributes: {
 				class: 'header',
-				// event: paragraphOperation.name,
+				event: paragraphOperation.name,
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true,
 			},

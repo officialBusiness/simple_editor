@@ -1,5 +1,44 @@
 import * as nodeApi from './node.js';
 
+// 判断 range 是否是 container 的开端
+export function isStartInContainer(node, offset){
+	if( offset === 0 ){
+		let parentNode = node.parentNode;
+		while( nodeApi.isNotContainer(node) ){
+			if( parentNode.childNodes[0] !== node ){
+				return false;
+			}
+			node = parentNode;
+			parentNode = node.parentNode;
+		}
+		return true;
+	}else{
+		return false;
+	}
+}
+
+// 判断 range 是否是 container 的末端
+export function isEndInContainer(node, offset){
+	if( node.nodeType === Node.TEXT_NODE ){
+		if( offset !== node.length ){
+			return false;
+		}
+	}else if( node.nodeType === Node.ELEMENT_NODE ){
+		if( offset !== node.childNodes.length ){
+			return false;
+		}
+	}
+	let parentNode = node.parentNode;
+	while( nodeApi.isNotContainer(node) ){
+		let len = parentNode.childNodes.length;
+		if( parentNode.childNodes[len - 1] !== node ){
+			return false;
+		}
+		node = parentNode;
+		parentNode = node.parentNode;
+	}
+	return true;
+}
 
 export function getRange(){
 	let selection = document.getSelection();
@@ -43,27 +82,9 @@ export function setNewCollapsedRange(node, offset){
 	selection.addRange(range);
 }
 
-export function setRangeOfNodeEndInContainer(node){
-	if( !node || !node.nodeType || !node.parentNode || 
-			nodeApi.isContainer(node)){
-		console.error('node:', node);
-		throw new Error('setRangeOfNodeEndInContainer 传参错误');
-	}
-	while( node.childNodes.length > 0 ){
-		node = node.childNodes[node.childNodes.length - 1];
-	}
-	if(node.nodeType === Node.TEXT_NODE){
-		setCollapsedRange(node, node.length);
-	}else if(node.nodeType === Node.ELEMENT_NODE){
-		setCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node) + 1);
-	}else{
-		console.error('没有处理的节点类型');
-	}
-}
-
+//	选择 container 的最开始
 export function setRangeOfNodeStartInContainer(node){
-	if( !node || !node.nodeType || !node.parentNode || 
-			nodeApi.isContainer(node)){
+	if( !node || !node.nodeType || !node.parentNode ){
 		console.error('node:', node);
 		throw new Error('setRangeOfNodeStartInContainer 传参错误');
 	}
@@ -77,6 +98,24 @@ export function setRangeOfNodeStartInContainer(node){
 		setCollapsedRange(node, 0);
 	}else if(node.nodeType === Node.ELEMENT_NODE){
 		setCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node));
+	}else{
+		console.error('没有处理的节点类型');
+	}
+}
+
+//	选择 container 的最末端
+export function setRangeOfNodeEndInContainer(node){
+	if( !node || !node.nodeType || !node.parentNode ){
+		console.error('node:', node);
+		throw new Error('setRangeOfNodeEndInContainer 传参错误');
+	}
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[node.childNodes.length - 1];
+	}
+	if(node.nodeType === Node.TEXT_NODE){
+		setCollapsedRange(node, node.length);
+	}else if(node.nodeType === Node.ELEMENT_NODE){
+		setCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node) + 1);
 	}else{
 		console.error('没有处理的节点类型');
 	}

@@ -5,12 +5,24 @@ export const nodeLabel = {
 }
 // 	判断
 
+export function isBlock(dom){
+	return dom.nodeType === Node.ELEMENT_NODE && !!dom.getAttribute('block');
+}
+
+export function isNotBlock(dom){
+	return dom.nodeType !== Node.ELEMENT_NODE || !dom.getAttribute('block');
+}
+
 export function isContainer(dom){
 	return dom.nodeType === Node.ELEMENT_NODE && !!dom.getAttribute('container');
 }
 
 export function isNotContainer(dom){
 	return dom.nodeType !== Node.ELEMENT_NODE || !dom.getAttribute('container');
+}
+
+export function isEmpty(node){
+	return node.childNodes.length === 0
 }
 
 export function isNodeEqual(a, b) {
@@ -100,17 +112,35 @@ export function isStartInContainer(node){
 
 // 	增
 
+export function insertBefore(newNode, nextNode){
+	nextNode.parentNode.insertBefore(newNode, nextNode);
+}
+
+export function insertAfter(newNode, preNode){
+	let parentNode = preNode.parentNode;
+	if( preNode.nextSibling ){
+		parentNode.insertBefore(newNode, preNode.nextSibling);
+	}else{
+		parentNode.appendChild(newNode);
+	}
+}
+
 export function appendChild(parentNode, newNode){
 	parentNode.appendChild(newNode);
 }
 
 export function appendChildren(parentNode, childrenNodes){
-	if( !NodeList.prototype.isPrototypeOf(childrenNodes)){
-		console.error('参数出错');
-		return;
-	}
-	for( let i = 0, len = childrenNodes.length; i < len; i++ ){
-		parentNode.appendChild(childrenNodes[0]);
+	if( NodeList.prototype.isPrototypeOf(childrenNodes)){
+		for( let i = 0, len = childrenNodes.length; i < len; i++ ){
+			parentNode.appendChild(childrenNodes[0]);
+		}
+	}else if(Array.prototype.isPrototypeOf(childrenNodes)){
+		for( let i = 0, len = childrenNodes.length; i < len; i++ ){
+			parentNode.appendChild(childrenNodes[i]);
+		}
+	}else{
+		console.error('childrenNodes:', childrenNodes);
+		throw new Error('appendChildren 传参错误, childrenNodes 类型未知');
 	}
 }
 
@@ -204,7 +234,73 @@ export function removeNode(node){
 	node.parentNode.removeChild(node);
 }
 
-// 	获取
+// 改
+
+export function mergeTwoNodesInContainer(pre, next){
+	if( pre.nextSibling !== next ){
+		console.error('pre:', pre, 'next:', next);
+		throw new Error('mergeTwoNodesInContainer 传入的两个参数不是兄弟节点');
+	}
+	if( pre.nodeType === Node.TEXT_NODE &&
+			next.nodeType === Node.TEXT_NODE ){//	前后节点都是text
+		console.log('前后节点都是 text');
+		pre.parentNode.normalize();//	合并前后 text
+	}else if( isNodeEqual( pre, next ) ){// 	前后节点一样，可以合并
+		if( pre.childNodes.length > 0 && next.childNodes.length > 0 ){
+			console.log('前后节点一致，可以合并');
+			let preEnd = pre.childNodes[pre.childNodes.length - 1],
+					nextStart = next.childNodes[0];
+			appendChildren(pre, next.childNodes);
+			removeNode(next);
+			mergeTwoNodesInContainer( preEnd, nextStart);
+		}
+	}
+}
+
+export function splitFromNodeOffsetStillTop(node, offset, topNode){
+	if( !topNode.contains(node) ){
+		console.error('node:', node, 'topNode:', topNode);
+		throw new Error('splitFromNodeOffsetInContainer 传参错误, node 不包含在 topNode 中');
+	}
+	let startNode;
+	if( node.nodeType === Node.TEXT_NODE ){
+		node.splitText(offset);
+		startNode = node.nextSibling;
+	}else if( node.nodeType === Node.ELEMENT_NODE ){
+		startNode = offset === node.childNodes.length ? getNextNodeInContainer(node.childNodes[offset - 1]) : 
+												node.childNodes[offset];
+	}
+	let	startNodeParent,
+		startNodeParentClone,
+		rememberStartNodeParentClone;
+
+	while( startNode.parentNode && startNode !== topNode ){
+		let	
+			nextSibling = startNode.nextSibling,
+			rememberNextSibling;
+
+		startNodeParent = startNode.parentNode;
+		startNodeParentClone = startNodeParent.cloneNode(false);
+
+		if( rememberStartNodeParentClone ){
+			startNodeParentClone.appendChild(rememberStartNodeParentClone);
+		}else{
+			startNodeParentClone.appendChild(startNode);
+		}
+		rememberStartNodeParentClone = startNodeParentClone;
+
+		while( nextSibling ){
+			rememberNextSibling = nextSibling.nextSibling;
+			startNodeParentClone.appendChild( nextSibling );
+			nextSibling = rememberNextSibling;
+		}
+
+		startNode = startNodeParent;
+	}
+	return startNodeParentClone;
+}
+
+// 	查
 
 export function getNodeIndexOf(node){
 	let childNodes = node.parentNode.childNodes;
@@ -225,6 +321,57 @@ export function getNodeStyle(node){
 		}
 	}
 	return style;
+}
+
+
+export function getBlock(node){
+	if( !node || !node.nodeType || !node.parentNode){
+		console.error('node:', node);
+		throw new Error('getBlock 传参错误');
+	}
+	let root = node,
+			parentNode = node.parentNode;
+	while( isNotBlock(root) ){
+		root = parentNode;
+		parentNode = root.parentNode;
+	}
+	return root;
+}
+
+export function getPreBlock(node){
+	if( !node || !node.nodeType || !node.parentNode){
+		console.error('node:', node);
+		throw new Error('getPreBlock 传参错误');
+	}
+	if( isBlock(node) ){
+		return node.previousSibling;
+	}else{
+		let root = node,
+				parentNode = node.parentNode;
+		while( isNotBlock(root) ){
+			root = parentNode;
+			parentNode = root.parentNode;
+		}
+		return root.previousSibling;
+	}
+}
+
+export function getNextBlock(node){
+	if( !node || !node.nodeType || !node.parentNode){
+		console.error('node:', node);
+		throw new Error('getNextBlock 传参错误');
+	}
+	if( isBlock(node) ){
+		return node.nextSibling;
+	}else{
+		let root = node,
+				parentNode = node.parentNode;
+		while( isNotBlock(root) ){
+			root = parentNode;
+			parentNode = root.parentNode;
+		}
+		return root.nextSibling;
+	}
 }
 
 export function getContainer(node){

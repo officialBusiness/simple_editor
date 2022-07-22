@@ -119,16 +119,30 @@ Editor.prototype.exportObjJsonFormatting = function(filename){
 
 // 事件操作
 
+Editor.prototype.helpEventType = {
+	getLastContainer: 'getLastContainer',
+	getMergeContainer: 'getMergeContainer',
+	getMergedNodes: 'getMergedNodes',
+}
+
+Editor.prototype.executeHelpEvent = function(block, eventType, params){
+	if( this.nodeApi.isNotBlock(block) ){
+		console.error('block:', block);
+		throw new Error('executeHelpEvent 传参错误, 不是 block');
+	}
+	let event = componentApi.getComponentHelpEvent(block.className, eventType);
+	return event.apply(this, params);
+}
+
 Editor.prototype.eventType = {
 	deleteForward: 'deleteForward',
 	// deleteBackward: 'deleteBackward',
-	// deleteForwardOnStart: 'deleteForwardOnStart',
 	// deleteFragment: 'deleteFragment',
 	enter: 'enter',
 	// enterFragment: 'enterFragment'
 }
 
-Editor.prototype.execute = function(conatienr, eventType, params){
+Editor.prototype.executeEditorEvent = function(conatienr, eventType, params){
 	let eventKey = conatienr.getAttribute('event');
 	if( eventKey ){
 		let event = this.componentEvent[eventKey][eventType];
@@ -153,17 +167,37 @@ Editor.prototype.deleteForward = function(){
 
 	if( collapsed ){
 		let executeNode = nodeApi.getContainer(startContainer);
-		this.execute(executeNode, this.eventType.deleteForward, [startContainer, startOffset]);
+		this.executeEditorEvent(executeNode, this.eventType.deleteForward, [startContainer, startOffset]);
 	}else{
-
+		
 	}
+}
 
-	// console.log('collapsed:', collapsed);
-	// console.log('startContainer:', startContainer);
-	// console.log('startOffset:', startOffset);
-	// console.log('endContainer:', endContainer);
-	// console.log('endOffset:', endOffset);
-	// console.log('commonAncestorContainer:', commonAncestorContainer);
+Editor.prototype.mergeTwoBlock = function(preBlock, block){
+	console.log('mergeTwoBlock', 'preBlock:', preBlock, 'block:', block);
+	let
+		mergeContainer = this.executeHelpEvent(preBlock, this.helpEventType.getMergeContainer, [preBlock]),
+		mergedNodes = this.executeHelpEvent(block, this.helpEventType.getMergedNodes, [block]);
+
+	if( mergeContainer ){
+		console.log('前一个 block 存在能够合并的容器');
+		if( mergedNodes ){
+			console.log('当前 block 存在用于合并的节点');
+			let preEnd = mergeContainer.childNodes[mergeContainer.childNodes.length - 1],
+					nextStart = mergedNodes[0];
+			this.rangeApi.setRangeOfNodeEndInContainer(mergeContainer);
+			this.nodeApi.appendChildren(mergeContainer, mergedNodes);
+			this.nodeApi.removeNode(block);
+			this.nodeApi.mergeTwoNodesInContainer(preEnd, nextStart);
+		}else{
+			console.error('当前 block:', block);
+			throw new Error('当前 block 如果不存在用于合并的节点, 就不会触发 mergeTwoBlock');
+		}
+	}else{
+		console.log('前一个 block 不存在能够合并的容器, range 选择前一个 Block 最后一个 container 的的最后一个位置');
+		let lastContainer = this.executeHelpEvent(preBlock, this.helpEventType.getLastContainer, [preBlock]);
+		rangeApi.setRangeOfNodeEndInContainer(lastContainer);
+	}
 }
 
 Editor.prototype.deleteBackward = function(){
@@ -191,7 +225,7 @@ Editor.prototype.enter = function(){
 	if( collapsed ){
 		let executeNode = nodeApi.getContainer(startContainer);
 		// console.log('executeNode:', executeNode);
-		this.execute(executeNode, this.eventType.enter, [startContainer, startOffset]);
+		this.executeEditorEvent(executeNode, this.eventType.enter, [startContainer, startOffset]);
 	}else{
 
 	}

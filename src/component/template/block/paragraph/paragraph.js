@@ -10,7 +10,7 @@ export default {
 			nodeName: 'div',
 			attributes: {
 				class: 'paragraph',
-				// event: paragraphOperation.name,
+				event: paragraphOperation.name,
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true,
 			},

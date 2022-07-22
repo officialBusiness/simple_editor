@@ -13,6 +13,21 @@ export function registerComponentEvent(context){
 	}
 }
 
+export function getComponentHelpEvent(componentName, helpEventType){
+	let factory = factories[componentName];
+	if( factory ){
+		if( factory.helpEvent && factory.helpEvent[helpEventType] ){
+			return factory.helpEvent[helpEventType];
+		}else{
+			console.error('组件名', componentName, '辅助事件:', helpEventType);
+			throw new Error('该辅助事件未完善');
+		}
+	}else{
+		console.error('组件名', componentName);
+		throw new Error('不存在该组件');
+	}
+}
+
 export function getComponentDom(context, obj){
 	if( typeof obj !== 'object' ){
 		console.error('obj', obj);

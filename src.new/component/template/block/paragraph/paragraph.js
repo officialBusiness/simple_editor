@@ -42,5 +42,16 @@ export default {
 			obj.data.push(this.domToObj(child));
 		});
 		return obj;
+	},
+	helpEvent: {
+		getLastContainer(paragraph){
+			return paragraph;
+		},
+		getMergeContainer(paragraph){
+			return paragraph;
+		},
+		getMergedNodes(paragraph){
+			return paragraph.childNodes;
+		}
 	}
 }

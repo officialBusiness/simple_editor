@@ -1,7 +1,6 @@
 // 默认的 当前 block 为 paragraph 类型, block 即为 container
 
 export default function enter(node, offset){
-
 	let { rangeApi, nodeApi } = this;
 
 	console.log('执行 enter:', node, offset);
