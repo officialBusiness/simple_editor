@@ -115,16 +115,10 @@
 
 		document.addEventListener('selectionchange', ()=>{
 			// console.log('selectionchange');
-			let range = document.getSelection().getRangeAt(0);
+			let range = editorEnglish.rangeApi.getRange();
 			if( range ){
-				if( editorEnglish.editorDom.contains( range.startContainer ) ){
-					editorEnglish.rememberRange();
-					window.editor = editorEnglish;
-				}
-				if( editorChinese.editorDom.contains( range.startContainer ) ){
-					editorChinese.rememberRange();
-					window.editor = editorChinese;
-				}
+				editorEnglish.rangeApi.checkRange();
+				editorEnglish.rangeApi.consoleRange();
 			}
 		});
 

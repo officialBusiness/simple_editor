@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>new_editor</title>
+		<title>test_equal</title>
 		<style type="text/css">
 			html,body{
 				margin: 0;
@@ -11,71 +11,47 @@
 				width: 100%;
 				height: 100%;
 			}
-			body{
-				display: flex;
-				justify-content: center;
-			}
-			.editor,
-			#editor-english,
-			#editor-chinese{
-				box-sizing: border-box;
-				padding: 0 40px 40px 40px;
+			.editor{
+				margin: 0;
+				padding: 0 50px 100px 50px;
 				border: 0;
-				max-width: 900px;
-				/*width: 50%;*/
 				width: 100%;
-				min-width: 350px;
-				height: 100%;
+				height: 20%;
 				outline: none;
-				overflow: auto;
 			}
 		</style>
 		<script type="text/javascript" src="../../src.new/thirdparty/tex-svg.js"></script>
 		<link rel="stylesheet" type="text/css" href="../../src.new/editor.css" />
 	</head>
 	<body>
-		<!-- <div class="editor"></div> -->
-		<div class="editor"><div class="paragraph" block="true" container="true" event="paragraph"><b><i>iiiiiii</i>111111<i>aaaaa</i><a href="/#">222222</a>1234</b><i>333333</i><b>222</b></div><div class="paragraph" block="true" container="true" event="paragraph"><b><i>iiiiiii</i><img src="./aaa" />111111<i>aaaaa</i><a href="/#">222222</a></b><i>33<img src="./aaa" />3333</i></div></div>
+		<div class="editor" contenteditable="true">
+			<b><i>iiiiiii</i>111111<i>aaaaa</i><a href="/#">222222</a></b><i>333333</i>
+		</div>
+		<div class="editor" contenteditable="true">
+			<b><i>iiiiiii</i><img src="./aaa" />111111<i>aaaaa</i><a href="/#">222222</a></b><i>33<img src="./aaa" />3333</i>
+		</div>
 	</body>
 	<script type="module">
-		import Editor from '../../src.new/editor.js';
-
-		let
-			// englishFile = '../paper/A Technique for Drawing Directed Graphs/english.json',
-			// chineseFile = ('../paper/A Technique for Drawing Directed Graphs/chinese.json'),
-			englishFile = '../paper/Simple and Efficient Bilayer Cross Counting/english.json',
-			chineseFile = '../paper/Simple and Efficient Bilayer Cross Counting/chinese.json',
-
-			editorEnglish = new Editor(document.getElementsByClassName('editor')[0])
-				// .init(),
-				// .loadJson(englishFile)
-			// editorChinese = new Editor(document.getElementsByClassName('editor')[1])
-			// 	.init()
-				// .loadJson(chineseFile);
-
-		window.editorEnglish = editorEnglish;
-		// window.editorChinese = editorChinese;
-
+		// import Editor from '../../src.new/editor.js';
+		// let 
+		// 	editor = new Editor(document.getElementsByClassName('editor')[0])
+		// 		.loadJson('../paper/Simple and Efficient Bilayer Cross Counting/english.json');
 
 		document.addEventListener('selectionchange', ()=>{
-			console.log('%cselectionchange', 'color: #000000; background-color: #ffffff');
 			let selection = document.getSelection(),
 					range;
 			if( selection.type !== 'None' ){
-				// console.log('%cselectionchange', 'color: #000000; background-color: #ffffff');
 				range =  selection.getRangeAt(0);
 				checkRange(range);
 				console.log('collapsed:', range.collapsed);
 				console.log('startContainer:', range.startContainer);
 				console.log('startOffset:', range.startOffset);
-				// if( !range.collapsed ){
+				if( !range.collapsed ){
 					console.log('endContainer:', range.endContainer);
 					console.log('endOffset:', range.endOffset);
-				// }
+				}
 			}
-			console.log('%cselectionchange', 'color: #000000; background-color: #ffffff');
 		});
-
 		function checkRange(range){
 			let { collapsed, startContainer, startOffset, endContainer, endOffset } = range;
 

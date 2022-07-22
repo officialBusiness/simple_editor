@@ -15,6 +15,8 @@ export default function Editor(dom, contentObj){
 	// 事件
 	// 初始化事件
 	this.event = new EditorEvent(this);
+	this.componentEvent = {};
+	componentApi.registerComponentEvent(this);
 
 	// 组件
 	// 默认的块类型数据
@@ -117,22 +119,93 @@ Editor.prototype.exportObjJsonFormatting = function(filename){
 
 // 事件操作
 
+Editor.prototype.eventType = {
+	deleteForward: 'deleteForward',
+	// deleteBackward: 'deleteBackward',
+	// deleteForwardOnStart: 'deleteForwardOnStart',
+	// deleteFragment: 'deleteFragment',
+	enter: 'enter',
+	// enterFragment: 'enterFragment'
+}
+
+Editor.prototype.execute = function(conatienr, eventType, params){
+	let eventKey = conatienr.getAttribute('event');
+	if( eventKey ){
+		let event = this.componentEvent[eventKey][eventType];
+		if( event ){
+			event.apply(this, params);
+		}else{
+			throw new Error(`${eventKey} 组件 ${eventType} 事件未完善`);
+		}
+	}
+}
+
 Editor.prototype.deleteForward = function(){
 	console.log('deleteForward');
+	let 
+		{ rangeApi, nodeApi } = this,
+		range = rangeApi.getRange();
+	if( !range ){
+		throw new Error('range 不存在, deleteForward 执行失败');
+		return ;
+	}
+	let	{ collapsed, startContainer, startOffset, endContainer, endOffset, commonAncestorContainer } = range;
+
+	if( collapsed ){
+		let executeNode = nodeApi.getContainer(startContainer);
+		this.execute(executeNode, this.eventType.deleteForward, [startContainer, startOffset]);
+	}else{
+
+	}
+
+	// console.log('collapsed:', collapsed);
+	// console.log('startContainer:', startContainer);
+	// console.log('startOffset:', startOffset);
+	// console.log('endContainer:', endContainer);
+	// console.log('endOffset:', endOffset);
+	// console.log('commonAncestorContainer:', commonAncestorContainer);
 }
 
 Editor.prototype.deleteBackward = function(){
 	console.log('deleteBackward');
-
+	let 
+		{ rangeApi, nodeApi } = this,
+		range = rangeApi.getRange();
+	if( !range ){
+		throw new Error('range 不存在, deleteBackward 执行失败');
+		return ;
+	}
+	let	{ collapsed, startContainer, startOffset, endContainer, endOffset, commonAncestorContainer } = range;
 }
 
 Editor.prototype.enter = function(){
 	console.log('enter');
+	let 
+		{ rangeApi, nodeApi } = this,
+		range = rangeApi.getRange();
+	if( !range ){
+		throw new Error('range 不存在, enter 执行失败');
+		return ;
+	}
+	let	{ collapsed, startContainer, startOffset, endContainer, endOffset, commonAncestorContainer } = range;
+	if( collapsed ){
+		let executeNode = nodeApi.getContainer(startContainer);
+		// console.log('executeNode:', executeNode);
+		this.execute(executeNode, this.eventType.enter, [startContainer, startOffset]);
+	}else{
 
+	}
 }
 
 Editor.prototype.insertText = function(text){
 	console.log('insertText');
+	let 
+		{ rangeApi, nodeApi } = this,
+		range = rangeApi.getRange();
+	if( !range ){
+		throw new Error('range 不存在, insertText 执行失败');
+		return ;
+	}
 
 }
 
@@ -141,3 +214,6 @@ Editor.prototype.insertElement = function(element){
 
 }
 
+Editor.prototype.format = function(command){
+
+}

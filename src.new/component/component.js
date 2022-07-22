@@ -1,5 +1,18 @@
 import * as factories from './template/templates.js';
 
+
+export function registerComponentEvent(context){
+	for( let factorieKey in factories ){
+		if( Array.isArray(factories[factorieKey].event) ){
+			factories[factorieKey].event.forEach((event)=>{
+				context.componentEvent[event.name] = event.operation;
+			});
+		}else{
+			console.warn(`${factorieKey} 组件还未实现事件`);
+		}
+	}
+}
+
 export function getComponentDom(context, obj){
 	if( typeof obj !== 'object' ){
 		console.error('obj', obj);
