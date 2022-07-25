@@ -90,7 +90,7 @@ export function deleteCenterFragment(container, startContainer, startOffset, end
 }
 
 export function deleteEndFragment(container, startContainer, startOffset, needRange = true){
-	console.log('%c删除 container 结尾部分片段, 不进行 range 选择', 'color: #000000; background-color: #ffffff');
+	console.log('%c删除 container 结尾部分片段', 'color: #000000; background-color: #ffffff');
 	let { rangeApi, nodeApi } = this;
 	if( startContainer.nodeType === Node.TEXT_NODE && startOffset !== 0 ){
 		console.log('开端光标在一个 text 内部');

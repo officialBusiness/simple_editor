@@ -118,6 +118,7 @@ Editor.prototype.exportObjJsonFormatting = function(filename){
 // 事件操作
 
 Editor.prototype.helpEventType = {
+	getFirstContainer: 'getFirstContainer',
 	getLastContainer: 'getLastContainer',
 	getMergeContainer: 'getMergeContainer',
 	getMergedNodes: 'getMergedNodes',
@@ -190,7 +191,7 @@ Editor.prototype.deleteForward = function(){
 		}
 	}
 }
-// 在不同的 block 中, deleteForward 之后合并两个 block
+// 在不同的 block 中, deleteForward deleteBackward 之后合并两个 block
 Editor.prototype.mergeTwoBlocks = function(preBlock, block){
 	console.log('%cEditor mergeTwoBlocks', 'color: #000000; background-color: #ffffff');
 	console.log('preBlock:', preBlock, '\nblock:', block);

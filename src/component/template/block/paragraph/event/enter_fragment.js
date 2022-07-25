@@ -72,7 +72,7 @@ export default function enterFragment(startContainer, startOffset, endContainer,
 }
 
 export function enterCenterFragment(container, startContainer, startOffset, endContainer, endOffset){
-	console.log('%c删除 container 中间部分片段, 不进行 range 选择', 'color: #000000; background-color: #ffffff');
+	console.log('%c删除 container 中间部分片段', 'color: #000000; background-color: #ffffff');
 	let { rangeApi, nodeApi } = this,
 			endFragment = nodeApi.splitFromNodeOffsetStillTop(endContainer, endOffset, container);
 

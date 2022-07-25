@@ -41,6 +41,9 @@ export default {
 		return obj;
 	},
 	helpEvent: {
+		getFirstContainer(paragraph){
+			return paragraph;
+		},
 		getLastContainer(paragraph){
 			return paragraph;
 		},

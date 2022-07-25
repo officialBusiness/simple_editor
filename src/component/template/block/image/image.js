@@ -1,6 +1,19 @@
+import imageEvent from './event/image_event.js';
+
+export function getImageTitleDom(title){
+	return this.nodeApi.createDom({
+		nodeName: 'div',
+		attributes: {
+			class: 'image_title',
+			[this.nodeLabel.container]: true,
+		},
+		children: title
+	})
+}
 
 export default {
 	type: 'image',
+	event: imageEvent,
 	toDom(obj){
 		return this.nodeApi.createDom({
 			nodeName: 'div',
@@ -57,5 +70,16 @@ export default {
 			obj.imgStyle = imgStyle;
 		}
 		return obj;
+	},
+	helpEvent: {
+		getLastContainer(imageBlock){
+			return imageBlock.childNodes[1];
+		},
+		getMergeContainer(imageBlock){
+			return false;
+		},
+		getMergedNodes(imageBlock){
+			return false;
+		}
 	}
 }
