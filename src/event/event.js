@@ -1,35 +1,21 @@
 import handleOnKeydown from './native/keydown.js';
 import { handleCompositionStart, handleCompositionEnd } from './native/composition.js';
-import handleOnPaste from './native/paste.js';
-
-export const supportOperationType = {
-	getLastContainer: 'getLastContainer',
-}
+// import handleOnPaste from './native/paste.js';
+// import handleOnCopy from './native/copy.js';
 
 export default class EditorEvent{
 	constructor(editor){
 		this.editor = editor;
 
-		let editorEvent = this;
-
-		this.keydown = handleOnKeydown.bind(this);
+		this.keydown = handleOnKeydown.bind(editor);
 		editor.editorDom.addEventListener('keydown', this.keydown);
 
-		this.compositionstart = handleCompositionStart.bind(this);
+		this.compositionStartRange = {};
+		this.compositionstart = handleCompositionStart.bind(editor);
 		editor.editorDom.addEventListener('compositionstart', this.compositionstart);
 
-		// 用于测试
-		// this.compositionupdate = (function(e){
-		// 	console.log('compositionupdate e:', e);
-		// 	this.editor.rangeApi.consoleRange();
-		// }).bind(this);
-		// editor.editorDom.addEventListener('compositionupdate', this.compositionupdate);
-
-		this.compositionend = handleCompositionEnd.bind(this);
+		this.compositionend = handleCompositionEnd.bind(editor);
 		editor.editorDom.addEventListener('compositionend', this.compositionend);
-
-		this.paste = handleOnPaste.bind(this);
-		editor.editorDom.addEventListener('paste', this.paste);
 
 
 		// 拖拽相关暂不实现, 直接禁止, 目前就先和上面一样用 addEventListener 吧, 说不准哪天就想实现了
@@ -42,19 +28,18 @@ export default class EditorEvent{
 		}
 		editor.editorDom.addEventListener('drop', this.drop);
 	}
-	// addEvent(eventType, event){
-	// 	if( !this.events[eventType] ){
-	// 		console.error('目前不支持该事件', eventType);
-	// 		return ;
-	// 	}
-	// 	this.events[eventType].push(event);
-	// }
 	destroy(){
 		this.editor.editorDom.removeEventListener('keydown', this.keydown);
+		this.keydown = null;
+		this.compositionStartRange = null;
 		this.editor.editorDom.removeEventListener('compositionstart', this.compositionstart);
+		this.compositionstart = null;
 		this.editor.editorDom.removeEventListener('compositionend', this.compositionend);
-		this.editor.editorDom.removeEventListener('paste', this.paste);
+		this.compositionend = null;
 		this.editor.editorDom.removeEventListener('dragstart', this.dragstart);
+		this.dragstart = null;
 		this.editor.editorDom.removeEventListener('drop', this.drop);
+		this.drop = null;
+		this.editor = null;
 	}
 }

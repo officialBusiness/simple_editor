@@ -1,16 +1,13 @@
-import paragraphOperation from './operation/operation.js';
+import paragraphEvent from './event/paragraph_event.js';
 
 export default {
 	type: 'paragraph',
-	event: [
-		paragraphOperation
-	],
+	event: paragraphEvent,
 	toDom(obj){
-		return this.nodeApi.createComonentDom({
+		return this.nodeApi.createDom({
 			nodeName: 'div',
 			attributes: {
 				class: 'paragraph',
-				event: paragraphOperation.name,
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true,
 			},
@@ -18,13 +15,15 @@ export default {
 				if(Array.isArray(obj.data)){
 					obj.data.forEach((child, index, array)=>{
 						if( array[index + 1] && array[index + 1].type === child.type && child.type === 'text' ){
-							console.error('存在两个连续的 text', child, array[index + 1]);
+							console.error(child, array[index + 1]);
+							throw new Error('存在两个连续的 text');
 						}
-						let childDom = this.getComponentDom(child);
+						let childDom = this.objToDom(child);
 						if( childDom ){
-							paragraph.appendChild( childDom );
+							this.nodeApi.appendChild(paragraph, childDom);
 						}else{
-							console.error('组件读取解析失败:', child);
+							console.error(child);
+							throw new Error('组件读取解析失败');
 						}
 					});
 				}
@@ -37,13 +36,19 @@ export default {
 			data: []
 		};
 		dom.childNodes.forEach((child, index, array)=>{
-			obj.data.push(this.getComponentObj(child));
+			obj.data.push(this.domToObj(child));
 		});
 		return obj;
 	},
-	supportOperation: {
+	helpEvent: {
 		getLastContainer(paragraph){
 			return paragraph;
+		},
+		getMergeContainer(paragraph){
+			return paragraph;
+		},
+		getMergedNodes(paragraph){
+			return paragraph.childNodes;
 		}
 	}
 }

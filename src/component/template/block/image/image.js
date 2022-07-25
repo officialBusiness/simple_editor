@@ -1,28 +1,27 @@
 
-// const 
-
-
 export default {
 	type: 'image',
 	toDom(obj){
-		return this.nodeApi.createComonentDom({
+		return this.nodeApi.createDom({
 			nodeName: 'div',
 			attributes: {
 				class: 'image',
 				[this.nodeLabel.block]: true,
-				[this.nodeLabel.container]: true
 			},
-			style: {
-				'text-align': obj.alignment
-			},
+			style: obj.imageStyle,
 			children: [
 				{
-					nodeName: 'img',
+					nodeName: 'div',
 					attributes: {
-						src: obj.src
+						class: 'img_container',
+						[this.nodeLabel.container]: true,
 					},
-					style: {
-						width: obj.width
+					children: {
+						nodeName: 'img',
+						attributes: {
+							src: obj.src,
+						},
+						style: obj.imgStyle,
 					}
 				},
 				{
@@ -39,31 +38,24 @@ export default {
 	},
 	toObj(dom){
 		let 
-			img = dom.childNodes[0],
+			img = dom.childNodes[0].childNodes[0],
 			title = dom.childNodes[1],
 			obj = {
 				type: 'image',
 				src: img.src
 			},
-			imgStyle = {},
-			imageStyle = {};
+			imageStyle = this.nodeApi.getNodeStyle(dom),
+			imgStyle = this.nodeApi.getNodeStyle(img);
 
-		if(img.style.width){
-			imgStyle.width = img.style.width;
-			obj.imgStyle = imgStyle;
-		}
-		if(dom.style['text-align']){
-			imageStyle['text-align'] =  dom.style['text-align'];
-			obj.imageStyle = imageStyle;
-		}
 		if( title ){
 			obj.title = title.innerText;
 		}
+		if( imageStyle ){
+			obj.imageStyle = imageStyle;
+		}
+		if( imgStyle ){
+			obj.imgStyle = imgStyle;
+		}
 		return obj;
-	},
-	supportOperation: {
-		getLastContainer(image){
-			return image.childNodes[1] ? image.childNodes[1] : image.childNodes[0];
-		},
 	}
 }
