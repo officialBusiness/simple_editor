@@ -25,7 +25,8 @@ export function isEmpty(node){
 	return node.childNodes.length === 0
 }
 
-export function isNodeEqual(a, b) {
+// 单个元素是否相同, 不考虑子节点
+export function isElementEqual(a, b) {
 	// 判断两个对象是否指向同一内存，指向同一内存返回true
 	if (a === b) {
 		return true;
@@ -41,6 +42,13 @@ export function isNodeEqual(a, b) {
 	}
 
 	if( a.nodeType === Node.ELEMENT_NODE ){
+		if( a.nodeName !== b.nodeName ){
+			console.log('标签 nodeName 不一样');
+			console.log('a:', a);
+			console.log('b:', b);
+			return false;
+		}
+
 		if( a.attributes.length !== b.attributes.length ){
 			console.log('attributes 长度不一样');
 			console.log('a:', a, 'attribute', a.attributes);
@@ -77,20 +85,12 @@ export function isNodeEqual(a, b) {
 				console.log('b:', b, 'style', b.style[i]);
 				return false;
 			}
-
 			if( a.style[aStyle] !== b.style[bStyle] ){
 				console.log('style 属性不一样');
 				console.log('a:', a, `a.style[${aStyle}]`, a.style[aStyle]);
 				console.log('b:', b, `b.style[${bStyle}]`, b.style[bStyle]);
 				return false;
 			}
-
-		}
-
-	}else if( a.nodeType === Node.TEXT_NODE ){
-		if( a.nodeValue  !== b.nodeValue ){
-			console.log('text 内容不一样', 'a:', a, 'b:', b);
-			return false;
 		}
 	}
 
@@ -236,40 +236,50 @@ export function removeNode(node){
 
 // 改
 
-export function mergeTwoNodesInContainer(pre, next){
+export function mergeTwoNodes(pre, next){
+	console.log('%cnode mergeTwoNodes', 'color: #000000; background-color: #ffffff');
+	console.log('pre:', pre, '\nnext:', next);
 	if( pre.nextSibling !== next ){
-		console.error('pre:', pre, 'next:', next);
-		throw new Error('mergeTwoNodesInContainer 传入的两个参数不是兄弟节点');
+		throw new Error('mergeTwoNodes 传入的两个参数不是兄弟节点');
 	}
 	if( pre.nodeType === Node.TEXT_NODE &&
 			next.nodeType === Node.TEXT_NODE ){//	前后节点都是text
-		console.log('前后节点都是 text');
+		console.log('节点都是 text');
 		pre.parentNode.normalize();//	合并前后 text
-	}else if( isNodeEqual( pre, next ) ){// 	前后节点一样，可以合并
+	}else if( isElementEqual( pre, next ) ){// 	前后节点一样，可以合并
+		console.log('节点元素信息一致，可以合并');
 		if( pre.childNodes.length > 0 && next.childNodes.length > 0 ){
-			console.log('前后节点一致，可以合并');
 			let preEnd = pre.childNodes[pre.childNodes.length - 1],
 					nextStart = next.childNodes[0];
 			appendChildren(pre, next.childNodes);
 			removeNode(next);
-			mergeTwoNodesInContainer( preEnd, nextStart);
+			mergeTwoNodes( preEnd, nextStart);
 		}
 	}
 }
 
 export function splitFromNodeOffsetStillTop(node, offset, topNode){
+	console.log('%cnode splitFromNodeOffsetStillTop', 'color: #000000; background-color: #ffffff');
+	console.log('node:', node, '\noffset:', offset, '\ntopNode:', topNode);
 	if( !topNode.contains(node) ){
 		console.error('node:', node, 'topNode:', topNode);
 		throw new Error('splitFromNodeOffsetInContainer 传参错误, node 不包含在 topNode 中');
 	}
 	let startNode;
 	if( node.nodeType === Node.TEXT_NODE ){
-		node.splitText(offset);
-		startNode = node.nextSibling;
+		if( offset === node.length ){
+			startNode = getNextNodeInContainer(node);
+		}else if( offset === 0 ){
+			throw new Error('splitFromNodeOffsetStillTop 传入参数出错, node 为 text 时, offset 不应该为 0');
+		}else{
+			node.splitText(offset);
+			startNode = node.nextSibling;
+		}
 	}else if( node.nodeType === Node.ELEMENT_NODE ){
 		startNode = offset === node.childNodes.length ? getNextNodeInContainer(node.childNodes[offset - 1]) : 
 												node.childNodes[offset];
 	}
+	console.log('开始拆分 startNode:', startNode);
 	let	startNodeParent,
 		startNodeParentClone,
 		rememberStartNodeParentClone;

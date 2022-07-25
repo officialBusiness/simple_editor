@@ -1,6 +1,6 @@
 
 import deleteForward from './delete_forward.js';
-// import deleteFragment from './delete_fragment.js';
+import deleteFragment from './delete_fragment.js';
 import enter from './enter.js';
 
 // import insertText from './insert_text.js';
@@ -11,17 +11,14 @@ import enter from './enter.js';
 // import deleteBackward from './delete_backward.js';
 
 export default {
-	name: 'paragraph',
-	operation: {
-		deleteForward,
-		// deleteFragment,
-		enter,
+	deleteForward,
+	deleteFragment,
+	enter,
 
-		// insertText,
-		// insertElement,
-		// enterFragment,
-		// deleteFragment,
-		// deleteForwardOnStart,
-		// deleteBackward,
-	}
+	// insertText,
+	// insertElement,
+	// enterFragment,
+	// deleteFragment,
+	// deleteForwardOnStart,
+	// deleteBackward,
 }

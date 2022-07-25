@@ -1,15 +1,17 @@
 import * as factories from './template/templates.js';
 
-
-export function registerComponentEvent(context){
-	for( let factorieKey in factories ){
-		if( Array.isArray(factories[factorieKey].event) ){
-			factories[factorieKey].event.forEach((event)=>{
-				context.componentEvent[event.name] = event.operation;
-			});
+export function getComponentEvent(componentName, eventType){
+	let factory = factories[componentName];
+	if( factory ){
+		if( factory.event && factory.event[eventType] ){
+			return factory.event[eventType];
 		}else{
-			console.warn(`${factorieKey} 组件还未实现事件`);
+			console.error('组件名', componentName, '组件:', factory, '事件类型:', eventType, '事件:', factory.event);
+			throw new Error('该事件未完善');
 		}
+	}else{
+		console.error('组件名', componentName);
+		throw new Error('不存在该组件');
 	}
 }
 

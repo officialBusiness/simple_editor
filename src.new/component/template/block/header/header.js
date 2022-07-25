@@ -1,6 +1,8 @@
+import paragraphEvent from '../paragraph/event/paragraph_event.js';
 
 export default {
 	type: 'header',
+	event: paragraphEvent,
 	toDom(obj){
 		return this.nodeApi.createDom({
 			nodeName: obj.level,
@@ -8,7 +10,6 @@ export default {
 				class: 'header',
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true,
-				// event: paragraphOperation.name,
 			},
 			created: (header)=>{
 				if(Array.isArray(obj.data)){
@@ -47,5 +48,16 @@ export default {
 			throw new Error('header 组件转化 dom 为 obj 时出错');
 		}
 		return obj;
+	},
+	helpEvent: {
+		getLastContainer(header){
+			return header;
+		},
+		getMergeContainer(header){
+			return header;
+		},
+		getMergedNodes(header){
+			return header.childNodes;
+		}
 	}
 }

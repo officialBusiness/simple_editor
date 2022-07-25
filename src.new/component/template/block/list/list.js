@@ -62,7 +62,6 @@ function createLiDomObj(label, index, li){
 				nodeName: 'div',
 				attributes: {
 					class: 'li_content',
-					// event: liOperation.name,
 					[this.nodeLabel.container]: true
 				},
 				created: (container)=>{

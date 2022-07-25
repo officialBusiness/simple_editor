@@ -1,12 +1,14 @@
 
 
 export default function enter(node, offset){
+	console.log('%c执行 enter', 'color: #000000; background-color: #ffffff');
+	console.log('node:', node, '\noffset:', offset);
+
 	let { rangeApi, nodeApi } = this,
 			container = nodeApi.getContainer(node),
 			newContainer = container.cloneNode(false);
 
-	console.clear();
-	console.log('执行 enter:', node, offset);
+	console.log('paragraph 执行 enter:', node, offset);
 	if( rangeApi.isStartInContainer(node, offset) ){
 		console.log('在 container 头部');
 
@@ -21,7 +23,6 @@ export default function enter(node, offset){
 		let splitedNode = nodeApi.splitFromNodeOffsetStillTop(node, offset, container);
 
 		nodeApi.insertAfter( splitedNode, container );
-		rangeApi.setRangeOfNodeStartInContainer(splitedNode);
-
+		rangeApi.setRangeOfNodeStart(splitedNode);
 	}
 }

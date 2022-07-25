@@ -1,6 +1,7 @@
 
 export default function deleteForwardOnStart(node, offset){
-	console.log('执行 deleteForwardOnStart:', 'node:', node, 'offset:', offset);
+	console.log('%c执行 deleteForwardOnStart', 'color: #000000; background-color: #ffffff');
+	console.log('node:', node, '\noffset:', offset);
 
 	let { rangeApi, nodeApi } = this,
 			container = nodeApi.getContainer(node),
@@ -17,11 +18,11 @@ export default function deleteForwardOnStart(node, offset){
 			if( nodeApi.isEmpty(block) ){
 				console.log('当前 Block 为空, 删除当前 Block, range 选择前一个 Block 最后一个 container 的的最后一个位置');
 				let lastContainer = this.executeHelpEvent(preBlock, this.helpEventType.getLastContainer, [preBlock]);
-				rangeApi.setRangeOfNodeEndInContainer(lastContainer);
+				rangeApi.setRangeOfNodeEnd(lastContainer);
 				nodeApi.removeNode(block);
 			}else{
-				console.log('当前 Block 不为空, 执行 mergeTwoBlock, 根据不同情况合并两个 Block');
-				this.mergeTwoBlock(preBlock, block);
+				console.log('当前 Block 不为空, 执行 mergeTwoBlocks, 根据不同情况合并两个 Block');
+				this.mergeTwoBlocks(preBlock, block);
 			}
 		}
 	}else{

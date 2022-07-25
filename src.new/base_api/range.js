@@ -11,7 +11,7 @@ export function isStartInContainer(node, offset){
 			node = parentNode;
 			parentNode = node.parentNode;
 		}
-		return true;
+		return nodeApi.isStartInContainer(node);
 	}else{
 		return false;
 	}
@@ -51,15 +51,36 @@ export function getRange(){
 
 export function setRange(startNode, startOffset, endNode, endOffset){
 	let range = document.getSelection().getRangeAt(0);
+	// console.log('startNode:', startNode, '\nstartOffset:', startOffset, '\nendNode:', endNode, '\nendOffset:', endOffset);
+	// console.log('range.startContainer:', range.startContainer, '\nrange.startOffset:', range.startOffset, '\nrange.endContainer:', range.endContainer, '\nrange.endOffset:', range.endOffset);
 
-	range.setStart(startNode, startOffset);
-	range.setEnd(endNode, endOffset);
+	if( range.startContainer === startNode && range.startOffset === startOffset ){
+		console.log('start range 一样不需要设置');
+	}else{
+		range.setStart(startNode, startOffset);
+	}
+	if( range.endContainer === endNode && range.endOffset === endOffset ){
+		console.log('end range 一样不需要设置');
+	}else{
+		range.setEnd(endNode, endOffset);
+	}
 }
 
 export function setCollapsedRange(node, offset){
 	let range = document.getSelection().getRangeAt(0);
-	range.setStart(node, offset);
-	range.setEnd(node, offset);
+	// console.log('%crange setCollapsedRange', 'color: #000000; background-color: #ffffff');
+	// console.log('node:', node, '\noffset:', offset);
+	// console.log('range.startContainer:', range.startContainer, '\nrange.startOffset:', range.startOffset, '\nrange.endContainer:', range.endContainer, '\nrange.endOffset:', range.endOffset);
+	if( range.startContainer === node && range.startOffset === offset ){
+		console.log('start range 一样不需要设置');
+	}else{
+		range.setStart(node, offset);
+	}
+	if( range.endContainer === node && range.endOffset === offset ){
+		console.log('end range 一样不需要设置');
+	}else{
+		range.setEnd(node, offset);
+	}
 }
 
 export function setNewRange(startNode, startOffset, endNode, endOffset){
@@ -82,11 +103,11 @@ export function setNewCollapsedRange(node, offset){
 	selection.addRange(range);
 }
 
-//	选择 container 的最开始
-export function setRangeOfNodeStartInContainer(node){
+//	选择 node 节点最开始的位置
+export function setRangeOfNodeStart(node){
 	if( !node || !node.nodeType || !node.parentNode ){
 		console.error('node:', node);
-		throw new Error('setRangeOfNodeStartInContainer 传参错误');
+		throw new Error('setRangeOfNodeStart 传参错误');
 	}
 	while( node.childNodes.length > 0 ){
 		node = node.childNodes[0];
@@ -94,29 +115,41 @@ export function setRangeOfNodeStartInContainer(node){
 	if( !node ){
 		console.error('node不存在, 请检查组件设计是否正确');
 	}
+	let rangeNode, rangeOffset;
 	if(node.nodeType === Node.TEXT_NODE){
-		setCollapsedRange(node, 0);
+		rangeNode = node;
+		rangeOffset = 0;
 	}else if(node.nodeType === Node.ELEMENT_NODE){
-		setCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node));
+		rangeNode = node.parentNode;
+		rangeOffset = nodeApi.getNodeIndexOf(node);
 	}else{
-		console.error('没有处理的节点类型');
+		console.error('节点:', node);
+		throw new Error('没有处理的节点类型');
 	}
+	setCollapsedRange(rangeNode, rangeOffset);
+	return [rangeNode, rangeOffset];
 }
 
-//	选择 container 的最末端
-export function setRangeOfNodeEndInContainer(node){
+//	选择 node 节点最末端的位置
+export function setRangeOfNodeEnd(node){
 	if( !node || !node.nodeType || !node.parentNode ){
 		console.error('node:', node);
-		throw new Error('setRangeOfNodeEndInContainer 传参错误');
+		throw new Error('setRangeOfNodeEnd 传参错误');
 	}
 	while( node.childNodes.length > 0 ){
 		node = node.childNodes[node.childNodes.length - 1];
 	}
+	let rangeNode, rangeOffset;
 	if(node.nodeType === Node.TEXT_NODE){
-		setCollapsedRange(node, node.length);
+		rangeNode = node;
+		rangeOffset = node.length;
 	}else if(node.nodeType === Node.ELEMENT_NODE){
-		setCollapsedRange(node.parentNode, nodeApi.getNodeIndexOf(node) + 1);
+		rangeNode = node.parentNode;
+		rangeOffset = nodeApi.getNodeIndexOf(node) + 1;
 	}else{
-		console.error('没有处理的节点类型');
+		console.error('节点:', node);
+		throw new Error('没有处理的节点类型');
 	}
+	setCollapsedRange(rangeNode, rangeOffset);
+	return [rangeNode, rangeOffset];
 }

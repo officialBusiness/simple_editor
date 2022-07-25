@@ -2,9 +2,7 @@ import paragraphEvent from './event/paragraph_event.js';
 
 export default {
 	type: 'paragraph',
-	event: [
-		paragraphEvent
-	],
+	event: paragraphEvent,
 	toDom(obj){
 		return this.nodeApi.createDom({
 			nodeName: 'div',
@@ -12,7 +10,6 @@ export default {
 				class: 'paragraph',
 				[this.nodeLabel.block]: true,
 				[this.nodeLabel.container]: true,
-				event: paragraphEvent.name,
 			},
 			created: (paragraph)=>{
 				if(Array.isArray(obj.data)){

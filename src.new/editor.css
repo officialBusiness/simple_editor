@@ -58,7 +58,10 @@ img.mathjax{
 	padding: 0 0 10px 0;
 	width: 100%;
 }
-.image > img{
+.image > .img_container{
+	width: 100%;
+}
+.image > .img_container > img{
 	width: 100%;
 	max-width: 100%;
 	cursor: pointer;

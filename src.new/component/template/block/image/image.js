@@ -7,16 +7,22 @@ export default {
 			attributes: {
 				class: 'image',
 				[this.nodeLabel.block]: true,
-				[this.nodeLabel.container]: true
 			},
 			style: obj.imageStyle,
 			children: [
 				{
-					nodeName: 'img',
+					nodeName: 'div',
 					attributes: {
-						src: obj.src
+						class: 'img_container',
+						[this.nodeLabel.container]: true,
 					},
-					style: obj.imgStyle
+					children: {
+						nodeName: 'img',
+						attributes: {
+							src: obj.src,
+						},
+						style: obj.imgStyle,
+					}
 				},
 				{
 					if: !!obj.title,
@@ -32,7 +38,7 @@ export default {
 	},
 	toObj(dom){
 		let 
-			img = dom.childNodes[0],
+			img = dom.childNodes[0].childNodes[0],
 			title = dom.childNodes[1],
 			obj = {
 				type: 'image',
