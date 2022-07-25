@@ -47,10 +47,17 @@ export default function deleteForward(node, offset){
 		console.log('为 ELEMENT_NODE');
 		if( offset === 0 ){
 			console.log('偏移量为 0');
-			if( nodeApi.isStartInContainer(node.childNodes[0]) ){
-				deleteForwardOnStart.call(this, node, offset);
+			let element = node.childNodes[ 0 ];
+			if( element ){
+				console.log('元素存在, 应该是 container 内的第一个独立节点');
+				if( nodeApi.isStartInContainer(node.childNodes[0]) ){
+					deleteForwardOnStart.call(this, node, offset);
+				}else{
+					throw new Error('未知情况, 按照浏览 range 的标准以及之前设置 range 的代码,应该是 container 内的第一个独立节点');
+				}
 			}else{
-				throw new Error('未知情况, 按照浏览 range 的标准以及之前设置 range 的代码,应该是 container 内的第一个独立节点');
+				console.log('元素不存在, 表示是一个空的 container');
+				deleteForwardOnStart.call(this, node, offset);
 			}
 		}else{
 			let element = node.childNodes[ offset - 1 ];

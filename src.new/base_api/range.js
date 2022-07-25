@@ -153,3 +153,26 @@ export function setRangeOfNodeEnd(node){
 	setCollapsedRange(rangeNode, rangeOffset);
 	return [rangeNode, rangeOffset];
 }
+
+//	获取 node 节点最末端的位置
+export function getRangeOfNodeEnd(node){
+	if( !node || !node.nodeType || !node.parentNode ){
+		console.error('node:', node);
+		throw new Error('getRangeOfNodeEnd 传参错误');
+	}
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[node.childNodes.length - 1];
+	}
+	let rangeNode, rangeOffset;
+	if(node.nodeType === Node.TEXT_NODE){
+		rangeNode = node;
+		rangeOffset = node.length;
+	}else if(node.nodeType === Node.ELEMENT_NODE){
+		rangeNode = node.parentNode;
+		rangeOffset = nodeApi.getNodeIndexOf(node) + 1;
+	}else{
+		console.error('节点:', node);
+		throw new Error('没有处理的节点类型');
+	}
+	return [rangeNode, rangeOffset];
+}

@@ -1,11 +1,11 @@
 
 export default function deleteFragment(startContainer, startOffset, endContainer, endOffset){
-	let { rangeApi, nodeApi } = this;
 	console.log('%c执行 deleteFragment', 'color: #000000; background-color: #ffffff');
 	console.log('startContainer:', startContainer, '\nstartOffset:', startOffset, '\nendContainer:', endContainer, '\nendOffset:', endOffset);
+	let { rangeApi, nodeApi } = this;
 	if( startContainer && endContainer ){
-		let container = nodeApi.getContainer(startContainer);
 		console.log('fragment 在 container 中');
+		let container = nodeApi.getContainer(startContainer);
 		if( rangeApi.isStartInContainer(startContainer, startOffset) ){
 			console.log('startContainer 光标在 container 最前端');
 			if( rangeApi.isEndInContainer(endContainer, endOffset) ){
@@ -18,7 +18,6 @@ export default function deleteFragment(startContainer, startOffset, endContainer
 			}
 		}else{
 			console.log('startContainer 光标不在 container 最前端');
-			let endFragment
 			if( rangeApi.isEndInContainer(endContainer, endOffset) ){
 				console.log('endContainer 光标在 container 最未端');
 				deleteEndFragment.call(this, container, startContainer, startOffset);
@@ -46,7 +45,6 @@ export default function deleteFragment(startContainer, startOffset, endContainer
 		let container = nodeApi.getContainer(endContainer);
 		if( rangeApi.isStartInContainer(endContainer, endOffset) ){
 			console.log('endContainer 光标在 container 最前端, 无操作');
-
 		}else if( rangeApi.isEndInContainer(endContainer, endOffset) ){
 			console.log('endContainer 光标在 container 最未端, 清空 container');
 			nodeApi.emptyAllChild(container);
@@ -55,7 +53,7 @@ export default function deleteFragment(startContainer, startOffset, endContainer
 			deleteStartFragment.call(this, container, endContainer, endOffset, false);
 		}
 	}else{
-		console.error('commonAncestorContainer:', commonAncestorContainer, 'startContainer:', startContainer, 'startOffset:', startOffset, 'endContainer:', endContainer, 'endOffset:', endOffset);
+		console.error('startContainer:', startContainer, 'startOffset:', startOffset, 'endContainer:', endContainer, 'endOffset:', endOffset);
 		throw new Error('不知道的特殊情况');
 	}
 }
@@ -69,7 +67,10 @@ export function deleteStartFragment(container, endContainer, endOffset, needRang
 		nodeApi.appendChildren(container, endFragment.childNodes);
 		endFragment = null;
 		if( needRange ){
+			console.log('进行光标选择');
 			rangeApi.setRangeOfNodeStart(container);
+		}else{
+			console.log('不进行光标选择');
 		}
 	}else{
 		console.error('endFragment:', endFragment);
@@ -78,7 +79,7 @@ export function deleteStartFragment(container, endContainer, endOffset, needRang
 }
 
 export function deleteCenterFragment(container, startContainer, startOffset, endContainer, endOffset){
-	console.log('%c删除 container 中间部分片段, 不进行 range 选择', 'color: #000000; background-color: #ffffff');
+	console.log('%c删除 container 中间部分片段', 'color: #000000; background-color: #ffffff');
 	let { rangeApi, nodeApi } = this,
 			endFragment = nodeApi.splitFromNodeOffsetStillTop(endContainer, endOffset, container);
 
@@ -88,12 +89,17 @@ export function deleteCenterFragment(container, startContainer, startOffset, end
 	nodeApi.mergeTwoNodes(container, endFragment);
 }
 
-export function deleteEndFragment(container, startContainer, startOffset){
+export function deleteEndFragment(container, startContainer, startOffset, needRange = true){
 	console.log('%c删除 container 结尾部分片段, 不进行 range 选择', 'color: #000000; background-color: #ffffff');
 	let { rangeApi, nodeApi } = this;
 	if( startContainer.nodeType === Node.TEXT_NODE && startOffset !== 0 ){
 		console.log('开端光标在一个 text 内部');
-		rangeApi.setCollapsedRange(startContainer, startOffset);
+		if( needRange ){
+			console.log('进行光标选择');
+			rangeApi.setCollapsedRange(startContainer, startOffset);
+		}else{
+			console.log('不进行光标选择');
+		}
 		nodeApi.splitFromNodeOffsetStillTop(startContainer, startOffset, container);
 	}else{
 		if( startContainer.nodeType === Node.TEXT_NODE && startOffset === startContainer.length ){
@@ -106,8 +112,15 @@ export function deleteEndFragment(container, startContainer, startOffset){
 		let preNode = nodeApi.getPreNodeInContainer(startContainer);
 		if( preNode ){
 			console.log('preNode 存在');
-			let [rangeNode, rangeOffset] = rangeApi.setRangeOfNodeEnd(preNode);
-			nodeApi.splitFromNodeOffsetStillTop(rangeNode, rangeOffset, container);
+			if( needRange ){
+				console.log('进行光标选择');
+				let [rangeNode, rangeOffset] = rangeApi.setRangeOfNodeEnd(preNode);
+				nodeApi.splitFromNodeOffsetStillTop(rangeNode, rangeOffset, container);
+			}else{
+				console.log('不进行光标选择');
+				let [rangeNode, rangeOffset] = rangeApi.getRangeOfNodeEnd(preNode);
+				nodeApi.splitFromNodeOffsetStillTop(rangeNode, rangeOffset, container);
+			}
 		}else{
 			throw new Error('按道理 preNode 应该存在');
 		}

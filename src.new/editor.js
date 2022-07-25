@@ -141,7 +141,7 @@ Editor.prototype.eventType = {
 	// deleteBackward: 'deleteBackward',
 	deleteFragment: 'deleteFragment',
 	enter: 'enter',
-	// enterFragment: 'enterFragment'
+	enterFragment: 'enterFragment'
 }
 
 Editor.prototype.executeEditorEvent = function(block, eventType, params){
@@ -190,25 +190,48 @@ Editor.prototype.deleteForward = function(){
 		}
 	}
 }
-// 合并两个 block
+// 在不同的 block 中, deleteForward 之后合并两个 block
 Editor.prototype.mergeTwoBlocks = function(preBlock, block){
 	console.log('%cEditor mergeTwoBlocks', 'color: #000000; background-color: #ffffff');
 	console.log('preBlock:', preBlock, '\nblock:', block);
 	let
+		{ rangeApi, nodeApi } = this,
 		mergeContainer = this.executeHelpEvent(preBlock, this.helpEventType.getMergeContainer, [preBlock]),
 		mergedNodes = this.executeHelpEvent(block, this.helpEventType.getMergedNodes, [block]);
 
 	if( mergeContainer ){
-		console.log('前一个 block 存在能够合并的容器');
+		console.log('前一个 block 存在能够合并的容器:', mergeContainer);
 		if( mergedNodes ){
-			console.log('当前 block 存在用于合并的节点');
+			console.log('当前 block 存在用于合并的节点:', mergedNodes);
 			let preEnd = mergeContainer.childNodes[mergeContainer.childNodes.length - 1],
 					nextStart = mergedNodes[0];
+			if( preEnd ){
+				console.log('前一个 block 存在最后一个节点:', preEnd);
+				if( nextStart ){
+					console.log('当前 block 存在第一个节点:', nextStart);
+					rangeApi.setRangeOfNodeEnd(preEnd);
+					nodeApi.appendChildren(mergeContainer, mergedNodes);
+					nodeApi.removeNode(block);
+					nodeApi.mergeTwoNodes(preEnd, nextStart);
+				}else{
+					console.log('当前 block 不存在第一个节点, 为空');
+					rangeApi.setRangeOfNodeEnd(preEnd);
+					nodeApi.removeNode(block);
+				}
+			}else{
+				console.log('前一个 block 不存在最后一个节点, 为空');
+				if(nextStart){
+					console.log('当前 block 存在第一个节点:', nextStart);
+					nodeApi.appendChildren(mergeContainer, mergedNodes);
+					rangeApi.setRangeOfNodeStart(mergeContainer);
+					nodeApi.removeNode(block);
+				}else{
+					console.log('当前 block 不存在第一个节点, 为空');
+					rangeApi.setCollapsedRange(preBlock, 0);
+					nodeApi.removeNode(block);
+				}
+			}
 
-			this.rangeApi.setRangeOfNodeEnd(mergeContainer);
-			this.nodeApi.appendChildren(mergeContainer, mergedNodes);
-			this.nodeApi.removeNode(block);
-			this.nodeApi.mergeTwoNodes(preEnd, nextStart);
 		}else{
 			console.log('当前 block 不存在用于合并的节点');
 		}
@@ -252,10 +275,16 @@ Editor.prototype.enter = function(){
 
 		if( startBlockNode === endBlockNode ){
 			console.log('在同一个 block 中');
+			let executeNode = nodeApi.getBlock(startContainer);
+			this.executeEditorEvent(executeNode, this.eventType.enterFragment, [startContainer, startOffset, endContainer, endOffset]);
 
 		}else{
 			console.log('在不同的 block 中');
-
+			while(startBlockNode.nextSibling !== endBlockNode){
+				this.nodeApi.removeNode(startBlockNode.nextSibling);
+			}
+			this.executeEditorEvent(startBlockNode, this.eventType.enterFragment, [startContainer, startOffset, void 0, void 0]);
+			this.executeEditorEvent(endBlockNode, this.eventType.enterFragment, [void 0, void 0, endContainer, endOffset]);
 		}
 	}
 }
