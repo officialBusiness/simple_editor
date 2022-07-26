@@ -50,6 +50,9 @@ export default {
 		return obj;
 	},
 	helpEvent: {
+		getFirstContainer(header){
+			return header;
+		},
 		getLastContainer(header){
 			return header;
 		},

@@ -53,6 +53,8 @@ export default function enterFragment(startContainer, startOffset, endContainer,
 						throw new Error('按道理 endContainer 和 endContainerNode 应该相等');
 					}
 				}
+			}else{
+				throw new Error('不知道的情况, 需要完善');
 			}
 
 		}

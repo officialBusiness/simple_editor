@@ -1,6 +1,8 @@
+import listEvent from './event/list_event.js';
 
 export default {
 	type: 'list',
+	event: listEvent,
 	toDom(obj){
 		return this.nodeApi.createDom({
 			nodeName: 'div',
@@ -39,6 +41,24 @@ export default {
 			obj.data.push(container);
 		});
 		return obj;
+	},
+	helpEvent: {
+		getFirstContainer(listBlock){
+			console.log('listBlock:', listBlock);
+			// return paragraph;
+		},
+		getLastContainer(listBlock){
+			console.log('listBlock:', listBlock);
+			console.log('listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1]:', listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1]);
+			return listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1];
+		},
+		getMergeContainer(listBlock){
+			// return paragraph;
+			return listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1];
+		},
+		getMergedNodes(listBlock){
+			// return paragraph.childNodes;
+		}
 	}
 }
 
@@ -92,4 +112,8 @@ export function getLabel(index, label){
 	}else if( label === 'custom' ){
 		return '';
 	}
+}
+
+export function resetListLabel(block){
+
 }

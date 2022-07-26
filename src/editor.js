@@ -139,6 +139,7 @@ Editor.prototype.executeHelpEvent = function(block, eventType, params){
 
 Editor.prototype.eventType = {
 	deleteForward: 'deleteForward',
+	deleteForwardOnStart: 'deleteForwardOnStart',
 	// deleteBackward: 'deleteBackward',
 	deleteFragment: 'deleteFragment',
 	enter: 'enter',
@@ -228,7 +229,6 @@ Editor.prototype.mergeTwoBlocks = function(preBlock, block){
 					nodeApi.removeNode(block);
 				}
 			}
-
 		}else{
 			console.log('当前 block 不存在用于合并的节点');
 		}
