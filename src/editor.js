@@ -210,13 +210,11 @@ Editor.prototype.mergeTwoBlocks = function(preBlock, block){
 				console.log('前一个 block 存在最后一个节点:', preEnd);
 				if( nextStart ){
 					console.log('当前 block 存在第一个节点:', nextStart);
-					rangeApi.setRangeOfNodeEnd(preEnd);
 					nodeApi.appendChildren(mergeContainer, mergedNodes);
 					nodeApi.removeNode(block);
 					nodeApi.mergeTwoNodes(preEnd, nextStart);
 				}else{
 					console.log('当前 block 不存在第一个节点, 为空');
-					rangeApi.setRangeOfNodeEnd(preEnd);
 					nodeApi.removeNode(block);
 				}
 			}else{
@@ -224,11 +222,9 @@ Editor.prototype.mergeTwoBlocks = function(preBlock, block){
 				if(nextStart){
 					console.log('当前 block 存在第一个节点:', nextStart);
 					nodeApi.appendChildren(mergeContainer, mergedNodes);
-					rangeApi.setRangeOfNodeStart(mergeContainer);
 					nodeApi.removeNode(block);
 				}else{
 					console.log('当前 block 不存在第一个节点, 为空');
-					rangeApi.setCollapsedRange(preBlock, 0);
 					nodeApi.removeNode(block);
 				}
 			}
@@ -237,9 +233,7 @@ Editor.prototype.mergeTwoBlocks = function(preBlock, block){
 			console.log('当前 block 不存在用于合并的节点');
 		}
 	}else{
-		console.log('前一个 block 不存在能够合并的容器, range 选择前一个 Block 最后一个 container 的的最后一个位置');
-		let lastContainer = this.executeHelpEvent(preBlock, this.helpEventType.getLastContainer, [preBlock]);
-		rangeApi.setRangeOfNodeEnd(lastContainer);
+		console.log('前一个 block 不存在能够合并的容器');
 	}
 }
 

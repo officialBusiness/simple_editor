@@ -5,7 +5,7 @@ export function getImageTitleDom(title){
 		nodeName: 'div',
 		attributes: {
 			class: 'image_title',
-			[this.nodeLabel.container]: true,
+			[this.nodeLabel.container]: true
 		},
 		children: title
 	})
@@ -72,6 +72,9 @@ export default {
 		return obj;
 	},
 	helpEvent: {
+		getFirstContainer(paragraph){
+			return imageBlock.childNodes[0];
+		},
 		getLastContainer(imageBlock){
 			return imageBlock.childNodes[1];
 		},

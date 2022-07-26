@@ -40,7 +40,7 @@ export default function enterFragment(startContainer, startOffset, endContainer,
 
 		}
 	}else if( startContainer ){
-		console.log('container 后半部分在 fragment 中');
+		console.log('container 后半部分在 fragment 中, 不需要选择 range');
 		let container = nodeApi.getContainer(startContainer);
 		if( rangeApi.isStartInContainer(startContainer, startOffset) ){
 			console.log('startContainer 光标在 container 最前端, 清空 container');
@@ -52,7 +52,7 @@ export default function enterFragment(startContainer, startOffset, endContainer,
 			deleteEndFragment.call(this, container, startContainer, startOffset, false);
 		}
 	}else if( endContainer ){
-		console.log('container 前半部分在 fragment 中');
+		console.log('container 前半部分在 fragment 中, 需要选择 range');
 		let container = nodeApi.getContainer(endContainer);
 		if( rangeApi.isStartInContainer(endContainer, endOffset) ){
 			console.log('endContainer 光标在 container 最前端, 光标重叠选择 container 最未端');
