@@ -130,6 +130,32 @@ export function setRangeOfNodeStart(node){
 	return [rangeNode, rangeOffset];
 }
 
+//	获取 node 节点最开始的位置
+export function getRangeOfNodeStart(node){
+	if( !node || !node.nodeType || !node.parentNode ){
+		console.error('node:', node);
+		throw new Error('getRangeOfNodeStart 传参错误');
+	}
+	while( node.childNodes.length > 0 ){
+		node = node.childNodes[0];
+	}
+	if( !node ){
+		console.error('node不存在, 请检查组件设计是否正确');
+	}
+	let rangeNode, rangeOffset;
+	if(node.nodeType === Node.TEXT_NODE){
+		rangeNode = node;
+		rangeOffset = 0;
+	}else if(node.nodeType === Node.ELEMENT_NODE){
+		rangeNode = node.parentNode;
+		rangeOffset = nodeApi.getNodeIndexOf(node);
+	}else{
+		console.error('节点:', node);
+		throw new Error('没有处理的节点类型');
+	}
+	return [rangeNode, rangeOffset];
+}
+
 //	选择 node 节点最末端的位置
 export function setRangeOfNodeEnd(node){
 	if( !node || !node.nodeType || !node.parentNode ){

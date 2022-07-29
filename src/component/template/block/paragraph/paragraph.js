@@ -52,6 +52,9 @@ export default {
 		},
 		getMergedNodes(paragraph){
 			return paragraph.childNodes;
+		},
+		mergedDeleteNode(paragraph){
+			return paragraph;
 		}
 	}
 }

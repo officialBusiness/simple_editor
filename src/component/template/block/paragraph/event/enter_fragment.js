@@ -55,8 +55,12 @@ export default function enterFragment(startContainer, startOffset, endContainer,
 		console.log('container 前半部分在 fragment 中, 需要选择 range');
 		let container = nodeApi.getContainer(endContainer);
 		if( rangeApi.isStartInContainer(endContainer, endOffset) ){
-			console.log('endContainer 光标在 container 最前端, 光标重叠选择 container 最未端');
-			rangeApi.setCollapsedRange(endContainer, endOffset);
+			console.log('endContainer 光标在 container 最前端, 光标重叠选择 container 最前端');
+			if( endContainer.childNodes.length > 0 ){
+				rangeApi.setRangeOfNodeStart(endContainer);
+			}else{
+				rangeApi.setCollapsedRange(endContainer, 0);
+			}
 		}else if( rangeApi.isEndInContainer(endContainer, endOffset) ){
 			console.log('endContainer 光标在 container 最未端, 清空 container');
 			nodeApi.emptyAllChild(container);

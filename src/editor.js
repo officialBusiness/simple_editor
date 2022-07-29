@@ -122,6 +122,7 @@ Editor.prototype.helpEventType = {
 	getLastContainer: 'getLastContainer',
 	getMergeContainer: 'getMergeContainer',
 	getMergedNodes: 'getMergedNodes',
+	mergedDeleteNode: 'mergedDeleteNode',
 }
 
 Editor.prototype.executeHelpEvent = function(block, eventType, params){
@@ -199,7 +200,8 @@ Editor.prototype.mergeTwoBlocks = function(preBlock, block){
 	let
 		{ rangeApi, nodeApi } = this,
 		mergeContainer = this.executeHelpEvent(preBlock, this.helpEventType.getMergeContainer, [preBlock]),
-		mergedNodes = this.executeHelpEvent(block, this.helpEventType.getMergedNodes, [block]);
+		mergedNodes = this.executeHelpEvent(block, this.helpEventType.getMergedNodes, [block]),
+		mergedDeleteNode = this.executeHelpEvent(block, this.helpEventType.mergedDeleteNode, [block]);
 
 	if( mergeContainer ){
 		console.log('前一个 block 存在能够合并的容器:', mergeContainer);
@@ -212,21 +214,29 @@ Editor.prototype.mergeTwoBlocks = function(preBlock, block){
 				if( nextStart ){
 					console.log('当前 block 存在第一个节点:', nextStart);
 					nodeApi.appendChildren(mergeContainer, mergedNodes);
-					nodeApi.removeNode(block);
 					nodeApi.mergeTwoNodes(preEnd, nextStart);
+					if( mergedDeleteNode ){
+						nodeApi.removeNode(mergedDeleteNode);
+					}
 				}else{
 					console.log('当前 block 不存在第一个节点, 为空');
-					nodeApi.removeNode(block);
+					if( mergedDeleteNode ){
+						nodeApi.removeNode(mergedDeleteNode);
+					}
 				}
 			}else{
 				console.log('前一个 block 不存在最后一个节点, 为空');
 				if(nextStart){
 					console.log('当前 block 存在第一个节点:', nextStart);
 					nodeApi.appendChildren(mergeContainer, mergedNodes);
-					nodeApi.removeNode(block);
+					if( mergedDeleteNode ){
+						nodeApi.removeNode(mergedDeleteNode);
+					}
 				}else{
 					console.log('当前 block 不存在第一个节点, 为空');
-					nodeApi.removeNode(block);
+					if( mergedDeleteNode ){
+						nodeApi.removeNode(mergedDeleteNode);
+					}
 				}
 			}
 		}else{

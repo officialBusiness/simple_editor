@@ -37,7 +37,14 @@ export default function deleteForward(node, offset){
 				// console.log('执行 deleteForwardOnStart 事件');
 				this.executeEditorEvent(block, this.eventType.deleteForwardOnStart, [node, offset]);
 			}else{
-				throw new Error('未知情况, 按照浏览 range 的标准以及之前设置 range 的代码,应该是 container 内的第一个独立节点');
+				if( preNode ){
+					console.log('preNode 存在, 当前节点应该为 block 样式');
+					let [newNode, newOffset] = rangeApi.getRangeOfNodeEnd(preNode);
+					deleteForward.call(this, newNode, newOffset);
+				}else{
+					throw new Error('未知情况, 按照浏览 range 的标准以及之前设置 range 的代码, 如果 preNode 不存在, singleNode 应该就是 container, node 是 container 内的第一个节点');
+				}
+				// throw new Error('未知情况, 按照浏览 range 的标准以及之前设置 range 的代码,应该是 container 内的第一个独立节点');
 			}
 		}else{//	不知道的特殊情况
 			throw new Error('在 text 中执行 deleteForward 遇到的不知道的特殊情况');

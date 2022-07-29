@@ -83,6 +83,9 @@ export default {
 		},
 		getMergedNodes(imageBlock){
 			return false;
+		},
+		mergedDeleteNode(imageBlock){
+			return false;
 		}
 	}
 }

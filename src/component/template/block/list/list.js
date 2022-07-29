@@ -44,12 +44,12 @@ export default {
 	},
 	helpEvent: {
 		getFirstContainer(listBlock){
-			console.log('listBlock:', listBlock);
-			// return paragraph;
+			// console.log('listBlock:', listBlock);
+			return listBlock.childNodes[0].childNodes[1];
 		},
 		getLastContainer(listBlock){
-			console.log('listBlock:', listBlock);
-			console.log('listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1]:', listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1]);
+			// console.log('listBlock:', listBlock);
+			// console.log('listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1]:', listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1]);
 			return listBlock.childNodes[listBlock.childNodes.length - 1].childNodes[1];
 		},
 		getMergeContainer(listBlock){
@@ -58,6 +58,17 @@ export default {
 		},
 		getMergedNodes(listBlock){
 			// return paragraph.childNodes;
+			return listBlock.childNodes[0].childNodes[1].childNodes;
+		},
+		mergedDeleteNode(listBlock){
+			if( listBlock.childNodes.length > 1 ){
+				setTimeout(()=>{
+					resetListLabel(listBlock);
+				}, 0);
+				return listBlock.childNodes[0];
+			}else{
+				return listBlock;
+			}
 		}
 	}
 }
@@ -99,6 +110,31 @@ function createLiDomObj(label, index, li){
 	}
 }
 
+export function getEmptyLiDom(labelType){
+	return this.nodeApi.createDom({
+			nodeName: 'div',
+			attributes: {
+				class: 'li',
+			},
+			children: [
+				{
+					nodeName: 'div',
+					attributes: {
+						class: 'label',
+						contenteditable: labelType === 'custom' ? true : 'false',
+						[this.nodeLabel.container]: labelType === 'custom' ? true : null
+					}
+				},
+				{
+					nodeName: 'div',
+					attributes: {
+						class: 'li_content',
+						[this.nodeLabel.container]: true
+					},
+				}
+			]
+	});
+}
 
 export function getLabel(index, label){
 	if( label === 'english' ){
@@ -115,5 +151,10 @@ export function getLabel(index, label){
 }
 
 export function resetListLabel(block){
-
+	let labelType = block.getAttribute('label');
+	if( labelType !== 'custom' ){
+		block.childNodes.forEach((li, index)=>{
+			li.childNodes[0].innerText = getLabel(index, labelType)
+		});
+	}
 }

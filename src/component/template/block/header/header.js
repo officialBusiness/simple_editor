@@ -61,6 +61,9 @@ export default {
 		},
 		getMergedNodes(header){
 			return header.childNodes;
+		},
+		mergedDeleteNode(header){
+			return header;
 		}
 	}
 }

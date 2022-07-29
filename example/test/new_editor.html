@@ -35,7 +35,7 @@
 	</head>
 	<body>
 		<!-- <div class="editor"></div> -->
-		<div class="editor"><div class="paragraph" block="true" container="true" event="paragraph"><b><i>iiiiiii</i>111111<i>aaaaa</i><a href="/#">222222</a>1234</b><i>333333</i><b>222</b></div><div class="paragraph" block="true" container="true" event="paragraph"><b><i>iiiiiii</i><img src="./aaa" />111111<i>aaaaa</i><a href="/#">222222</a></b><i>33<img src="./aaa" />3333</i></div><div class="paragraph" block="true" container="true" event="paragraph"><a href="/#"><i><b>bib</b></i></a>12<a href="/#"><i><b>bib</b>1212</i></a></div></div>
+		<div class="editor"><div class="paragraph" block="true" container="true" event="paragraph"><b><i>iiiiiii</i>111111<i>aaaaa</i><a href="/#">222222</a>1234</b><i>333333</i><b>222</b></div><div class="paragraph" block="true" container="true" event="paragraph"><b><i>iiiiiii</i><img src="./aaa" />111111<i>aaaaa</i><a href="/#">222222</a></b><i>33<img src="./aaa" />3333</i></div><div class="paragraph" block="true" container="true" event="paragraph"><a href="/#"><i><b>bib</b></i></a>12<a href="/#"><i><b>bib</b>1212</i></a></div><div class="paragraph" block="true" container="true" event="paragraph"><a href="/#"><i><b>bib</b></i></a>12<div><a href="/#"><i><b>bib</b>1212</i></a></div></div></div>
 	</body>
 	<script type="module">
 		import Editor from '../../src/editor.js';
@@ -64,7 +64,6 @@
 			if( selection.type !== 'None' ){
 				// console.log('%cselectionchange', 'color: #000000; background-color: #ffffff');
 				range =  selection.getRangeAt(0);
-				checkRange(range);
 				console.log('collapsed:', range.collapsed);
 				console.log('startContainer:', range.startContainer);
 				console.log('startOffset:', range.startOffset);
@@ -72,6 +71,7 @@
 					console.log('endContainer:', range.endContainer);
 					console.log('endOffset:', range.endOffset);
 				// }
+				checkRange(range);
 			}
 			console.log('%cselectionchange', 'color: #000000; background-color: #ffffff');
 		});
@@ -85,15 +85,15 @@
 				// console.log('node:', node);
 				// console.log('node.childNodes.length:', node.childNodes.length);
 				if( node && node.childNodes.length > 0 ){
-					// console.error('startContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
-					throw new Error('startContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
+					console.error('node:', node, '\nendContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
+					// throw new Error('startContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
 				}
 			}
 			if( !collapsed && endContainer.nodeType === Node.ELEMENT_NODE ){
 				let node = endContainer.childNodes[endOffset > 0 ? endOffset - 1 : 0];
 				if( node && node.childNodes.length > 0 ){
-					// console.error('endContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
-					throw new Error('endContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
+					console.error('node:', node, '\nendContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
+					// throw new Error('endContainer range 的位置不符合预期, 检查是否是浏览器自动的选择导致的, 如是, 需要优化完善代码');
 				}
 			}
 		}

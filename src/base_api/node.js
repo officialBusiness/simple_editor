@@ -237,11 +237,8 @@ export function removeNode(node){
 // 改
 
 export function mergeTwoNodes(pre, next){
-	console.log('%cnode mergeTwoNodes', 'color: #000000; background-color: #ffffff');
+	console.log('%c合并两个节点 node mergeTwoNodes', 'color: #000000; background-color: #ffffff');
 	console.log('pre:', pre, '\nnext:', next);
-	if( pre.nextSibling !== next ){
-		throw new Error('mergeTwoNodes 传入的两个参数不是兄弟节点');
-	}
 	if( pre.nodeType === Node.TEXT_NODE &&
 			next.nodeType === Node.TEXT_NODE ){//	前后节点都是text
 		console.log('节点都是 text');
@@ -254,6 +251,9 @@ export function mergeTwoNodes(pre, next){
 			appendChildren(pre, next.childNodes);
 			removeNode(next);
 			mergeTwoNodes( preEnd, nextStart);
+		}else if( pre.childNodes.length === 0 && next.childNodes.length > 0){
+			appendChildren(pre, next.childNodes);
+			removeNode(next);
 		}
 	}
 }
@@ -270,7 +270,8 @@ export function splitFromNodeOffsetStillTop(node, offset, topNode){
 		if( offset === node.length ){
 			startNode = getNextNodeInContainer(node);
 		}else if( offset === 0 ){
-			throw new Error('splitFromNodeOffsetStillTop 传入参数出错, node 为 text 时, offset 不应该为 0');
+			console.log('offset 为 0 的 特殊情况, text 为 display 容器中的第一个节点');
+			startNode = node;
 		}else{
 			node.splitText(offset);
 			startNode = node.nextSibling;
@@ -279,7 +280,12 @@ export function splitFromNodeOffsetStillTop(node, offset, topNode){
 		startNode = offset === node.childNodes.length ? getNextNodeInContainer(node.childNodes[offset - 1]) : 
 												node.childNodes[offset];
 	}
-	console.log('开始拆分 startNode:', startNode);
+	if( startNode ){
+		console.log('开始拆分 startNode:', startNode);
+	}else{
+		console.log('startNode 不存在, 在最末端, 不需要拆分');
+		return ;
+	} 
 	let	startNodeParent,
 		startNodeParentClone,
 		rememberStartNodeParentClone;
